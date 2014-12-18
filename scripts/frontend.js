@@ -1,7 +1,7 @@
 var juego = new Phaser.Game(600, 400, Phaser.AUTO ,'', { preload: preload, create: create, update: update });
 
 var user = "";
-var users = [];
+var users = {};
 var websocket = io.connect();
 var ax = 0;
 var ay = 0;
@@ -11,12 +11,45 @@ var pjs;
 
 
 
+
+
 //------------------------------------------------------------------------------------------------
 // CLASES
 //------------------------------------------------------------------------------------------------
+
+function User( options ){
+	var options = options || {}
+
+	// Definicion de parametros por default
+	var defaults = {
+		'nombre':'',
+		'posicion':{'x':0 , 'y':0}
+	}
+
+	// Funcion que mergea las opciones con los defaults
+	var extend = function(self){
+		for( prop in defaults ){
+			self[prop] = options[prop] || defaults[prop] || null;
+		}
+	}
+  	extend(this);
+
+	// Definicion de Metodos
+
+	this.setPosition = function( position ){
+		var position = position || {};
+		this.posicion.x = position.x || position[0] || 0;
+		this.posicion.y = position.y || position[1] || 0;
+	}
+
+	this.getPosition = function(){
+		return {'x':this.posicion.x , 'y':this.posicion.y}
+	}
+}
+/*
 function User(){
 	this.nombre = '';
-}
+}*/
 
 var usuario = new User();
 
@@ -59,8 +92,7 @@ usuario.nombre = prompt( 'nombre' );
 	// LOGIN OK
 	//------------------------------------------------------------------------------------------------
 	function login_success ( data ){
-		usuario = data.users;
-
+		usuario = data.pj;
 		crear_pj()
 	}
 
@@ -69,10 +101,14 @@ usuario.nombre = prompt( 'nombre' );
 	// Actualiza Existencia de USUARIOS
 	//------------------------------------------------------------------------------------------------
 	function actualizar_users( data ){
-		console.log(data)
-		users = data.users;
-		console.log(data.users);
 
+		for( u in data.users ){
+			if( data.users[u].nombre != usuario.nombre ){
+				if( !(u in users) ){
+					users[u] = new User( data.users[u] );
+				}
+			}
+		}
 		crear_demas_pj();
 
 		/*
@@ -82,15 +118,15 @@ usuario.nombre = prompt( 'nombre' );
 	}
 
 	function crear_demas_pj(){
-		console.log('usuarios conectados:')
-	    console.log( users )
-	    console.log( users.length )
+		console.log('usuarios conectados:', users)
 
 		// Demas pjs.
-	    for( u = 0 ; u < users.length ; u++ ){
+	    for( u in users ){
+	    	if( users[u].render ) continue;
 	    	console.log('renderizando', u);
 	    	var pos = users[u].getPosition();
 	    	var otrospj = pjs.create( pos.x , pos.y , 'pj' );
+	    	users[u].render = true;
 	    }
 	}
 
@@ -98,11 +134,9 @@ usuario.nombre = prompt( 'nombre' );
 	    //-------------------------------------
 	    // CREAMOS PJ
 	    //-------------------------------------
-
 	    // Crea grupo de pjs
 	    pjs = juego.add.group();
 	    pjs.enableBody = true;
-	    
 	    // Pj actual.
 	    //pj = juego.add.sprite(32, juego.world.height - 150, 'pj');
 	    pj = pjs.create( usuario.posicion.x , usuario.posicion.y , 'pj' );
