@@ -1,8 +1,9 @@
 var juego = new Phaser.Game(600, 400, Phaser.AUTO ,'', { preload: preload, create: create, update: update });
 
+var websocket = io.connect();
+
 var user = "";
 var users = {};
-var websocket = io.connect();
 var ax = 0;
 var ay = 0;
 
@@ -22,8 +23,8 @@ function User( options ){
 
 	// Definicion de parametros por default
 	var defaults = {
-		'nombre':'',
-		'posicion':{'x':0 , 'y':0}
+		'username':'',
+		'position':{'x':0 , 'y':0}
 	}
 
 	// Funcion que mergea las opciones con los defaults
@@ -38,26 +39,26 @@ function User( options ){
 
 	this.setPosition = function( position ){
 		var position = position || {};
-		this.posicion.x = position.x || position[0] || 0;
-		this.posicion.y = position.y || position[1] || 0;
+		this.position.x = position.x || position[0] || 0;
+		this.position.y = position.y || position[1] || 0;
 	}
 
 	this.getPosition = function(){
-		return {'x':this.posicion.x , 'y':this.posicion.y}
+		return {'x':this.position.x , 'y':this.position.y}
 	}
 }
 /*
 function User(){
-	this.nombre = '';
+	this.username = '';
 }*/
 
-var usuario = new User();
+var user = new User();
 
-usuario.nombre = prompt( 'nombre' );
+user.username = prompt( 'nombre' );
 
 
 //------------------------------------------------------------------------------------------------
-// CONSULTAS AL SERVER
+// ENVIOS AL SERVER
 //------------------------------------------------------------------------------------------------
 	
 	//------------------------------------------------------------------------------------------------
@@ -65,16 +66,23 @@ usuario.nombre = prompt( 'nombre' );
 	//------------------------------------------------------------------------------------------------
 	window.onload = function iniciar(){
 		
-		websocket.emit( 'login' , usuario );
+		websocket.emit( 'login' , user );
 
 	}
 
-	//------------------------------------------------------------------------------------------------
-	// EJECUTA: Server.KeyPressed(char);
-	//------------------------------------------------------------------------------------------------
-	document.onkeypress = function (e) { 
 
-	};
+	//-------------------------------------
+    // Envia position
+    //-------------------------------------
+	function envia_position(){
+
+		var data = { 
+			'username' : user.username ,
+			'position' : user.position
+		}
+		websocket.emit( 'user_position_update' , data );
+
+	}
 
 
 
@@ -84,32 +92,32 @@ usuario.nombre = prompt( 'nombre' );
 //------------------------------------------------------------------------------------------------
 	
 	websocket.on( 'login_success' , login_success );
-	websocket.on( 'actualizar_users' , actualizar_users );
-	//websocket.on( 'actualizar_pos' , actualizar_pos );
+	websocket.on( 'users_update' , users_update );
+	websocket.on( 'user_position_update' , user_position_update );
 
 
 	//------------------------------------------------------------------------------------------------
 	// LOGIN OK
 	//------------------------------------------------------------------------------------------------
 	function login_success ( data ){
-		usuario = data.pj;
-		crear_pj()
+		user = data.pj;
+		create_pj()
 	}
 
 
 	//------------------------------------------------------------------------------------------------
 	// Actualiza Existencia de USUARIOS
 	//------------------------------------------------------------------------------------------------
-	function actualizar_users( data ){
+	function users_update( data ){
 
 		for( u in data.users ){
-			if( data.users[u].nombre != usuario.nombre ){
+			if( data.users[u].username != user.username ){
 				if( !(u in users) ){
 					users[u] = new User( data.users[u] );
 				}
 			}
 		}
-		crear_demas_pj();
+		create_others_pj();
 
 		/*
 		console.log('salio o entro un user:')
@@ -117,7 +125,28 @@ usuario.nombre = prompt( 'nombre' );
 		*/
 	}
 
-	function crear_demas_pj(){
+
+	function user_position_update( data ){
+		var username = data.username;
+		var position = data.position;
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+//------------------------------------------------------------------------------------------------
+// FUNCIONES phaser VIEW
+//------------------------------------------------------------------------------------------------
+
+	function create_others_pj(){
 		console.log('usuarios conectados:', users)
 
 		// Demas pjs.
@@ -130,34 +159,28 @@ usuario.nombre = prompt( 'nombre' );
 	    }
 	}
 
-	function crear_pj(){
-	    //-------------------------------------
-	    // CREAMOS PJ
-	    //-------------------------------------
+    //-------------------------------------
+    // CREAMOS PJ
+    //-------------------------------------
+	function create_pj(){
 	    // Crea grupo de pjs
 	    pjs = juego.add.group();
 	    pjs.enableBody = true;
 	    // Pj actual.
 	    //pj = juego.add.sprite(32, juego.world.height - 150, 'pj');
-	    pj = pjs.create( usuario.posicion.x , usuario.posicion.y , 'pj' );
+	    pj = pjs.create( user.position.x , user.position.y , 'pj' );
 	}
 
 
-	//------------------------------------------------------------------------------------------------
-	// Actualiza Existencia de USUARIOS
-	//------------------------------------------------------------------------------------------------
-	/*function render_user( users ){
 
-	}*/
 
-	//------------------------------------------------------------------------------------------------
-	// Actualiza POS
-	//------------------------------------------------------------------------------------------------
-	/*function actualizar_pos( users ){
-		for( usr in users ){
 
-		}
-	}*/
+
+
+
+
+
+
 
 
 
@@ -193,22 +216,26 @@ function update(){
 	if(cursors.left.isDown){
 
         pj.body.velocity.x = - vel;
+        envia_position();
         //pj.animations.play('left');
 
     }else if(cursors.right.isDown){
 
         pj.body.velocity.x = vel;
+        envia_position();
         //pj.animations.play('right');
 
     }
     if(cursors.up.isDown){
 
         pj.body.velocity.y = - vel;
+        envia_position();
         //pj.animations.play('right');
 
     }else if(cursors.down.isDown){
 
         pj.body.velocity.y = vel;
+        envia_position();
         //pj.animations.play('right');
 
     }else{
