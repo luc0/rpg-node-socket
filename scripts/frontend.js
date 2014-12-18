@@ -1,9 +1,13 @@
 var juego = new Phaser.Game(600, 400, Phaser.AUTO ,'', { preload: preload, create: create, update: update });
 
-var user="";
+var user = "";
+var users = [];
 var websocket = io.connect();
 var ax = 0;
 var ay = 0;
+
+var pj;
+var pjs;
 
 
 
@@ -54,19 +58,54 @@ usuario.nombre = prompt( 'nombre' );
 	//------------------------------------------------------------------------------------------------
 	// LOGIN OK
 	//------------------------------------------------------------------------------------------------
-	function login_success ( svr_usuario ){
-		usuario = svr_usuario;
+	function login_success ( data ){
+		usuario = data.users;
+
+		crear_pj()
 	}
 
 
 	//------------------------------------------------------------------------------------------------
 	// Actualiza Existencia de USUARIOS
 	//------------------------------------------------------------------------------------------------
-	function actualizar_users( users ){
+	function actualizar_users( data ){
+		console.log(data)
+		users = data.users;
+		console.log(data.users);
+
+		crear_demas_pj();
+
 		/*
 		console.log('salio o entro un user:')
 		console.log( users );
 		*/
+	}
+
+	function crear_demas_pj(){
+		console.log('usuarios conectados:')
+	    console.log( users )
+	    console.log( users.length )
+
+		// Demas pjs.
+	    for( u = 0 ; u < users.length ; u++ ){
+	    	console.log('renderizando', u);
+	    	var pos = users[u].getPosition();
+	    	var otrospj = pjs.create( pos.x , pos.y , 'pj' );
+	    }
+	}
+
+	function crear_pj(){
+	    //-------------------------------------
+	    // CREAMOS PJ
+	    //-------------------------------------
+
+	    // Crea grupo de pjs
+	    pjs = juego.add.group();
+	    pjs.enableBody = true;
+	    
+	    // Pj actual.
+	    //pj = juego.add.sprite(32, juego.world.height - 150, 'pj');
+	    pj = pjs.create( usuario.posicion.x , usuario.posicion.y , 'pj' );
 	}
 
 
@@ -100,22 +139,19 @@ function create(){
 
 	cursors = juego.input.keyboard.createCursorKeys();
 
-    //-------------------------------------
-    // CREAMOS PJ
-    //-------------------------------------
 
-    // Crea pj.
-    pj = juego.add.sprite(32, juego.world.height - 150, 'pj');
-    console.log( users )
+
+
     
     // Habilita leyes de fisica a pj
-    juego.physics.arcade.enable(pj);
+    //juego.physics.arcade.enable(pj);
 
 }
 
 var vel = 150;
 
 function update(){
+
 
 	pj.body.velocity.x = 0;
 	pj.body.velocity.y = 0;
