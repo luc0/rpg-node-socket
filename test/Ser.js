@@ -27,9 +27,13 @@ function Ser( params ){
 		"solid":false,
 
 		/*Propiedad que define quien controla al Ser*/
-		"controls":null
-	}
+		"controls":null,
 
+		// no lo estamos usando, lo dejamos por si las moscas
+		"world":null,
+
+		"map":null
+	}
 
 	/*Mezcla de los defaults con los parametros pasados al objeto*/
 	merge( defaults , params , this );
@@ -42,6 +46,16 @@ function Ser( params ){
 		controls.eventsDown.left = (function(){this.mover({"x":-1})}).bind(this);
 		controls.init();
 	}
+
+	this.setMap = function( params ){
+		this.map = params;
+	}
+
+	this.setMap( params.map );
+	// Se agrega en el mapa
+	this.map.getTile( this.position ).append({ 'being' : this })
+
+	console.log(this)
 
 	this.mover = function( params ){
 		var x = params.x || 0;

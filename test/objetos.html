@@ -7,9 +7,14 @@
 	<script src="Controls.js"></script>
 	<script src="Ser.js"></script>
 	<script src="Elfo.js"></script>
+	<script src="Tile.js"></script>
+	<script src="Map.js"></script>
+	<script src="World.js"></script>
 </head>
 <body>
 	<script>
+
+		var world = new World();
 
 		var miElfo = new Elfo({
 			"position":{
@@ -19,10 +24,11 @@
 				y:1
 			},
 			"name":"Roberto",
-			"controls":"pc"
+			"controls":"pc",
+			"map": world.maps[0][0]
 		});
 
-		var miarray = createArray( 5 , 5 , Elfo);
+		//var miarray = createArray( 5 , 5 , Elfo );
 
 	</script>
 </body>

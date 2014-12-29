@@ -1,19 +1,21 @@
-function World(){
+function World( params ){
 
 	var defaults = {
 
-		"maps": createArray( 5 , 5 , Map );
+		"maps": createArray( 5 , 5 , Map )
 
 	}
 
-	maps[0][0] = createArray( 10 , 10 , Tile );
+	merge( defaults , params , this );
 
-	world.maps[0][0].load( [
-		[ {terrain:FLOOR.WAT} , {terrain:FLOOR.EAR} , {terrain:FLOOR.EAR} , {terrain:FLOOR.EAR} , {terrain:FLOOR.EAR} ],
-		[ {terrain:FLOOR.WAT} , {terrain:FLOOR.EAR} , {terrain:FLOOR.EAR} , {terrain:FLOOR.EAR} , {terrain:FLOOR.EAR} ],
-		[ {terrain:FLOOR.WAT} , {terrain:FLOOR.EAR} , {terrain:FLOOR.EAR} , {terrain:FLOOR.EAR} , {terrain:FLOOR.EAR} ],
-		[ {terrain:FLOOR.WAT} , {terrain:FLOOR.EAR} , {terrain:FLOOR.EAR} , {terrain:FLOOR.EAR} , {terrain:FLOOR.EAR} ],
-		[ {terrain:FLOOR.WAT} , {terrain:FLOOR.EAR} , {terrain:FLOOR.EAR} , {terrain:FLOOR.EAR} , {terrain:FLOOR.EAR} ]
+	this.maps[0][0].tiles = createArray( 10 , 10 , Tile );
+
+	this.maps[0][0].loadTiles( [
+		[ {terrain:'agua'} , {terrain:'tierra'} , {terrain:'tierra'} , {terrain:'tierra'} , {terrain:'tierra'} ],
+		[ {terrain:'agua'} , {terrain:'tierra'} , {terrain:'tierra'} , {terrain:'tierra'} , {terrain:'tierra'} ],
+		[ {terrain:'agua'} , {terrain:'tierra'} , {terrain:'tierra'} , {terrain:'tierra'} , {terrain:'tierra'} ],
+		[ {terrain:'agua'} , {terrain:'tierra'} , {terrain:'tierra'} , {terrain:'tierra'} , {terrain:'tierra'} ],
+		[ {terrain:'agua'} , {terrain:'tierra'} , {terrain:'tierra'} , {terrain:'tierra'} , {terrain:'tierra'} ]
 	] );
 
 }
