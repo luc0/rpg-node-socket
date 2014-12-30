@@ -11,4 +11,7 @@ function Lava( params ){
 	/*Mezcla de los defaults con los parametros pasados al objeto*/
 	merge( defaults , params , this );
 
+	// Se agrega en el mundo
+	console.log(this)
+	this.world.getTile( this.position ).append({ 'terrain' : this })
 }

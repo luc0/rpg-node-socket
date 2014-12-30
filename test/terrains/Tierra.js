@@ -10,7 +10,7 @@ function Tierra( params ){
 
 	/*Mezcla de los defaults con los parametros pasados al objeto*/
 	merge( defaults , params , this );
-	
+
 	// Se agrega en el mapa
-	this.map.getTile( this.position ).append({ 'terrain' : this })
+	this.world.getTile( this.position ).append({ 'terrain' : this })
 }

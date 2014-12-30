@@ -24,17 +24,15 @@ function Terrain( params ){
 		// no lo estamos usando, lo dejamos por si las moscas
 		"world":null,
 
-		"map":null,
-
 		"type":Terrain
 	}
 
 	/*Mezcla de los defaults con los parametros pasados al objeto*/
 	merge( defaults , params , this );
-	this.setMap = function( params ){
-		this.map = params;
+	this.setWorld = function( params ){
+		this.world = params;
 	}
 	console.log(params)
-	this.setMap( params.map );
+	this.setWorld( params.world );
 
 }

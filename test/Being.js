@@ -34,13 +34,11 @@ function Being( params ){
 		// no lo estamos usando, lo dejamos por si las moscas
 		"world":null,
 
-		"map":null,
-
 		"type":Being,
 
 		"damage": 6,
 
-		"life": 20,
+		"life": 20
 
 	}
 
@@ -55,28 +53,28 @@ function Being( params ){
 				var lastPosition = this.position;
 				this.move({"y":-1})
 				this.direction = 'up';
-				this.map.refresh({ "element":this , "lastPosition":lastPosition });
+				this.world.refresh({ "element":this , "lastPosition":lastPosition });
 			}).bind(this);
 
 			this.controls.eventsDown.right = (function(){
 				var lastPosition = this.position;
 				this.move({"x":1})
 				this.direction = 'right';
-				this.map.refresh({ "element":this , "lastPosition":lastPosition });
+				this.world.refresh({ "element":this , "lastPosition":lastPosition });
 			}).bind(this);
 
 			this.controls.eventsDown.down = (function(){
 				var lastPosition = this.position;
 				this.move({"y":1})
 				this.direction = 'down';
-				this.map.refresh({ "element":this , "lastPosition":lastPosition });
+				this.world.refresh({ "element":this , "lastPosition":lastPosition });
 			}).bind(this);
 
 			this.controls.eventsDown.left = (function(){
 				var lastPosition = this.position;
 				this.move({"x":-1})
 				this.direction = 'left';
-				this.map.refresh({ "element":this , "lastPosition":lastPosition });
+				this.world.refresh({ "element":this , "lastPosition":lastPosition });
 			}).bind(this);
 
 			this.controls.eventsDown.attack = (function(){
@@ -87,14 +85,11 @@ function Being( params ){
 		}
 	}
 
-	this.setMap = function( params ){
-		this.map = params;
+	this.setWorld = function( params ){
+		this.world = params;
 	}
 
-	this.setMap( params.map );
-	// Se agrega en el mapa
-	//this.map.getTile( this.position ).append({ 'being' : this })
-
+	this.setWorld( params.world );
 
 	this.move = function( params ){
 		var x = params.x || 0;
@@ -125,7 +120,7 @@ function Being( params ){
 				var attack_position = { x:this.position.x - 1, y: this.position.y };
 				break;
 		}
-		var target = this.map.getTile( attack_position ).being;
+		var target = this.world.getTile(attack_position ).being;
 		if( target ){
 			target.life -= this.damage;
 			console.log('Auch!');
@@ -136,8 +131,7 @@ function Being( params ){
 
 	// Verifica colision con cualquier elemento que sea solido.
 	this.collision = function( params ){
-		return this.boundaries( params.new_position) || this.map.getTile( params.new_position ).being ;
-		// hacer lo mismo con terrain y object
+		return this.boundaries( params.new_position ) || this.world.getTile( params.new_position ).being;
 	}
 
 	this.boundaries = function( new_position ){

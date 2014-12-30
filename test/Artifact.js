@@ -23,20 +23,18 @@ function Artifact( params ){
 		// no lo estamos usando, lo dejamos por si las moscas
 		"world":null,
 
-		"map":null,
-
 		"type":Artifact
 	}
 
 	/*Mezcla de los defaults con los parametros pasados al objeto*/
 	merge( defaults , params , this );
 
-	this.setMap = function( params ){
-		this.map = params;
+	this.setWorld = function( params ){
+		this.world = params;
 	}
 
-	this.setMap( params.map );
+	this.setWorld( params.world );
 
 	// Se agrega en el mapa
-	this.map.getTile( this.position ).append({ 'artifact' : this })
+	this.world.getTile( this.position ).append({ 'artifact' : this })
 }

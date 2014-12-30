@@ -12,6 +12,6 @@ function Elfo( params ){
 	merge( defaults , params , this );
 
 	// Se agrega en el mapa
-	this.map.getTile( this.position ).append({ 'being' : this });
+	this.world.getTile( this.position ).append({ 'being' : this });
 	this.createControls();
 }

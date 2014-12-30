@@ -23,6 +23,7 @@ function Controls(){
         "left":function(){},
         "attack":function(){}
     }
+
     this.init = function(){
         (function(self){
             document.onkeydown = function (e) {
@@ -38,7 +39,7 @@ function Controls(){
                 self.keys[self.keysNames[charCode] || "nothing"] = false;
                 self.triggerUp();
             };
-        })(this)
+        })(this);
     }
 
     this.triggerDown = function(){
