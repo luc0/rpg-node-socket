@@ -74,12 +74,13 @@ user.username = prompt( 'nombre' );
 	//-------------------------------------
     // Envia position
     //-------------------------------------
-	function envia_position(){
+	function send_position(){
 
 		var data = { 
 			'username' : user.username ,
 			'position' : user.position
 		}
+
 		websocket.emit( 'user_position_update' , data );
 
 	}
@@ -100,7 +101,10 @@ user.username = prompt( 'nombre' );
 	// LOGIN OK
 	//------------------------------------------------------------------------------------------------
 	function login_success ( data ){
-		user = data.pj;
+		for( d in data.pj ){
+			user[d] = data.pj[d];
+		}
+		//user = data.pj;
 		create_pj()
 	}
 
@@ -109,7 +113,7 @@ user.username = prompt( 'nombre' );
 	// Actualiza Existencia de USUARIOS
 	//------------------------------------------------------------------------------------------------
 	function users_update( data ){
-
+		console.log(data)
 		for( u in data.users ){
 			if( data.users[u].username != user.username ){
 				if( !(u in users) ){
@@ -127,8 +131,23 @@ user.username = prompt( 'nombre' );
 
 
 	function user_position_update( data ){
+		
 		var username = data.username;
 		var position = data.position;
+
+		// Si me movi yo
+		if( username == user.username ){
+			console.log(user)
+			user.setPosition( position );
+			user.phaser_sprite.position = position;
+			return;
+		}
+
+		// Otros pj
+		users[ username ].setPosition( position );
+		users[ username ].phaser_sprite.position = position;
+
+
 
 	}
 
@@ -152,10 +171,18 @@ user.username = prompt( 'nombre' );
 		// Demas pjs.
 	    for( u in users ){
 	    	if( users[u].render ) continue;
-	    	console.log('renderizando', u);
+
 	    	var pos = users[u].getPosition();
-	    	var otrospj = pjs.create( pos.x , pos.y , 'pj' );
+	    	var otherpj = pjs.create( pos.x , pos.y , 'pj' );
+	    	
+	    	juego.physics.arcade.enable(otherpj);
+	    	otherpj.body.bounce.y = 0.25;
+	    	otherpj.body.gravity.y = 1000;
+    		otherpj.body.collideWorldBounds = true;
+
+	    	users[u].phaser_sprite = otherpj
 	    	users[u].render = true;
+
 	    }
 	}
 
@@ -163,12 +190,24 @@ user.username = prompt( 'nombre' );
     // CREAMOS PJ
     //-------------------------------------
 	function create_pj(){
+	    
 	    // Crea grupo de pjs
 	    pjs = juego.add.group();
 	    pjs.enableBody = true;
+
 	    // Pj actual.
-	    //pj = juego.add.sprite(32, juego.world.height - 150, 'pj');
 	    pj = pjs.create( user.position.x , user.position.y , 'pj' );
+
+	    juego.physics.arcade.enable(pj);
+	    
+	    pj.body.bounce.y = 0.25;
+    	pj.body.gravity.y = 1000;
+    	pj.body.collideWorldBounds = true;
+    	
+
+
+	    user.phaser_sprite = pj;
+
 	}
 
 
@@ -190,16 +229,28 @@ user.username = prompt( 'nombre' );
 function preload(){
     // INDIVIDUOS
     juego.load.image('pj', 'graficos/abeja.png');
+    juego.load.image('piso', 'graficos/piso.png');
 }
 
 function create(){
 
 	cursors = juego.input.keyboard.createCursorKeys();
+	
+	juego.physics.startSystem(Phaser.Physics.ARCADE);
 
+    plataforma = juego.add.group();
 
+    // Habilitamos fisicas para todos los objetos del grupo
+    plataforma.enableBody = true;
 
-
-    
+    // Creamos PISO, como un objeto de plataforma en pos x,y, con sprite 'piso'
+    var piso = plataforma.create( 0 , juego.world.height - 24 , 'piso' );
+    piso.scale.setTo(100,2);
+    // Podes pisarlo y no se cae.
+    piso.body.immovable = true;
+/*
+    pjs.setAll('body.bounce.y', 0.25);
+	pjs.setAll('body.gravity.y', 2000);*/
     // Habilita leyes de fisica a pj
     //juego.physics.arcade.enable(pj);
 
@@ -209,6 +260,8 @@ var vel = 150;
 
 function update(){
 
+	juego.physics.arcade.collide( pj , plataforma );
+	juego.physics.arcade.collide( pj , pjs );
 
 	pj.body.velocity.x = 0;
 	pj.body.velocity.y = 0;
@@ -216,33 +269,22 @@ function update(){
 	if(cursors.left.isDown){
 
         pj.body.velocity.x = - vel;
-        envia_position();
+        user.setPosition( pj.body.position );
+        send_position();
         //pj.animations.play('left');
 
     }else if(cursors.right.isDown){
 
         pj.body.velocity.x = vel;
-        envia_position();
+        user.setPosition( pj.body.position );
+        send_position();
         //pj.animations.play('right');
 
     }
-    if(cursors.up.isDown){
 
-        pj.body.velocity.y = - vel;
-        envia_position();
-        //pj.animations.play('right');
 
-    }else if(cursors.down.isDown){
-
-        pj.body.velocity.y = vel;
-        envia_position();
-        //pj.animations.play('right');
-
-    }else{
-		/*
-        pj.animations.stop();
-        pj.frame = 4;
-		*/
+    if(cursors.up.isDown && pj.body.touching.down){
+        pj.body.velocity.y = - 3500;
     }
 
 }
