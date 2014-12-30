@@ -40,48 +40,51 @@ function Being( params ){
 
 		"damage": 6,
 
-		"life": 20
+		"life": 20,
+
 	}
 
 	/*Mezcla de los defaults con los parametros pasados al objeto*/
 	merge( defaults , params , this );
 
-	if( this.controls == "pc" ){
-		var controls = new Controls();
+	this.createControls = function(){
+		if( this.controls == "pc" ){
+			this.controls = new Controls();
 
-		controls.eventsDown.up = (function(){
-			var lastPosition = this.position;
-			this.move({"y":-1})
-			this.direction = 'up';
-			this.map.refresh({ "element":this , "lastPosition":lastPosition });
-		}).bind(this);
+			this.controls.eventsDown.up = (function(){
+				var lastPosition = this.position;
+				this.move({"y":-1})
+				this.direction = 'up';
+				this.map.refresh({ "element":this , "lastPosition":lastPosition });
+			}).bind(this);
 
-		controls.eventsDown.right = (function(){
-			var lastPosition = this.position;
-			this.move({"x":1})
-			this.direction = 'right';
-			this.map.refresh({ "element":this , "lastPosition":lastPosition });
-		}).bind(this);
+			this.controls.eventsDown.right = (function(){
+				var lastPosition = this.position;
+				this.move({"x":1})
+				this.direction = 'right';
+				this.map.refresh({ "element":this , "lastPosition":lastPosition });
+			}).bind(this);
 
-		controls.eventsDown.down = (function(){
-			var lastPosition = this.position;
-			this.move({"y":1})
-			this.direction = 'down';
-			this.map.refresh({ "element":this , "lastPosition":lastPosition });
-		}).bind(this);
+			this.controls.eventsDown.down = (function(){
+				var lastPosition = this.position;
+				this.move({"y":1})
+				this.direction = 'down';
+				this.map.refresh({ "element":this , "lastPosition":lastPosition });
+			}).bind(this);
 
-		controls.eventsDown.left = (function(){
-			var lastPosition = this.position;
-			this.move({"x":-1})
-			this.direction = 'left';
-			this.map.refresh({ "element":this , "lastPosition":lastPosition });
-		}).bind(this);
+			this.controls.eventsDown.left = (function(){
+				var lastPosition = this.position;
+				this.move({"x":-1})
+				this.direction = 'left';
+				this.map.refresh({ "element":this , "lastPosition":lastPosition });
+			}).bind(this);
 
-		controls.eventsDown.attack = (function(){
-			this.attack();
-		}).bind(this);
+			this.controls.eventsDown.attack = (function(){
+				this.attack();
+			}).bind(this);
 
-		controls.init();
+			this.controls.init();
+		}
 	}
 
 	this.setMap = function( params ){
