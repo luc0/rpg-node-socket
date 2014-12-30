@@ -5,14 +5,14 @@ function Agua( params ){
 	var defaults = {
 		"name": 'agua',
 		"descripcion": "Agua profunda",
-		"solid": true
+		"solid": true,
+		"specie":"Agua"
 	}
 
 	/*Mezcla de los defaults con los parametros pasados al objeto*/
 	merge( defaults , params , this );
 
 	// Se agrega en el mundo
-	console.log(this)
 	this.world.getTile( this.position ).append({ 'terrain' : this })
 
 }

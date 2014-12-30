@@ -38,13 +38,23 @@
 			top:0;
 			width:100%;
 			height:100%;
-			background-color:rgba(255,0,0,0.2);
+			/*background-color:rgba(255,0,0,0.2);*/
 			display:block;
 		}
 		.Elfo{
-			background-color:rgba(0,255,0,0.2);
+			background-color:rgba(0,255,0,1);
 			border-radius:100px;
 			z-index:3;
+		}
+
+		.Agua{
+			background-color:rgba(0,0,255,0.7);
+			z-index:1;
+		}
+
+		.Tierra{
+			background-color:rgba(100,80,30,0.7);
+			z-index:1;
 		}
 	</style>
 </head>
@@ -84,11 +94,14 @@
 				tiles+="<div>";
 				for( var x = 0 ; x < 30 ; x++ ){
 					beingClass = world.getTile({"x":x , "y":y}).being && world.getTile({"x":x , "y":y}).being.specie;
+					terrainClass = world.getTile({"x":x , "y":y}).terrain && world.getTile({"x":x , "y":y}).terrain.specie;
 
 					beingSpan = "<span class='" + beingClass + "'></span>";
-					tiles+="<div class='tile'>" + beingSpan + "</div>";
+					terrainSpan = "<span class='" + terrainClass + "'></span>";
+					tiles+="<div class='tile'>" + beingSpan + terrainSpan + "</div>";
 
 					beingClass="";
+					terrainClass="";
 				}
 				tiles+="</div>";
 
