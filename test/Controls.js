@@ -3,7 +3,8 @@ function Controls(){
         38  :  "up",
         39  :  "right",
         40  :  "down",
-        37  :  "left"
+        37  :  "left",
+        65  :  "attack"
     }
     this.keys = {};
     this.eventsDown = {
@@ -11,14 +12,16 @@ function Controls(){
         "up":function(){},
         "right":function(){},
         "down":function(){},
-        "left":function(){}
+        "left":function(){},
+        "attack":function(){}
     }
     this.eventsUp = {
         "nothing":function(){},
         "up":function(){},
         "right":function(){},
         "down":function(){},
-        "left":function(){}
+        "left":function(){},
+        "attack":function(){}
     }
     this.init = function(){
         (function(self){
