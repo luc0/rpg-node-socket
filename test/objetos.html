@@ -12,8 +12,11 @@
 	<script src="World.js"></script>
 	<style>
 		#view{
-			width:400px;
-			margin:100px auto;
+			width:50%;
+			margin:10px auto;
+		}
+		body{
+			overflow: hidden;
 		}
 	</style>
 </head>
@@ -27,25 +30,33 @@
 			"position":{
 				"x": 2
 			},
-			"rotation":{
-				y:1
-			},
 			"name":"Roberto",
 			"controls":"pc",
+			"map": world.maps[0][0]
+		});
+		var otroElfo = new Elfo({
+			"position":{
+				"x": 5,
+				"y": 5
+			},
+			"name":"Lucas",
+			"controls":"npc",
 			"map": world.maps[0][0]
 		});
 
 		//var miarray = createArray( 5 , 5 , Elfo );
 		var mapa = world.maps[0][0];
 		var view = document.getElementById('view');
-		var tiles = ""
-		for( var y = 0 ; y < 10 ; y++ ){
-			for( var x = 0 ; x < 10 ; x++ ){
-				mapa.getTile({"x":x , "y":y}).being != undefined ? tiles+=" x " : tiles+=" _ ";
+		setInterval(function(){
+			var tiles = ""
+			for( var y = 0 ; y < 30 ; y++ ){
+				for( var x = 0 ; x < 30 ; x++ ){
+					mapa.getTile({"x":x , "y":y}).being != undefined ? tiles+=" x " : tiles+=" _ ";
+				}
+				tiles+= "<br />"
 			}
-			tiles+= "<br />"
-		}
-		view.innerHTML = tiles;
+			view.innerHTML = tiles;
+		},20)
 	</script>
 </body>
 </html>

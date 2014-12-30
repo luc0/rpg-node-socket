@@ -26,4 +26,23 @@ function Map( params ){
 
 	}
 
+	// refresca posicion de un elemento ( being , terrain u object)
+	this.refresh = function( params ){
+
+		// Verifica en que capa esta el objeto
+		var element_type;
+		switch( params.element.type ){
+			case Ser:
+				element_type = 'being';
+				break;
+			default:
+				break;
+		}
+
+		// borra de la posicion anterior.
+		this.getTile( params.lastPosition )[element_type] = null;
+		// lo crea en la nueva posicion.
+		this.getTile( params.element.position )[element_type] = params.element;
+	}
+
 }
