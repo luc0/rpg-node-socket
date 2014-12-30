@@ -1,6 +1,6 @@
 function Lava( params ){
 
-	extend( this , Being , params );
+	extend( this , Terrain , params );
 
 	var defaults = {
 		"name": 'lava',

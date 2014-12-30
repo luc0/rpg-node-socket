@@ -31,13 +31,10 @@ function Terrain( params ){
 
 	/*Mezcla de los defaults con los parametros pasados al objeto*/
 	merge( defaults , params , this );
-
 	this.setMap = function( params ){
 		this.map = params;
 	}
-
+	console.log(params)
 	this.setMap( params.map );
-	// Se agrega en el mapa
-	this.map.getTile( this.position ).append({ 'terrain' : this })
 
 }

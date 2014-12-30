@@ -10,10 +10,10 @@ function Map( params ){
 
 	// Carga los tiles desde un array en donde se le define el terrain de cada uno.
 	this.loadTiles = function( params ){
-
+		console.log(world)
 		for( var tx in params ){
 			for( var ty in params[tx] ){
-				this.tiles[tx][ty].terrain = params[tx][ty].terrain;
+				this.tiles[tx][ty].terrain = new params[tx][ty].terrain({"position":{"x":+tx,"y":+ty},"map":world.maps[0][0]});
 			}
 		}
 
