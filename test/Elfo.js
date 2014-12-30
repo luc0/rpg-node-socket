@@ -4,10 +4,13 @@ function Elfo( params ){
 	var defaults = {
 
 		/*Nombre del elfo*/
-		"name":null
+		"name":"Elfo",
+		"specie":"Elfo"
 	}
 
 	/*Mezcla de los defaults con los parametros pasados al objeto*/
 	merge( defaults , params , this );
 
+	// Se agrega en el mapa
+	this.map.getTile( this.position ).append({ 'being' : this })
 }
