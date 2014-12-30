@@ -32,7 +32,7 @@ function Map( params ){
 		// Verifica en que capa esta el objeto
 		var element_type;
 		switch( params.element.type ){
-			case Ser:
+			case Being:
 				element_type = 'being';
 				break;
 			default:

@@ -1,5 +1,5 @@
 function Elfo( params ){
-	extend( this , Ser , params );
+	extend( this , Being , params );
 
 	var defaults = {
 
