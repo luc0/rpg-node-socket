@@ -5,8 +5,16 @@ function Daga( params ){
 
 		/*Nombre de la daga*/
 		"name":"Daga",
+
 		"solid":false,
-		"specie":"Daga"
+
+		"specie":"Daga",
+
+		// lugar donde se equipa
+		"equipable":[
+			"rightHand",
+			"leftHand"
+		]
 	}
 
 	/*Mezcla de los defaults con los parametros pasados al objeto*/

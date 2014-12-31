@@ -52,6 +52,14 @@ function Being( params ){
 			"freezed": false,
 			"stoned": false,
 
+		},
+		
+		"equipped":{
+			"head" : false,
+			"neck" : false,
+			"body" : false,
+			"rightHand": false,
+			"leftHand": false,
 		}
 
 	}
@@ -146,8 +154,11 @@ function Being( params ){
 		}
 		var target = this.world.getTile(attack_position ).being;
 		if( target ){
-			target.isAffected({ "life": - this.damage });
-			console.log('ouch',this.damage)
+			target.isAffected({ 
+				"stats" : { "life": - this.damage } , 
+				"author" : this 
+			});
+			console.log('le has infligido daño: ',this.damage)
 		}else{
 			console.log('tiraste una piña al aire')
 		}
@@ -264,15 +275,18 @@ function Being( params ){
 	}
 
 	this.isAffected = function( params ){
-		for( stats in params){
-			this[stats]+=params[stats]
+		var stats = params.stats;
+		var author = params.author;
+
+		for( stat in params){
+			this[stat]+=params[stat]
 		}
 
-		for( stats in params){
-			if( this[stats+"Event"] ){
-				this[stats+"Event"]();
+		for( stat in params){
+			if( this[stat+"Event"] ){
+				this[stat+"Event"]( author );
 			}else{
-				throw new Error('no existe la funcion '+stats+"Event")
+				throw new Error('no existe la funcion '+stat+"Event")
 			}
 		}
 	}
@@ -282,7 +296,57 @@ function Being( params ){
 
 	}
 
+	this.equip = function( params ){
+		var artifact = this.inventory[ params.slot ];
+		var placeEquip = this.canEquip({ "artifact" : artifact });
 
+		// Si no existe nada equipado en el mismo lugar
+		for( var place in placeEquip ){
+			// Equipa
+			this.equipped[placeEquip[place]] = artifact;
+			console.log("equipado")
+		}
+		
+	}
+
+	this.unEquip = function( params ){
+		var artifact = this.inventory[ params.slot ];
+		// Verifica si ya tiene equipado ese mismo objeto
+		if( this.isEquipped({ "artifact" : artifact }) ){
+			// Busca en donde se equipa el objeto y lo desequipa
+			for( var place in artifact.equipable){
+				this.equipped[artifact.equipable[place]] = false;
+				console.log("desequipado")
+			}
+		}
+	}
+
+	this.isEquipped = function( params ){
+		var artifact = params.artifact;
+		// Verifica la parte del cuerpo donde se equipa el objeto y compara con el objeto que ya esta equipado, para ver si es el mismo.
+		for( var place in artifact.equipable){
+			if( this.equipped[artifact.equipable[place]] == artifact ){
+				return true;
+			}
+		}
+		console.log('Nada para desequipar')
+		return false;
+	}
+
+	this.canEquip = function( params ){
+		var artifact = params.artifact;
+		var canEquip = [];
+
+		// Verifica la parte del cuerpo donde se equipa y se fija si ya hay algo equipado.
+		for( var place in artifact.equipable){
+			if( this.equipped[artifact.equipable[place]] ){
+				console.log('Ya tenes algo equipado ahi.')
+				return false;
+			}
+			canEquip.push( artifact.equipable[place] );
+		}
+		return canEquip;
+	}
 
 
 	// Verifica colision con cualquier elemento que sea solido.

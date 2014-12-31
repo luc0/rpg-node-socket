@@ -1,3 +1,4 @@
+
 // Modelo Artifact
 function Artifact( params ){
 	var defaults = {
