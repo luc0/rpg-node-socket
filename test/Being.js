@@ -8,6 +8,10 @@ function Being( params ){
 
 	var defaults = {
 
+		"type":Being,
+
+		"world":null,
+
 		/*Objeto que contiene el sprite de THREE.JS*/
 		"sprite":null,
 
@@ -25,22 +29,30 @@ function Being( params ){
 
 		"direction": 'up',
 
-		/*Propiedad que define si el objeto puede Being atravesado*/
-		"solid":true,
-
 		/*Propiedad que define quien controla al Being*/
 		"controls":null,
 
-		// no lo estamos usando, lo dejamos por si las moscas
-		"world":null,
+		/*Propiedad que define si el objeto puede Being atravesado*/
+		"solid":true,
 
-		"type":Being,
+		"inventory": [],
+		
+		"level":1,
 
-		"damage": 6,
+		"experience":0,
 
 		"life": 20,
 
-		"inventory": []
+		"damage": 6,
+
+		"state": {
+
+			"alive": true,
+			"poisoned": false,
+			"freezed": false,
+			"stoned": false,
+
+		}
 
 	}
 
@@ -116,7 +128,7 @@ function Being( params ){
 		}
 	}
 
-	// Ataque meele
+		// Ataque meele
 	this.attack = function(){
 		switch( this.direction ){
 			case 'up':
@@ -134,8 +146,8 @@ function Being( params ){
 		}
 		var target = this.world.getTile(attack_position ).being;
 		if( target ){
-			target.life -= this.damage;
-			console.log('Auch!');
+			target.isAffected({ "life": - this.damage });
+			console.log('ouch',this.damage)
 		}else{
 			console.log('tiraste una piña al aire')
 		}
@@ -240,7 +252,7 @@ function Being( params ){
 
 	}
 
-	this.eventLife = function(){
+	this.lifeEvent = function(){
 		if( this.life <=0 ){
 			this.dead();
 		}
@@ -248,17 +260,30 @@ function Being( params ){
 
 	this.dead = function(){
 		this.dropAll();
+		this.state.alive = false;
 	}
 
 	this.isAffected = function( params ){
 		for( stats in params){
-			this[hits]+=params[hits]
+			this[stats]+=params[stats]
 		}
 
 		for( stats in params){
-			this["event"+hits]();
+			if( this[stats+"Event"] ){
+				this[stats+"Event"]();
+			}else{
+				throw new Error('no existe la funcion '+stats+"Event")
+			}
 		}
 	}
+
+	//
+	this.experienceEvent = function(){
+
+	}
+
+
+
 
 	// Verifica colision con cualquier elemento que sea solido.
 	this.collision = function( params ){
