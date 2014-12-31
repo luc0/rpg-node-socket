@@ -209,9 +209,9 @@ function Being( params ){
 			position_right 	= { "x" : toSearch[0].x + 1 	, "y" : toSearch[0].y  		};
 			position_down 	= { "x" : toSearch[0].x 		, "y" : toSearch[0].y + 1  	};
 			position_left 	= { "x" : toSearch[0].x - 1 	, "y" : toSearch[0].y  		};
-			
-			// Checkea: 
-			// 1 - Si existe el tile. 
+
+			// Checkea:
+			// 1 - Si existe el tile.
 			// 2 - Si esta siendo ocupado ahora por un artifact. (full)
 			// 3 - Si esta reservado para tirar un artifact. (used)
 			// 4 - Si el terrain es solid (has_floor)
@@ -240,9 +240,24 @@ function Being( params ){
 
 	}
 
+	this.eventLife = function(){
+		if( this.life <=0 ){
+			this.dead();
+		}
+	}
+
 	this.dead = function(){
-		console.log('Has muerto!')
 		this.dropAll();
+	}
+
+	this.isAffected = function( params ){
+		for( stats in params){
+			this[hits]+=params[hits]
+		}
+
+		for( stats in params){
+			this["event"+hits]();
+		}
 	}
 
 	// Verifica colision con cualquier elemento que sea solido.
