@@ -157,7 +157,7 @@ function Being( params ){
 	// INVENTARIO
 	this.drop = function(){
 		// Si hay artifact para tirar al piso
-		if( this.inventory[0] ){
+		if( this.inventory.length ){
 			// Si hay espacio en el piso
 			if( !this.world.getTile( this.position ).artifact ){
 				var artifact_dropped = this.inventory[0];
@@ -173,8 +173,35 @@ function Being( params ){
 		console.log(this.inventory)
 	}
 
+	// Tira todos los objetos del inventario
+	this.dropAll(){
+		// Si existen items
+		if( this.inventory.length ){
+			var numItems = this.inventory.length;
+			var freePositions = this.findFreePositions({ "numItems":numItems });
+		}
+	}
+
+	// Encuentra posiciones libres alrededor del personaje. Segun la cantidad dada.
+	this.findFreePositions = function( params ){
+		var positions = [];
+		var ocupado;
+		//var radius = params.radius || 0;
+		var position_up 	= { "x" : this.position.x 		, "y" : this.position.y - 1  	};
+		var position_right 	= { "x" : this.position.x + 1 	, "y" : this.position.y  		};
+		var position_down 	= { "x" : this.position.x 		, "y" : this.position.y + 1  	};
+		var position_left 	= { "x" : this.position.x - 1 	, "y" : this.position.y  		};
+		
+		ocupado = this.world.getTile( position_up ).artifact;
+		if( !ocupado ){
+			positions.push( position_up ); // Si esta libre, la agrego
+		}
+
+	}
+
 	this.dead = function(){
 		console.log('Has muerto!')
+		this.dropAll();
 	}
 
 	// Verifica colision con cualquier elemento que sea solido.
