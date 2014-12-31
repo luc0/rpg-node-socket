@@ -174,28 +174,69 @@ function Being( params ){
 	}
 
 	// Tira todos los objetos del inventario
-	this.dropAll(){
+	this.dropAll = function(){
 		// Si existen items
 		if( this.inventory.length ){
 			var numItems = this.inventory.length;
 			var freePositions = this.findFreePositions({ "numItems":numItems });
+
+			console.log( 'objetos en inventario:',numItems );
+			// Tira un item en cada posicion vacia.
+			for(var i = 0 ; i < numItems ; i++ ){
+				console.log('Se cae '+ this.inventory[i] +' en: '+freePositions[i])
+				this.world.getTile( freePositions[i] ).artifact = this.inventory[i];
+			}
+			// Vacio inventario.
+			this.inventory = [];
 		}
 	}
 
 	// Encuentra posiciones libres alrededor del personaje. Segun la cantidad dada.
 	this.findFreePositions = function( params ){
-		var positions = [];
-		var ocupado;
-		//var radius = params.radius || 0;
-		var position_up 	= { "x" : this.position.x 		, "y" : this.position.y - 1  	};
-		var position_right 	= { "x" : this.position.x + 1 	, "y" : this.position.y  		};
-		var position_down 	= { "x" : this.position.x 		, "y" : this.position.y + 1  	};
-		var position_left 	= { "x" : this.position.x - 1 	, "y" : this.position.y  		};
-		
-		ocupado = this.world.getTile( position_up ).artifact;
-		if( !ocupado ){
-			positions.push( position_up ); // Si esta libre, la agrego
-		}
+
+		var freePositions = []; // Posiciones donde tirar artifacts
+		var toSearch = [ this.position ]; // Posiciones que va a verificar, empieza por donde esta parado.
+		var full; // Ya esta ocupado ( actualmente )
+		var used; // Ya esta ocupado ( futuro )
+		var tile; // Lo uso para ver existencia del tile. (bordes del mapa)
+		var position_up, position_right, position_down, position_left // Posiciones que verifica por cada position.
+
+		// Mientras haya posiciones para verificar
+		do{
+
+			// Guarda posiciones de alrededor de la posicion a verificar
+			position_up 	= { "x" : toSearch[0].x 		, "y" : toSearch[0].y - 1  	};
+			position_right 	= { "x" : toSearch[0].x + 1 	, "y" : toSearch[0].y  		};
+			position_down 	= { "x" : toSearch[0].x 		, "y" : toSearch[0].y + 1  	};
+			position_left 	= { "x" : toSearch[0].x - 1 	, "y" : toSearch[0].y  		};
+			
+			// Checkea: 
+			// 1 - Si existe el tile. 
+			// 2 - Si esta siendo ocupado ahora por un artifact. (full)
+			// 3 - Si esta reservado para tirar un artifact. (used)
+			// 4 - Si el terrain es solid (has_floor)
+			tile = this.world.getTile( toSearch[0] );
+			if( tile ){
+				full = tile.artifact;
+				used = findPositionInArray({ "array" : freePositions , "position" : toSearch[0] })
+				has_floor = tile.terrain.solid == false;
+
+				if( !full && !used && has_floor ){
+					freePositions.push( toSearch[0] );
+				}
+			}
+
+			// Agrega posiciones a verificar de alrededor (son 4, en agujas del reloj)
+			toSearch.push( position_up , position_right , position_down , position_left );
+
+			// Cuando ya verifico la posicion, la borra del array verificar y continua
+			toSearch.splice(0,1);
+
+		// Antes de continuar verifica si hace falta buscar mas posiciones libres
+		}while( params.numItems > freePositions.length );
+
+ 		// encontro suficientes posiciones y las devuelve
+ 		return freePositions;
 
 	}
 

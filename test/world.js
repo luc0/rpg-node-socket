@@ -21,8 +21,11 @@ function World( params ){
 
 	// Devuelve tile en base a una posicion dada.
 	this.getTile = function( position ){
-
-		return this.tiles[ position.x ][ position.y ];
+		if( this.tiles[ position.x ] && this.tiles[ position.x ][ position.y ] ){
+			return this.tiles[ position.x ][ position.y ];
+		}else{
+			return false;
+		}
 
 	}
 

@@ -34,4 +34,16 @@
 		}
 		return newArray;
 	}
+
+	// Encuentra una position en un array. function( array , position )
+	this.findPositionInArray = function( params ) {
+		var array = params.array;
+		var position = params.position;
+	    for (var i = 0; i < array.length; i++) {
+	        if (array[i]["x"] === position.x && array[i]["y"] === position.y) {
+	            return array[i];
+	        }
+	    }
+	    return null;
+	}
 })(self);
