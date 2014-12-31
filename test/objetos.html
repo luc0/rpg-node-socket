@@ -9,6 +9,7 @@
 	<script src="Terrain.js"></script>
 	<script src="Artifact.js"></script>
 	<script src="beings/Elfo.js"></script>
+	<script src="beings/Aguila.js"></script>
 	<script src="terrains/Tierra.js"></script>
 	<script src="terrains/Agua.js"></script>
 	<script src="artifacts/Daga.js"></script>
@@ -64,6 +65,12 @@
 			background:url(daga.png) no-repeat;
 			background-size: contain;
 			z-index:2;
+		}
+
+		.Aguila{
+			background-color:rgba(0,0,255,1);
+			border-radius:100px;
+			z-index:3;
 		}
 	</style>
 </head>
@@ -186,6 +193,16 @@
 			"position":{
 				"x": 4,
 				"y": 15
+			},
+			"world":world
+		});
+
+		var bicho = new Aguila({
+			"position":{
+				"x": 3,
+				"y": 10,
+				"controls":"npc",
+				"points":1000
 			},
 			"world":world
 		});
