@@ -4,7 +4,9 @@ function Daga( params ){
 	var defaults = {
 
 		/*Nombre de la daga*/
-		"name":"Daga"
+		"name":"Daga",
+		"solid":false,
+		"specie":"Daga"
 	}
 
 	/*Mezcla de los defaults con los parametros pasados al objeto*/
@@ -12,5 +14,5 @@ function Daga( params ){
 
 	// Se agrega en el mapa
 	this.world.getTile( this.position ).append({ 'artifact' : this });
-	this.createControls();
+
 }

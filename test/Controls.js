@@ -4,7 +4,9 @@ function Controls(){
         39  :  "right",
         40  :  "down",
         37  :  "left",
-        65  :  "attack"
+        65  :  "attack",
+        81  :  "take", // INVENTARIO
+        69  :  "drop" // INVENTARIO
     }
     this.keys = {};
     this.eventsDown = {
@@ -13,7 +15,9 @@ function Controls(){
         "right":function(){},
         "down":function(){},
         "left":function(){},
-        "attack":function(){}
+        "attack":function(){},
+        "take":function(){}, // INVENTARIO
+        "drop":function(){} // INVENTARIO
     }
     this.eventsUp = {
         "nothing":function(){},
@@ -21,7 +25,9 @@ function Controls(){
         "right":function(){},
         "down":function(){},
         "left":function(){},
-        "attack":function(){}
+        "attack":function(){},
+        "take":function(){}, // INVENTARIO
+        "drop":function(){} // INVENTARIO
     }
 
     this.init = function(){

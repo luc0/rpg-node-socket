@@ -7,9 +7,12 @@
 	<script src="Controls.js"></script>
 	<script src="Being.js"></script>
 	<script src="Terrain.js"></script>
+	<script src="Artifact.js"></script>
 	<script src="beings/Elfo.js"></script>
 	<script src="terrains/Tierra.js"></script>
 	<script src="terrains/Agua.js"></script>
+	<script src="artifacts/Daga.js"></script>
+	<script src="artifacts/Papiro.js"></script>
 	<script src="Tile.js"></script>
 	<script src="World.js"></script>
 	<style>
@@ -23,12 +26,12 @@
 		div{
 			margin:0;
 			padding:0;
-			height:10px;
+			height:20px;
 		}
 		.tile{
 			display:inline-block;
-			width:10px;
-			height:10px;
+			width:20px;
+			height:20px;
 			outline:1px solid rgba(0,0,0,0.2);
 			position:relative;
 		}
@@ -56,6 +59,12 @@
 			background-color:rgba(100,80,30,0.7);
 			z-index:1;
 		}
+
+		.Daga{
+			background:url(daga.png) no-repeat;
+			background-size: contain;
+			z-index:2;
+		}
 	</style>
 </head>
 <body>
@@ -82,26 +91,45 @@
 			"world":world
 		});
 
+		var miDaga = new Daga({
+			"position":{
+				"x": 3,
+				"y": 3
+			},
+			"world":world
+		});
+		var miOtraDaga = new Daga({
+			"position":{
+				"x": 4,
+				"y": 3
+			},
+			"world":world
+		});
+
 		//var miarray = createArray( 5 , 5 , Elfo );
 		var view = document.getElementById('view');
 		setInterval(function(){
 			var tiles = ""
-			var beingClass;
-			var artifactClass;
-			var terrainClass;
+			var beingClass , beingSpan;
+			var artifactClass , artifactSpan;
+			var terrainClass , terrainSpan;
+
 
 			for( var y = 0 ; y < 30 ; y++ ){
 				tiles+="<div>";
 				for( var x = 0 ; x < 30 ; x++ ){
 					beingClass = world.getTile({"x":x , "y":y}).being && world.getTile({"x":x , "y":y}).being.specie;
 					terrainClass = world.getTile({"x":x , "y":y}).terrain && world.getTile({"x":x , "y":y}).terrain.specie;
+					artifactClass = world.getTile({"x":x , "y":y}).artifact && world.getTile({"x":x , "y":y}).artifact.specie;
 
 					beingSpan = "<span class='" + beingClass + "'></span>";
 					terrainSpan = "<span class='" + terrainClass + "'></span>";
-					tiles+="<div class='tile'>" + beingSpan + terrainSpan + "</div>";
+					artifactSpan = "<span class='" + artifactClass + "'></span>";
+					tiles+="<div class='tile'>" + beingSpan + terrainSpan + artifactSpan + "</div>";
 
 					beingClass="";
 					terrainClass="";
+					artifactClass="";
 				}
 				tiles+="</div>";
 

@@ -35,6 +35,4 @@ function Artifact( params ){
 
 	this.setWorld( params.world );
 
-	// Se agrega en el mapa
-	this.world.getTile( this.position ).append({ 'artifact' : this })
 }

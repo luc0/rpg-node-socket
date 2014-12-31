@@ -4,7 +4,8 @@ function Papiro( params ){
 	var defaults = {
 
 		/*Nombre del papiro*/
-		"name":"Papiro"
+		"name":"Papiro",
+		"specie":"Papiro"
 	}
 
 	/*Mezcla de los defaults con los parametros pasados al objeto*/
@@ -12,5 +13,4 @@ function Papiro( params ){
 
 	// Se agrega en el mapa
 	this.world.getTile( this.position ).append({ 'artifact' : this });
-	this.createControls();
 }

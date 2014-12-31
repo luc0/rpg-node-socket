@@ -26,7 +26,7 @@ function Being( params ){
 		"direction": 'up',
 
 		/*Propiedad que define si el objeto puede Being atravesado*/
-		"solid":false,
+		"solid":true,
 
 		/*Propiedad que define quien controla al Being*/
 		"controls":null,
@@ -38,7 +38,9 @@ function Being( params ){
 
 		"damage": 6,
 
-		"life": 20
+		"life": 20,
+
+		"inventory": []
 
 	}
 
@@ -79,6 +81,16 @@ function Being( params ){
 
 			this.controls.eventsDown.attack = (function(){
 				this.attack();
+			}).bind(this);
+
+			// INVENTARIO
+			this.controls.eventsDown.take = (function(){
+				this.take();
+			}).bind(this);
+
+			// INVENTARIO
+			this.controls.eventsDown.drop = (function(){
+				this.drop();
 			}).bind(this);
 
 			this.controls.init();
@@ -129,9 +141,55 @@ function Being( params ){
 		}
 	}
 
+	// INVENTARIO
+	this.take = function(){
+		var artifact = this.world.getTile( this.position ).artifact;
+		if( artifact ){
+			this.inventory.push(artifact);
+			this.world.getTile( this.position ).artifact = null;
+			console.log(artifact.name+" adquirida!");
+		}else{
+			console.log('No hay nada ahi');
+		}
+		console.log(this.inventory)
+	}
+
+	// INVENTARIO
+	this.drop = function(){
+		// Si hay artifact para tirar al piso
+		if( this.inventory[0] ){
+			// Si hay espacio en el piso
+			if( !this.world.getTile( this.position ).artifact ){
+				var artifact_dropped = this.inventory[0];
+				this.inventory.splice(0,1);
+				this.world.getTile( this.position ).artifact = artifact_dropped;
+				console.log(artifact_dropped.name+" lanzada al piso.")
+			}else{
+				console.log('No hay espacio en el piso.')
+			}
+		}else{
+			console.log('No tenes artefactos para tirar.')
+		}
+		console.log(this.inventory)
+	}
+
+	this.dead = function(){
+		console.log('Has muerto!')
+	}
+
 	// Verifica colision con cualquier elemento que sea solido.
 	this.collision = function( params ){
-		return this.boundaries( params.new_position ) || this.world.getTile( params.new_position ).being;
+		var actualTile = this.world.getTile( params.new_position );
+		return (
+			/*	Verifica colision con los bordes del escenario */
+			this.boundaries( params.new_position ) ||
+			/* Verifica colision con un ser y si el ser es solido */
+			( actualTile.being		&&	actualTile.being.solid )	||
+			/* Verifica colision con un terreno y si el terreno es solido */
+			( actualTile.terrain	&&	actualTile.terrain.solid )	||
+			/* Verifica colision con un artefacto y si el artefacto es solido */
+			( actualTile.artifact	&& 	actualTile.artifact.solid )
+		);
 	}
 
 	this.boundaries = function( new_position ){

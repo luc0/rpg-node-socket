@@ -32,7 +32,6 @@ function Terrain( params ){
 	this.setWorld = function( params ){
 		this.world = params;
 	}
-	console.log(params)
 	this.setWorld( params.world );
 
 }
