@@ -157,7 +157,6 @@ function Being( params ){
 			target.isAffected({
 				"stats" : { "life": - this.damage } ,
 				/* Provisorio para que ataque, ahora los parametros estan dentro de stats, habria que recorrer ese array*/
-				  "life": - this.damage  ,
 				"author" : this
 			});
 			console.log('le has infligido daño: ',this.damage)
@@ -265,9 +264,10 @@ function Being( params ){
 
 	}
 
-	this.lifeEvent = function(){
+	this.lifeEvent = function( params ){
 		if( this.life <=0 ){
 			this.dead();
+			console.debug('Te mato ' + params.author.name )
 		}
 	}
 
@@ -287,14 +287,13 @@ function Being( params ){
 		var stats = params.stats;
 		var author = params.author;
 
-		for( stat in params){
-			this[stat]+=params[stat]
+		for( var stat in stats){
+			this[stat]+=stats[stat]
 		}
 
-		for( stat in params){
-			console.log(stat)
+		for( var stat in stats){
 			if( this[stat+"Event"] ){
-				this[stat+"Event"]( author );
+				this[stat+"Event"]( {"author":author} );
 			}else{
 				throw new Error('no existe la funcion '+stat+"Event")
 			}
