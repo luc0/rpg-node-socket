@@ -36,7 +36,7 @@ function Being( params ){
 		"solid":true,
 
 		"inventory": [],
-		
+
 		"level":1,
 
 		"experience":0,
@@ -53,7 +53,7 @@ function Being( params ){
 			"stoned": false,
 
 		},
-		
+
 		"equipped":{
 			"head" : false,
 			"neck" : false,
@@ -154,9 +154,11 @@ function Being( params ){
 		}
 		var target = this.world.getTile(attack_position ).being;
 		if( target ){
-			target.isAffected({ 
-				"stats" : { "life": - this.damage } , 
-				"author" : this 
+			target.isAffected({
+				"stats" : { "life": - this.damage } ,
+				/* Provisorio para que ataque, ahora los parametros estan dentro de stats, habria que recorrer ese array*/
+				  "life": - this.damage  ,
+				"author" : this
 			});
 			console.log('le has infligido daño: ',this.damage)
 		}else{
@@ -269,6 +271,13 @@ function Being( params ){
 		}
 	}
 
+	/*
+		Funcion provisoria
+	*/
+	this.statsEvent = function(){}
+
+	this.authorEvent = function(){}
+
 	this.dead = function(){
 		this.dropAll();
 		this.state.alive = false;
@@ -283,6 +292,7 @@ function Being( params ){
 		}
 
 		for( stat in params){
+			console.log(stat)
 			if( this[stat+"Event"] ){
 				this[stat+"Event"]( author );
 			}else{
@@ -306,7 +316,7 @@ function Being( params ){
 			this.equipped[placeEquip[place]] = artifact;
 			console.log("equipado")
 		}
-		
+
 	}
 
 	this.unEquip = function( params ){
@@ -366,6 +376,18 @@ function Being( params ){
 
 	this.boundaries = function( new_position ){
 		return ( new_position.x < 0 || new_position.x >= 30 || new_position.y < 0 || new_position.y >= 30 );
+	}
+
+	/*
+		PROVISORIO
+	*/
+
+	this.createArtifact = function( params ){
+		var artifact = params.artifact;
+
+		var newArtifact = new artifact({"world":this.world , "position":this.position});
+
+		this.take();
 	}
 
 }
