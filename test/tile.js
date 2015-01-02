@@ -20,7 +20,6 @@ function Tile( params ){
 
 	this.remove = function( params ){
 		this[params.type] = null;
-		console.log(this)
 	}
 
 

@@ -29,12 +29,12 @@
 		div{
 			margin:0;
 			padding:0;
-			height:20px;
+			height:32px;
 		}
 		.tile{
 			display:inline-block;
-			width:20px;
-			height:20px;
+			width:32px;
+			height:32px;
 			outline:1px solid rgba(0,0,0,0.2);
 			position:relative;
 		}
@@ -46,11 +46,6 @@
 			height:100%;
 			/*background-color:rgba(255,0,0,0.2);*/
 			display:block;
-		}
-		.Elfo{
-			background-color:rgba(0,255,0,1);
-			border-radius:100px;
-			z-index:3;
 		}
 
 		.Agua{
@@ -69,11 +64,20 @@
 			z-index:2;
 		}
 
-		.Aguila{
-			background-color:rgba(0,0,255,1);
-			border-radius:100px;
+		.Aguila,.Elfo{
 			z-index:3;
+			background-size: contain;
+			background-repeat:no-repeat;
 		}
+
+		.Aguila.up{ background-image:url(aguila-up.png); }
+		.Aguila.right{ background-image:url(aguila-right.png); }
+		.Aguila.down{ background-image:url(aguila-down.png); }
+		.Aguila.left{ background-image:url(aguila-left.png); }
+		.Elfo.up{ background-image:url(elfo-up.png); }
+		.Elfo.right{ background-image:url(elfo-right.png); }
+		.Elfo.down{ background-image:url(elfo-down.png); }
+		.Elfo.left{ background-image:url(elfo-left.png); }
 
 		.Manzana{
 			background:url(manzana.png) no-repeat;
@@ -151,7 +155,7 @@
 		var view = document.getElementById('view');
 		setInterval(function(){
 			var tiles = ""
-			var beingClass , beingSpan;
+			var beingClass, beingDirectionClass , beingSpan;
 			var artifactClass , artifactSpan;
 			var terrainClass , terrainSpan;
 
@@ -160,10 +164,11 @@
 				tiles+="<div>";
 				for( var x = 0 ; x < 30 ; x++ ){
 					beingClass = world.getTile({"x":x , "y":y}).being && world.getTile({"x":x , "y":y}).being.specie;
+					beingDirectionClass = world.getTile({"x":x , "y":y}).being && world.getTile({"x":x , "y":y}).being.direction;
 					terrainClass = world.getTile({"x":x , "y":y}).terrain && world.getTile({"x":x , "y":y}).terrain.specie;
 					artifactClass = world.getTile({"x":x , "y":y}).artifact && world.getTile({"x":x , "y":y}).artifact.specie;
 
-					beingSpan = "<span class='" + beingClass + "'></span>";
+					beingSpan = "<span class='" + beingClass+" "+ beingDirectionClass + "'></span>";
 					terrainSpan = "<span class='" + terrainClass + "'></span>";
 					artifactSpan = "<span class='" + artifactClass + "'></span>";
 					tiles+="<div class='tile'>" + beingSpan + terrainSpan + artifactSpan + "</div>";

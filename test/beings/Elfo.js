@@ -1,6 +1,5 @@
 function Elfo( params ){
 	extend( this , Being , params );
-
 	var defaults = {
 
 		/*Nombre del elfo*/
@@ -18,12 +17,12 @@ function Elfo( params ){
 
 			"agility" : 10e3,
 
-			"points": 15
+			"points": {"min":15}
 		}
 	}
 
 	/*Mezcla de los defaults con los parametros pasados al objeto*/
-	merge( defaults , params , this );
+	merge( defaults , this , this );
 
 	// Se agrega en el mapa
 	this.world.getTile( this.position ).append({ 'being' : this });

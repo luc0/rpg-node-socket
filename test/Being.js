@@ -328,7 +328,7 @@ function Being( params ){
 	this.calculeStat = function( params ){
 
 		var stat = params.stat;
-
+		var value = this.stats[ stat ].min;
 		// Calcula base_damage
 		if( stat == 'damage' ){
 
@@ -338,7 +338,7 @@ function Being( params ){
 			// Devuelve 1 si le emboco, 0 si le pifio
 			var hitted = Math.random() < this.stats.accurancy / 100e3 ? 1 : 0;
 			if( hitted ){
-				var value = Math.round( ( damage_min - 0.49 ) + ( damage_max - damage_min + 0.49 ) * Math.random() );
+				value = Math.round( ( damage_min - 0.49 ) + ( damage_max - damage_min + 0.49 ) * Math.random() );
 				console.log('le has infligido daño: ' , value )
 				return value;
 			}else{
@@ -449,7 +449,7 @@ function Being( params ){
 
 	// Dar experiencia al que me mato.
 	this.giveExperience = function( params ){
-		params.author.isAffected({ "stats":{ "experience": + this.calculeStat({ "stat" : "points" }) } });
+		params.author.isAffected({ "stats":{ "experience": {"min": +this.calculeStat({ "stat" : "points" })} } });
 		console.log('Experiencia: ',params.author.stats.experience);
 	}
 

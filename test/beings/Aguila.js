@@ -7,8 +7,17 @@ function Aguila( params ){
 		"name":"Aguila",
 		"specie":"Aguila",
 		"stats" : {
-			"life" : {"min":80,"max":80},
-			"points": 10
+			"life" : { "min" : 15 , "max" : 15 },
+
+			"damage": { "min" : 2 , "max" : 3 },
+
+			"shields": { "min" : 0 , "max" : 0 },
+
+			"accurancy" : 100e3,
+
+			"agility" : 10e3,
+
+			"points": {"min":10}
 		}
 	}
 
