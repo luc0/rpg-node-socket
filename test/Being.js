@@ -148,13 +148,28 @@ function Being( params ){
 			this.controls.init();
 
 		}else if(this.controls == "npc"){
-
+			var movement;
 			var follow = function(){
 				var lastPosition = this.position;
 				//console.log( this.findNearest({ "target" : "being" }) );
 				var destiny = this.findNearest({ "target" : "being" });
 				if( destiny ){
-					this.goTo({ "destiny" : destiny });
+					movement = this.goTo({ "destiny" : destiny });
+					if( !movement.success ){
+						console.log('oh!, algo bloquea mi camino!');
+						if( movement.colision.being && movement.colision.being.controls != 'npc' ){
+							console.log('Es un being!, a darle murra!')
+							movement.colision.being.isAffected({
+								"stats" : {
+									"life": {
+										"min":- this.calculeStat({ "stat" : "damage" }),
+									}
+								} ,
+								/* Provisorio para que ataque, ahora los parametros estan dentro de stats, habria que recorrer ese array*/
+								"author" : this
+							});
+						}
+					}
 				}
 				this.world.refresh({ "element":this , "lastPosition":lastPosition });
 			}
@@ -199,7 +214,6 @@ function Being( params ){
 
 		// Mientras haya posiciones para verificar
 		do{
-			console.log(1)
 			// Guarda posiciones de alrededor de la posicion a verificar
 			position_up 	= { "x" : toSearch[0].x 		, "y" : toSearch[0].y - 1  	};
 			position_right 	= { "x" : toSearch[0].x + 1 	, "y" : toSearch[0].y  		};
@@ -266,7 +280,11 @@ function Being( params ){
 
 		if( !this.collision({ "new_position": new_position }) ){
 			this.position = new_position;
+			return { "success" : true }
 		}
+
+		// devuelve objeto con el que colisiona
+		return { "success" : false , "colision" : world.getTile( new_position ) }
 	}
 
 
@@ -441,11 +459,14 @@ function Being( params ){
 		if( this.controls == 'npc' ){
 			clearInterval(this.provisorio.timerCamina);
 			this.remove();
+		}else if( this.controls != 'npc' ){ // si es pc
+			this.remove(); // temporal
 		}
 	}
 
 	// Remueve todas las instancias del objeto ( en world y en el tile )
 	this.remove = function(){
+
 		this.world.removeObject({ "object" : this })
 		this.world.getTile( this.position ).remove({ "type" : "being" });
 	}
