@@ -475,6 +475,16 @@ function Being( params ){
 
 	}
 
+	// Morir de hambre
+	this.hungerEvent = function(){
+
+	}
+
+	// Morir de sed
+	this.thristEvent = function(){
+		
+	}
+
 	// Cada vez que se le modifica la vida.
 	this.lifeEvent = function( params ){
 		if( this.stats.life <=0 ){
