@@ -16,6 +16,9 @@
 	<script src="artifacts/Pollo.js"></script>
 	<script src="artifacts/Manzana.js"></script>
 	<script src="artifacts/Papiro.js"></script>
+	<script src="artifacts/Escudo.js"></script>
+	<script src="artifacts/Casco.js"></script>
+	<script src="artifacts/PocionRoja.js"></script>
 	<script src="Tile.js"></script>
 	<script src="World.js"></script>
 	<style>
@@ -59,7 +62,25 @@
 		}
 
 		.Daga{
-			background:url(daga.png) no-repeat;
+			background:url(sprites/daga.png) no-repeat;
+			background-size: contain;
+			z-index:2;
+		}
+
+		.Escudo{
+			background:url(sprites/escudo.png) no-repeat;
+			background-size: contain;
+			z-index:2;
+		}
+
+		.Casco{
+			background:url(sprites/casco.png) no-repeat;
+			background-size: contain;
+			z-index:2;
+		}
+
+		.PocionRoja{
+			background:url(sprites/pocionRoja.png) no-repeat;
 			background-size: contain;
 			z-index:2;
 		}
@@ -70,23 +91,23 @@
 			background-repeat:no-repeat;
 		}
 
-		.Aguila.up{ background-image:url(aguila-up.png); }
-		.Aguila.right{ background-image:url(aguila-right.png); }
-		.Aguila.down{ background-image:url(aguila-down.png); }
-		.Aguila.left{ background-image:url(aguila-left.png); }
-		.Elfo.up{ background-image:url(elfo-up.png); }
-		.Elfo.right{ background-image:url(elfo-right.png); }
-		.Elfo.down{ background-image:url(elfo-down.png); }
-		.Elfo.left{ background-image:url(elfo-left.png); }
+		.Aguila.up{ background-image:url(sprites/aguila-up.png); }
+		.Aguila.right{ background-image:url(sprites/aguila-right.png); }
+		.Aguila.down{ background-image:url(sprites/aguila-down.png); }
+		.Aguila.left{ background-image:url(sprites/aguila-left.png); }
+		.Elfo.up{ background-image:url(sprites/elfo-up.png); }
+		.Elfo.right{ background-image:url(sprites/elfo-right.png); }
+		.Elfo.down{ background-image:url(sprites/elfo-down.png); }
+		.Elfo.left{ background-image:url(sprites/elfo-left.png); }
 
 		.Manzana{
-			background:url(manzana.png) no-repeat;
+			background:url(sprites/manzana.png) no-repeat;
 			background-size: contain;
 			z-index:2;
 		}
 
 		.Pollo{
-			background:url(pollo.png) no-repeat;
+			background:url(sprites/pollo.png) no-repeat;
 			background-size: contain;
 			z-index:2;
 		}
@@ -145,6 +166,36 @@
 				},
 				"controls":"npc",
 				"name" : "Manzana",
+				"world": world,
+			}),
+
+			"Escudo" : new Escudo({
+				"position":{
+					"x": 7,
+					"y": 4,
+				},
+				"controls":"npc",
+				"name" : "Escudo",
+				"world": world,
+			}),
+
+			"Casco" : new Casco({
+				"position":{
+					"x": 4,
+					"y": 5,
+				},
+				"controls":"npc",
+				"name" : "Casco",
+				"world": world,
+			}),
+
+			"PocionRoja" : new PocionRoja({
+				"position":{
+					"x": 18,
+					"y": 4,
+				},
+				"controls":"npc",
+				"name" : "PocionRoja",
 				"world": world,
 			})
 		};

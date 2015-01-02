@@ -162,7 +162,7 @@ function Being( params ){
 							movement.colision.being.isAffected({
 								"stats" : {
 									"life": {
-										"min":- this.calculeStat({ "stat" : "damage" }),
+										"min":- this.calculeStat({ "stat" : "damage" , "target" : movement.colision.being }),
 									}
 								} ,
 								/* Provisorio para que ataque, ahora los parametros estan dentro de stats, habria que recorrer ese array*/
@@ -308,12 +308,12 @@ function Being( params ){
 				var attack_position = { x:this.position.x - 1, y: this.position.y };
 				break;
 		}
-		var target = this.world.getTile(attack_position ).being;
+		var target = this.world.getTile( attack_position ).being;
 		if( target ){
 			target.isAffected({
 				"stats" : {
 					"life": {
-						"min":- this.calculeStat({ "stat" : "damage" }),
+						"min":- this.calculeStat({ "stat" : "damage" , "target" : target }),
 					}
 				} ,
 				/* Provisorio para que ataque, ahora los parametros estan dentro de stats, habria que recorrer ese array*/
@@ -326,21 +326,35 @@ function Being( params ){
 
 	// Suma stats con sus modificadores
 	this.calculeStat = function( params ){
-
+		var target = params.target || {};
 		var stat = params.stat;
 		var value = this.stats[ stat ].min;
 		// Calcula base_damage
 		if( stat == 'damage' ){
 
+			// Mi Daño
 			var damage_min = this.stats[ stat ].min + this.modificators[ stat ].min;
 			var damage_max = this.stats[ stat ].max + this.modificators[ stat ].max;
+			// Escudo del enemigo
+			var shields_min = target.stats[ 'shields' ].min + target.modificators[ 'shields' ].min;
+			var shields_max = target.stats[ 'shields' ].max + target.modificators[ 'shields' ].max;
+
+
 
 			// Devuelve 1 si le emboco, 0 si le pifio
 			var hitted = Math.random() < this.stats.accurancy / 100e3 ? 1 : 0;
+			
 			if( hitted ){
-				value = Math.round( ( damage_min - 0.49 ) + ( damage_max - damage_min + 0.49 ) * Math.random() );
-				console.log('le has infligido daño: ' , value )
+
+				// Calculo mi daño
+				value = this.randomRange( damage_min , damage_max );
+				// Resto escudos del enemigo
+				value -= this.randomRange( shields_min , shields_max );
+				value = (value > 0 ? value : 0);
+
+				console.log('le has infligido daño: ' , value)
 				return value;
+
 			}else{
 				console.log('pifiaste')
 				return 0; // temporal, enviar despues si pifio.
@@ -351,6 +365,11 @@ function Being( params ){
 
 	}
 
+	// Devuelve un numero al azar entre 2 numeros
+	this.randomRange = function( val1 , val2 ){
+		return Math.round( ( val1 - 0.49 ) + ( val2 - val1 + 0.49 ) * Math.random() );
+	}
+
 	// Afecta a los stats
 	this.isAffected = function( params ){
 		var stats = params.stats;
@@ -358,8 +377,19 @@ function Being( params ){
 
 
 		for( var stat in stats){
-			this.stats[stat].min+=stats[stat].min || 0;
-			this.stats[stat].max+=stats[stat].max || 0;
+			
+			// Escepciones:
+			if( stat == 'life' ){ // Si supera a la vida max, vida min es igualada a vida max.
+				if( (this.stats[stat].min + stats[stat].min) > this.stats[stat].max ){
+					this.stats[stat].min = this.stats[stat].max
+					continue;
+				}
+			}
+
+			// General
+			this.stats[stat].min += stats[stat].min || 0;
+			this.stats[stat].max += stats[stat].max || 0;
+
 		}
 
 		for( var stat in stats){
