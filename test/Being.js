@@ -38,7 +38,7 @@ function Being( params ){
 		"inventory": [],
 
 		"stats" : {
-		
+
 			"luck": 50e3,
 
 			"level": { "min" : 1 , "max" : 50 },
@@ -188,7 +188,11 @@ function Being( params ){
 		var target = this.world.getTile(attack_position ).being;
 		if( target ){
 			target.isAffected({
-				"stats" : { "life": - this.calculeStat({ "stat" : "damage" }) } ,
+				"stats" : {
+					"life": {
+						"min":- this.calculeStat({ "stat" : "damage" }),
+					}
+				} ,
 				/* Provisorio para que ataque, ahora los parametros estan dentro de stats, habria que recorrer ese array*/
 				"author" : this
 			});
@@ -199,7 +203,7 @@ function Being( params ){
 
 	// Suma stats con sus modificadores
 	this.calculeStat = function( params ){
-		
+
 		var stat = params.stat;
 
 		// Calcula base_damage
@@ -209,7 +213,7 @@ function Being( params ){
 			var damage_max = this.stats[ stat ].max + this.modificators[ stat ].max;
 
 			// Devuelve 1 si le emboco, 0 si le pifio
-			var hitted = Math.random() < this.stats.accurancy / 100e3 ? 1 : 0; 
+			var hitted = Math.random() < this.stats.accurancy / 100e3 ? 1 : 0;
 			if( hitted ){
 				var value = Math.round( ( damage_min - 0.49 ) + ( damage_max - damage_min + 0.49 ) * Math.random() );
 				console.log('le has infligido daño: ' , value )
@@ -229,8 +233,10 @@ function Being( params ){
 		var stats = params.stats;
 		var author = params.author;
 
+
 		for( var stat in stats){
-			this.stats[stat]+=stats[stat]
+			this.stats[stat].min+=stats[stat].min || 0;
+			this.stats[stat].max+=stats[stat].max || 0;
 		}
 
 		for( var stat in stats){
@@ -435,6 +441,37 @@ function Being( params ){
 	}
 
 	/*
+		Usar un objeto
+	*/
+
+	this.use = function( params ){
+		// Si no puede usar el objeto envia un mensaje y termina
+		var artifact = this.inventory[params.slot];
+		if( !artifact.usable ) {
+			this.think({"message":"No puedo usar este objeto"});
+			return false;
+		}
+
+		// Si puede usarlo ejecuta lo siguiente
+		var stats = {}
+		for( var modificator in artifact.modificators ){
+			stats[modificator] = artifact.modificators[modificator];
+		}
+		this.isAffected({
+			"stats":stats,
+			"author":artifact
+		});
+
+		this.think({"message":"Usé mi " + artifact.name + "."});
+
+		if(artifact.consumable){
+			console.log("borrando ");
+			this.world.removeObject({"object":artifact});
+			this.inventory[params.slot] = null;
+		}
+		return true;
+	}
+	/*
 		PROVISORIO
 	*/
 
@@ -482,12 +519,13 @@ function Being( params ){
 
 	// Morir de sed
 	this.thristEvent = function(){
-		
+
 	}
 
 	// Cada vez que se le modifica la vida.
 	this.lifeEvent = function( params ){
-		if( this.stats.life <=0 ){
+		console.log("lega y es " , this.stats.life)
+		if( this.stats.life.min <=0 ){
 			this.dead();
 			this.giveExperience({ "author" : params.author });
 			console.debug('Te mato ' + params.author.name )

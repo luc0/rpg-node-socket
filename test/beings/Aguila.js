@@ -7,7 +7,7 @@ function Aguila( params ){
 		"name":"Aguila",
 		"specie":"Aguila",
 		"stats" : {
-			"life" : 80,
+			"life" : {"min":80,"max":80},
 			"points": 10
 		}
 	}

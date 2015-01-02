@@ -13,6 +13,8 @@
 	<script src="terrains/Tierra.js"></script>
 	<script src="terrains/Agua.js"></script>
 	<script src="artifacts/Daga.js"></script>
+	<script src="artifacts/Pollo.js"></script>
+	<script src="artifacts/Manzana.js"></script>
 	<script src="artifacts/Papiro.js"></script>
 	<script src="Tile.js"></script>
 	<script src="World.js"></script>
@@ -72,6 +74,18 @@
 			border-radius:100px;
 			z-index:3;
 		}
+
+		.Manzana{
+			background:url(manzana.png) no-repeat;
+			background-size: contain;
+			z-index:2;
+		}
+
+		.Pollo{
+			background:url(pollo.png) no-repeat;
+			background-size: contain;
+			z-index:2;
+		}
 	</style>
 </head>
 <body>
@@ -117,11 +131,21 @@
 				"controls":"npc",
 				"name" : "bicho",
 				"world": world,
+			}),
+
+			"Manzana" : new Manzana({
+				"position":{
+					"x": 4,
+					"y": 10,
+				},
+				"controls":"npc",
+				"name" : "Manzana",
+				"world": world,
 			})
 		};
 
 
-		world.createdObjects.bicho.createArtifact({"artifact":Daga});
+		world.createdObjects.bicho.createArtifact({"artifact":Pollo});
 
 		//var miarray = createArray( 5 , 5 , Elfo );
 		var view = document.getElementById('view');

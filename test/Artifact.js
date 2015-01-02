@@ -42,23 +42,5 @@ function Artifact( params ){
 
 	this.setWorld( params.world );
 
-	this.use = function( params ){
-		var author = params.author;
-		// Si no puede usar el objeto envia un mensaje y termina
-		if( !this.usable ) {
-			author.think({"message":"No puedo usar este objeto"});
-			return false;
-		}
-
-		// Si puede usarlo ejecuta lo siguiente
-		author.isAffected({
-			"stats":{
-				this.modificators;
-			}
-		});
-
-		author.think({"message":"Usé mi " + this.name + "."});
-		return true;
-	}
 
 }
