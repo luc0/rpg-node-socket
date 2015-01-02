@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Objetos</title>
+	<style>
+		#view{
+			width:51%;
+			margin:10px auto;
+			cursor:pointer;
+		}
+		body{
+			-webkit-user-select:none;
+			user-select:none;
+			overflow: hidden;
+		}
+		div{
+			margin:0;
+			padding:0;
+			height:32px;
+		}
+		.tile{
+			display:inline-block;
+			width:32px;
+			height:32px;
+			outline:1px solid rgba(0,0,0,0.2);
+			position:relative;
+		}
+		span{
+			position:absolute;
+			left:0;
+			top:0;
+			width:100%;
+			height:100%;
+			/*background-color:rgba(255,0,0,0.2);*/
+			display:block;
+		}
+
+		.Agua{ background-color:rgba(0,0,255,0.7); }
+		.Tierra{ background-color:rgba(100,80,30,0.7); }
+		.Lava{ background-color:rgba(255,20,20,0.7); }
+
+		#paleta{
+			position:fixed;
+			width:200px;
+		}
+
+		input{
+			width:100%;
+			display:block;
+			margin-top:10px;
+			height:40px;
+		}
+	</style>
+</head>
+<body>
+	<div id="paleta">
+		<div data-terreno="Tierra" class="tile Tierra"></div>
+		<div data-terreno="Agua" class="tile Agua"></div>
+		<div data-terreno="Lava" class="tile Lava"></div>
+		<div data-terreno="" class="tile"></div>
+		<div data-terreno="" class="tile"></div>
+		<div data-terreno="" class="tile"></div>
+		<div data-terreno="" class="tile"></div>
+		<div><input id="generar" type="button" value="Generar"></div>
+	</div>
+	<div id="view"></div>
+	<script>
+	var view = document.getElementById('view');
+	var paleta = document.getElementById('paleta');
+	var btnGenerar = document.getElementById('generar');
+	var paintTerrain = "Tierra"
+	var tiles = ""
+	var pintando = false;
+	var world = [];
+	var mapa = [];
+	for(var x = 0 ; x < 30 ; x++){
+		world[x]=[];
+		for(var y = 0 ; y < 30 ; y++){
+			world[x][y]= "Agua"
+		}
+	}
+
+	view.onmousedown = function(e){
+		pintando = true;
+	}
+
+	view.onmouseup = function(e){
+		pintando = false;
+	}
+
+	view.onmousemove = function(e){
+		if(pintando){
+			var tile = e.target;
+			var x = tile.dataset['x'];
+			var y = tile.dataset['y'];
+			world[x][y]=paintTerrain;
+			dibuja();
+		}
+	}
+
+	paleta.onclick = function(e){
+		paintTerrain = target = e.target.dataset.terreno;
+	}
+
+	btnGenerar.onclick = function(){
+		generar();
+	}
+	function dibuja(){
+		var terrainClass , terrainSpan;
+		var tiles="";
+		for( var y = 0 ; y < 30 ; y++ ){
+			tiles+="<div>";
+			for( var x = 0 ; x < 30 ; x++ ){
+				terrainClass = world[x][y];
+				terrainSpan = "<span class='" + terrainClass + "' data-x='"+x+"' data-y='"+y+"'></span>";
+				tiles+="<div class='tile'>" + terrainSpan  + "</div>";
+
+				terrainClass="";
+
+			}
+			tiles+="</div>";
+
+		}
+		view.innerHTML = tiles;
+	}
+
+	function generar(){
+		for( var y = 0 ; y < 30 ; y++ ){
+			mapa[y]=[];
+			for( var x = 0 ; x < 30 ; x++ ){
+				mapa[y][x]= "{terrain:" + world[x][y] +"}";
+			}
+			mapa[y] = "[" + (mapa[y]).join(",") + "]";
+
+		}
+		mapa = "[" + (mapa).join(",") + "]";
+		console.log(mapa)
+	}
+
+	dibuja();
+	</script>
+</body>
+</html>
