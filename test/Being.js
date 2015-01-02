@@ -55,7 +55,11 @@ function Being( params ){
 
 			"accurancy" : 100e3,
 
-			"agility" : 10e3
+			"agility" : 10e3,
+
+			"hunger" : { "min" : 100 , "max" : 100 },
+
+			"thirst" : { "min" : 100 , "max" : 100 }
 
 		},
 
@@ -443,6 +447,24 @@ function Being( params ){
 	}
 
 
+	//------------------------------------------------------------------------------------------------------
+	// ACCIONES PASIVAS
+	//------------------------------------------------------------------------------------------------------
+
+	// Mensajes con informacion de las interacciones. ( Feedback para el usuario )
+	this.think = function( params ){
+		var message = params.message;
+		alert( message );
+	}
+
+	this.refreshOrganism = function( ){
+
+		var hunger = setInterval(function(){
+			this.stats.hunger.min -= 2;
+			this.stats.thirst.min -= 4;
+		},18000);
+
+	}
 
 	//------------------------------------------------------------------------------------------------------
 	// Events: disparan eventos segun el valor de las propiedades
