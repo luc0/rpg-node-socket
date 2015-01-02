@@ -2,11 +2,18 @@ function World( params ){
 
 	var defaults = {
 
-		"tiles" : null
+		"tiles" : null,
+		"createdObjects": {}
 
 	}
 
 	merge( defaults , params , this );
+
+
+	// Borra objeto del mapa
+	this.removeObject = function( params ){
+		this.createdObjects[ params.object.name ] = null;
+	}
 
 	// Carga los tiles desde un array en donde se le define el terrain de cada uno.
 	this.loadTiles = function( params ){

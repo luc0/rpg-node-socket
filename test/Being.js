@@ -136,7 +136,12 @@ function Being( params ){
 		}
 	}
 
-		// Ataque meele
+
+	//------------------------------------------------------------------------------------------------------
+	// LUCHA
+	//------------------------------------------------------------------------------------------------------
+
+	// Ataque meele
 	this.attack = function(){
 		switch( this.direction ){
 			case 'up':
@@ -165,36 +170,21 @@ function Being( params ){
 		}
 	}
 
-	// INVENTARIO
-	this.take = function(){
-		var artifact = this.world.getTile( this.position ).artifact;
-		if( artifact ){
-			this.inventory.push(artifact);
-			this.world.getTile( this.position ).artifact = null;
-			console.log(artifact.name+" adquirida!");
-		}else{
-			console.log('No hay nada ahi');
-		}
-		console.log(this.inventory)
-	}
+	this.isAffected = function( params ){
+		var stats = params.stats;
+		var author = params.author;
 
-	// INVENTARIO
-	this.drop = function(){
-		// Si hay artifact para tirar al piso
-		if( this.inventory.length ){
-			// Si hay espacio en el piso
-			if( !this.world.getTile( this.position ).artifact ){
-				var artifact_dropped = this.inventory[0];
-				this.inventory.splice(0,1);
-				this.world.getTile( this.position ).artifact = artifact_dropped;
-				console.log(artifact_dropped.name+" lanzada al piso.")
-			}else{
-				console.log('No hay espacio en el piso.')
-			}
-		}else{
-			console.log('No tenes artefactos para tirar.')
+		for( var stat in stats){
+			this[stat]+=stats[stat]
 		}
-		console.log(this.inventory)
+
+		for( var stat in stats){
+			if( this[stat+"Event"] ){
+				this[stat+"Event"]( {"author":author} );
+			}else{
+				throw new Error('no existe la funcion '+stat+"Event")
+			}
+		}
 	}
 
 	// Tira todos los objetos del inventario
@@ -264,46 +254,64 @@ function Being( params ){
 
 	}
 
-	this.lifeEvent = function( params ){
-		if( this.life <=0 ){
-			this.dead();
-			console.debug('Te mato ' + params.author.name )
-		}
+	// Dar experiencia al que me mato.
+	this.giveExperience = function( params ){
+		params.author.isAffected({ "stats":{ "experience": + this.points } });
+		console.log('Experiencia: ',params.author.experience);
 	}
-
-	/*
-		Funcion provisoria
-	*/
-	this.statsEvent = function(){}
-
-	this.authorEvent = function(){}
 
 	this.dead = function(){
 		this.dropAll();
 		this.state.alive = false;
+		if( this.controls == 'npc' ){
+			this.remove();
+		}
 	}
 
-	this.isAffected = function( params ){
-		var stats = params.stats;
-		var author = params.author;
+	// Remueve todas las instancias del objeto ( en world y en el tile )
+	this.remove = function(){
+		this.world.removeObject({ "object" : this })
+		this.world.getTile( this.position ).remove({ "type" : "being" });
+	}
 
-		for( var stat in stats){
-			this[stat]+=stats[stat]
+
+
+	//------------------------------------------------------------------------------------------------------
+	// ACCIONES
+	//------------------------------------------------------------------------------------------------------
+
+	// Tomar objetos del piso
+	this.take = function(){
+		var artifact = this.world.getTile( this.position ).artifact;
+		if( artifact ){
+			this.inventory.push(artifact);
+			this.world.getTile( this.position ).artifact = null;
+			console.log(artifact.name+" adquirida!");
+		}else{
+			console.log('No hay nada ahi');
 		}
+		console.log(this.inventory)
+	}
 
-		for( var stat in stats){
-			if( this[stat+"Event"] ){
-				this[stat+"Event"]( {"author":author} );
+	// Tirar objeto al piso
+	this.drop = function(){
+		// Si hay artifact para tirar al piso
+		if( this.inventory.length ){
+			// Si hay espacio en el piso
+			if( !this.world.getTile( this.position ).artifact ){
+				var artifact_dropped = this.inventory[0];
+				this.inventory.splice(0,1);
+				this.world.getTile( this.position ).artifact = artifact_dropped;
+				console.log(artifact_dropped.name+" lanzada al piso.")
 			}else{
-				throw new Error('no existe la funcion '+stat+"Event")
+				console.log('No hay espacio en el piso.')
 			}
+		}else{
+			console.log('No tenes artefactos para tirar.')
 		}
+		console.log(this.inventory)
 	}
 
-	//
-	this.experienceEvent = function(){
-
-	}
 
 	this.equip = function( params ){
 		var artifact = this.inventory[ params.slot ];
@@ -330,6 +338,7 @@ function Being( params ){
 		}
 	}
 
+	// Verifica si esta equipado
 	this.isEquipped = function( params ){
 		var artifact = params.artifact;
 		// Verifica la parte del cuerpo donde se equipa el objeto y compara con el objeto que ya esta equipado, para ver si es el mismo.
@@ -342,6 +351,7 @@ function Being( params ){
 		return false;
 	}
 
+	// Verifica si puede equipar
 	this.canEquip = function( params ){
 		var artifact = params.artifact;
 		var canEquip = [];
@@ -357,6 +367,49 @@ function Being( params ){
 		return canEquip;
 	}
 
+	/*
+		PROVISORIO
+	*/
+
+	this.createArtifact = function( params ){
+		var artifact = params.artifact;
+
+		var newArtifact = new artifact({"world":this.world , "position":this.position});
+
+		this.take();
+	}
+
+
+
+	//------------------------------------------------------------------------------------------------------
+	// Events: disparan eventos segun el valor de las propiedades
+	//------------------------------------------------------------------------------------------------------
+
+	// Subir de nivel
+	this.experienceEvent = function(){
+
+	}
+
+	// Cada vez que se le modifica la vida.
+	this.lifeEvent = function( params ){
+		if( this.life <=0 ){
+			this.dead();
+			this.giveExperience({ "author" : params.author });
+			console.debug('Te mato ' + params.author.name )
+		}
+	}
+
+	/*
+		Funcion provisoria
+	*/
+	this.statsEvent = function(){}
+
+	this.authorEvent = function(){}
+
+
+	//------------------------------------------------------------------------------------------------------
+	// Fisica
+	//------------------------------------------------------------------------------------------------------
 
 	// Verifica colision con cualquier elemento que sea solido.
 	this.collision = function( params ){
@@ -373,20 +426,9 @@ function Being( params ){
 		);
 	}
 
+	// Bordes del mapa
 	this.boundaries = function( new_position ){
 		return ( new_position.x < 0 || new_position.x >= 30 || new_position.y < 0 || new_position.y >= 30 );
-	}
-
-	/*
-		PROVISORIO
-	*/
-
-	this.createArtifact = function( params ){
-		var artifact = params.artifact;
-
-		var newArtifact = new artifact({"world":this.world , "position":this.position});
-
-		this.take();
 	}
 
 }

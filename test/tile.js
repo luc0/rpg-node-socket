@@ -19,9 +19,8 @@ function Tile( params ){
 	}
 
 	this.remove = function( params ){
-		for(var type in params){
-			this[type] = null;
-		}
+		this[params.type] = null;
+		console.log(this)
 	}
 
 

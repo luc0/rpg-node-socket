@@ -5,7 +5,8 @@ function Aguila( params ){
 
 		/*Nombre del elfo*/
 		"name":"Aguila",
-		"specie":"Aguila"
+		"specie":"Aguila",
+		"points":10
 	}
 
 	/*Mezcla de los defaults con los parametros pasados al objeto*/

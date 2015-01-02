@@ -80,134 +80,48 @@
 
 		var world = new World();
 
-		var miElfo = new Elfo({
-			"position":{
-				"x": 2
-			},
-			"name":"Roberto",
-			"controls":"pc",
-			"world":world
-		});
-		var otroElfo = new Elfo({
-			"position":{
-				"x": 5,
-				"y": 5
-			},
-			"name":"Lucas",
-			"controls":"npc",
-			"world":world
-		});
+		world.createdObjects = {
+			"miElfo" : new Elfo({
+				"position":{
+					"x": 2
+				},
+				"name":"miElfo",
+				"controls":"pc",
+				"world":world
+			}),
 
-		var miDaga = new Daga({
-			"position":{
-				"x": 3,
-				"y": 3
-			},
-			"world":world
-		});
-		var miOtraDaga = new Daga({
-			"position":{
-				"x": 4,
-				"y": 3
-			},
-			"world":world
-		});
-		var daga1 = new Daga({
-			"position":{
-				"x": 4,
-				"y": 4
-			},
-			"world":world
-		});
-		var daga2 = new Daga({
-			"position":{
-				"x": 4,
-				"y": 5
-			},
-			"world":world
-		});
-		var daga3 = new Daga({
-			"position":{
-				"x": 4,
-				"y": 6
-			},
-			"world":world
-		});
-		var daga4 = new Daga({
-			"position":{
-				"x": 4,
-				"y": 7
-			},
-			"world":world
-		});
-		var daga5 = new Daga({
-			"position":{
-				"x": 4,
-				"y": 8
-			},
-			"world":world
-		});
-		var daga6 = new Daga({
-			"position":{
-				"x": 4,
-				"y": 9
-			},
-			"world":world
-		});
-		var daga7 = new Daga({
-			"position":{
-				"x": 4,
-				"y": 10
-			},
-			"world":world
-		});
-		var daga8 = new Daga({
-			"position":{
-				"x": 4,
-				"y": 11
-			},
-			"world":world
-		});
-				var daga9 = new Daga({
-			"position":{
-				"x": 4,
-				"y": 12
-			},
-			"world":world
-		});
-		var daga10 = new Daga({
-			"position":{
-				"x": 4,
-				"y": 13
-			},
-			"world":world
-		});
-				var daga11 = new Daga({
-			"position":{
-				"x": 4,
-				"y": 14
-			},
-			"world":world
-		});
-		var daga12 = new Daga({
-			"position":{
-				"x": 4,
-				"y": 15
-			},
-			"world":world
-		});
-
-		var bicho = new Aguila({
-			"position":{
-				"x": 3,
-				"y": 10,
+			"elfo2" : new Elfo({
+				"position":{
+					"x": 5,
+					"y": 5
+				},
+				"name":"elfo2",
 				"controls":"npc",
-				"points":1000
-			},
-			"world":world,
-		});
+				"world":world
+			}),
 
-		bicho.createArtifact({"artifact":Daga});
+			"miDaga" : new Daga({
+				"position":{
+					"x": 3,
+					"y": 3
+				},
+				"name": "miDaga",
+				"world":world
+			}),
+
+			"bicho" : new Aguila({
+				"position":{
+					"x": 3,
+					"y": 10,
+				},
+				"controls":"npc",
+				"name" : "bicho",
+				"world":world,
+			})
+		};
+
+
+		world.createdObjects.bicho.createArtifact({"artifact":Daga});
 
 		//var miarray = createArray( 5 , 5 , Elfo );
 		var view = document.getElementById('view');
