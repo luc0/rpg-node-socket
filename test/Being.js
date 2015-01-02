@@ -37,13 +37,29 @@ function Being( params ){
 
 		"inventory": [],
 
-		"level":1,
+		"stats" : {
+		
+			"luck": 50e3,
 
-		"experience":0,
+			"level": { "min" : 1 , "max" : 50 },
 
-		"life": 20,
+			"experience": { "min" : 0 , "max" : 200 },
 
-		"damage": 6,
+			"life": { "min" : 20 , "max" : 20 },
+
+			"damage": { "min" : 2 , "max" : 4 },
+
+			"critical" : 5e3,
+
+			"shields": { "min" : 0 , "max" : 0 },
+
+			"accurancy" : 100e3,
+
+			"agility" : 10e3
+
+		},
+
+		"modificators" : { /* Replica de stats */ },
 
 		"state": {
 
@@ -64,8 +80,16 @@ function Being( params ){
 
 	}
 
+	// Crea propiedades modificators ( replica de stats )
+	var addProps = (function createModificators(){
+		for( modificator in defaults.stats ){
+			defaults.modificators[modificator] = { "min" : 0 , "max" : 0 };
+		}
+	})();
+
 	/*Mezcla de los defaults con los parametros pasados al objeto*/
 	merge( defaults , params , this );
+
 
 	this.createControls = function(){
 		if( this.controls == "pc" ){
@@ -160,22 +184,49 @@ function Being( params ){
 		var target = this.world.getTile(attack_position ).being;
 		if( target ){
 			target.isAffected({
-				"stats" : { "life": - this.damage } ,
+				"stats" : { "life": - this.calculeStat({ "stat" : "damage" }) } ,
 				/* Provisorio para que ataque, ahora los parametros estan dentro de stats, habria que recorrer ese array*/
 				"author" : this
 			});
-			console.log('le has infligido daño: ',this.damage)
 		}else{
 			console.log('tiraste una piña al aire')
 		}
 	}
 
+	// Suma stats con sus modificadores
+	this.calculeStat = function( params ){
+		
+		var stat = params.stat;
+
+		// Calcula base_damage
+		if( stat == 'damage' ){
+
+			var damage_min = this.stats[ stat ].min + this.modificators[ stat ].min;
+			var damage_max = this.stats[ stat ].max + this.modificators[ stat ].max;
+
+			// Devuelve 1 si le emboco, 0 si le pifio
+			var hitted = Math.random() < this.stats.accurancy / 100e3 ? 1 : 0; 
+			if( hitted ){
+				var value = Math.round( ( damage_min - 0.49 ) + ( damage_max - damage_min + 0.49 ) * Math.random() );
+				console.log('le has infligido daño: ' , value )
+				return value;
+			}else{
+				console.log('pifiaste')
+				return 0; // temporal, enviar despues si pifio.
+			}
+		}
+
+		return value;
+
+	}
+
+	// Afecta a los stats
 	this.isAffected = function( params ){
 		var stats = params.stats;
 		var author = params.author;
 
 		for( var stat in stats){
-			this[stat]+=stats[stat]
+			this.stats[stat]+=stats[stat]
 		}
 
 		for( var stat in stats){
@@ -256,8 +307,8 @@ function Being( params ){
 
 	// Dar experiencia al que me mato.
 	this.giveExperience = function( params ){
-		params.author.isAffected({ "stats":{ "experience": + this.points } });
-		console.log('Experiencia: ',params.author.experience);
+		params.author.isAffected({ "stats":{ "experience": + this.calculeStat({ "stat" : "points" }) } });
+		console.log('Experiencia: ',params.author.stats.experience);
 	}
 
 	this.dead = function(){
@@ -324,6 +375,12 @@ function Being( params ){
 			console.log("equipado")
 		}
 
+		// Agrega modificadores del objeto al being
+		for( modificator in artifact.modificators ){
+			this.modificators[ modificator ].min = artifact.modificators[ modificator ].min;
+			this.modificators[ modificator ].max = artifact.modificators[ modificator ].max;
+		}
+
 	}
 
 	this.unEquip = function( params ){
@@ -335,6 +392,12 @@ function Being( params ){
 				this.equipped[artifact.equipable[place]] = false;
 				console.log("desequipado")
 			}
+		}
+
+		// Resetea modificadores
+		for( modificator in artifact.modificators ){
+			this.modificators[ modificator ].min = 0;
+			this.modificators[ modificator ].max = 0;
 		}
 	}
 
@@ -392,7 +455,7 @@ function Being( params ){
 
 	// Cada vez que se le modifica la vida.
 	this.lifeEvent = function( params ){
-		if( this.life <=0 ){
+		if( this.stats.life <=0 ){
 			this.dead();
 			this.giveExperience({ "author" : params.author });
 			console.debug('Te mato ' + params.author.name )

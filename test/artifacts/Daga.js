@@ -14,7 +14,12 @@ function Daga( params ){
 		"equipable":[
 			"rightHand",
 			"leftHand"
-		]
+		],
+
+		"modificators" : {
+			"damage" : { "min" : 2 , "max" : 4 }
+		}
+
 	}
 
 	/*Mezcla de los defaults con los parametros pasados al objeto*/
