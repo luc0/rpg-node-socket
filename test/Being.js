@@ -190,11 +190,11 @@ function Being( params ){
 			return this.move({"x":+1});
 		}
 		if( destiny.y > this.position.y ){
-			this.direction = 'up';
+			this.direction = 'down';
 			return this.move({"y":+1});
 		}
 		if( destiny.y < this.position.y ){
-			this.direction = 'down';
+			this.direction = 'up';
 			return this.move({"y":-1});
 		}
 		//destiny.y > this.position.y ? {"y":+1} : {"y":-1};
@@ -645,7 +645,18 @@ function Being( params ){
 
 	// Subir de nivel
 	this.experienceEvent = function(){
-
+		if( this.stats.experience.min >= this.stats.experience.max ){
+			this.think({ "message" : 'He leveado!'})
+			// Experiencia
+			this.stats.experience.min -= this.stats.experience.max;
+			this.stats.experience.max *= this.world.stats.levelGrowth.experience;
+			// Level
+			this.stats.level.min ++;
+			// Mejorar stats
+			this.stats.life.min = this.stats.life.max += this.world.stats.levelGrowth.life;
+			this.stats.damage.min += this.world.stats.levelGrowth.damage;
+			this.stats.damage.max += this.world.stats.levelGrowth.damage;
+		}
 	}
 
 	// Morir de hambre

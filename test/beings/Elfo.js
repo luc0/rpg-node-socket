@@ -17,7 +17,7 @@ function Elfo( params ){
 
 			"agility" : 10e3,
 
-			"points": {"min":15}
+			"points": {"min":275 }
 		}
 	}
 

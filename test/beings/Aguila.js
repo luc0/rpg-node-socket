@@ -17,7 +17,7 @@ function Aguila( params ){
 
 			"agility" : 10e3,
 
-			"points": {"min":10}
+			"points": {"min":210 }
 		}
 	}
 
