@@ -80,6 +80,10 @@ function Being( params ){
 			"body" : false,
 			"rightHand": false,
 			"leftHand": false,
+		},
+
+		"provisorio":{ // Vars PROVISORIAS que se borraran con three
+			"timerCamina": null
 		}
 
 	}
@@ -142,7 +146,108 @@ function Being( params ){
 			}).bind(this);
 
 			this.controls.init();
+
+		}else if(this.controls == "npc"){
+
+			var follow = function(){
+				var lastPosition = this.position;
+				//console.log( this.findNearest({ "target" : "being" }) );
+				var destiny = this.findNearest({ "target" : "being" });
+				if( destiny ){
+					this.goTo({ "destiny" : destiny });
+				}
+				this.world.refresh({ "element":this , "lastPosition":lastPosition });
+			}
+			this.provisorio.timerCamina = setInterval( follow.bind(this), 1000); // previsorio ( hacer intervalo con three )
+
 		}
+	}
+
+	this.goTo = function( params ){
+		var destiny = params.destiny;
+		//console.log('destiny',destiny)
+		if( destiny.x < this.position.x ){
+			this.direction = 'left';
+			return this.move({"x":-1});
+		}
+		if( destiny.x > this.position.x ){
+			this.direction = 'right';
+			return this.move({"x":+1});
+		}
+		if( destiny.y > this.position.y ){
+			this.direction = 'up';
+			return this.move({"y":+1});
+		}
+		if( destiny.y < this.position.y ){
+			this.direction = 'down';
+			return this.move({"y":-1});
+		}
+		//destiny.y > this.position.y ? {"y":+1} : {"y":-1};
+	}
+
+	this.findNearest = function( params ){
+
+		var target = params.target;
+
+		var npc_vision = 15; // Radio de tiles que busca el npc
+		var tile, has_floor, has_target;
+		var taget_position = null;
+		var forgetPositions = {};  // posiciones que ya miro y no encontro nada.
+		var toSearch = [ this.position ]; // Posiciones que va a verificar, empieza por donde esta parado.
+		var position_cardinal = [];
+		var position_up, position_right, position_down, position_left // Posiciones que verifica por cada position.
+
+		// Mientras haya posiciones para verificar
+		do{
+			console.log(1)
+			// Guarda posiciones de alrededor de la posicion a verificar
+			position_up 	= { "x" : toSearch[0].x 		, "y" : toSearch[0].y - 1  	};
+			position_right 	= { "x" : toSearch[0].x + 1 	, "y" : toSearch[0].y  		};
+			position_down 	= { "x" : toSearch[0].x 		, "y" : toSearch[0].y + 1  	};
+			position_left 	= { "x" : toSearch[0].x - 1 	, "y" : toSearch[0].y  		};
+
+			// Checkea:
+			// 1 - Si existe el tile.
+			// 2 - Si el terrain es solid (has_floor)
+			// 3 - Si hay un target (has_target)
+			tile = this.world.getTile( toSearch[0] );
+			if( tile ){
+				has_floor = tile.terrain.solid == false;
+				if( tile[target] ){
+					has_target = tile[ target ].controls != 'npc';
+				}
+
+				if( has_floor && has_target ){
+					var target_position = toSearch[0];
+					break;
+				}
+			}
+
+			// Si ya tengo todas las posiciones necesarias, listo.
+			if( this.position.y - npc_vision >= position_up.y ){
+				break;
+			}
+
+			// Agrega posiciones a verificar de alrededor (son 4, en agujas del reloj) antes verifica si ya las miro.
+			position_cardinal = [ position_up , position_right , position_down , position_left ];
+			for( var p in position_cardinal ){
+				if( !(('p' + position_cardinal[p].x + '-' + position_cardinal[p].y ) in forgetPositions) ){
+					forgetPositions[ 'p' + position_cardinal[p].x + '-' + position_cardinal[p].y ] = null;
+					toSearch.push( position_cardinal[p] );
+				}
+			}
+
+
+			// Cuando ya verifico la posicion, la borra del array verificar y continua
+			toSearch.splice(0,1);
+
+		// Antes de continuar verifica si hace falta buscar mas posiciones libres
+		}while( this.position.y - npc_vision < position_up.y );
+
+		forgetPositions = null;
+ 		// encontro suficientes posiciones y las devuelve
+ 		return target_position;
+
 	}
 
 	this.setWorld = function( params ){
@@ -270,15 +375,16 @@ function Being( params ){
 	this.findFreePositions = function( params ){
 
 		var freePositions = []; // Posiciones donde tirar artifacts
+		var forgetPositions = {}; // Posiciones donde tirar artifacts
 		var toSearch = [ this.position ]; // Posiciones que va a verificar, empieza por donde esta parado.
 		var full; // Ya esta ocupado ( actualmente )
 		var used; // Ya esta ocupado ( futuro )
 		var tile; // Lo uso para ver existencia del tile. (bordes del mapa)
+		var position_cardinal = [];
 		var position_up, position_right, position_down, position_left // Posiciones que verifica por cada position.
 
 		// Mientras haya posiciones para verificar
 		do{
-
 			// Guarda posiciones de alrededor de la posicion a verificar
 			position_up 	= { "x" : toSearch[0].x 		, "y" : toSearch[0].y - 1  	};
 			position_right 	= { "x" : toSearch[0].x + 1 	, "y" : toSearch[0].y  		};
@@ -288,26 +394,34 @@ function Being( params ){
 			// Checkea:
 			// 1 - Si existe el tile.
 			// 2 - Si esta siendo ocupado ahora por un artifact. (full)
-			// 3 - Si esta reservado para tirar un artifact. (used)
-			// 4 - Si el terrain es solid (has_floor)
+			// 3 - Si el terrain es solid (has_floor)
 			tile = this.world.getTile( toSearch[0] );
 			if( tile ){
 				full = tile.artifact;
-				used = findPositionInArray({ "array" : freePositions , "position" : toSearch[0] })
 				has_floor = tile.terrain.solid == false;
 
-				if( !full && !used && has_floor ){
+				if( !full && has_floor ){
 					freePositions.push( toSearch[0] );
 				}
 			}
 
-			// Agrega posiciones a verificar de alrededor (son 4, en agujas del reloj)
-			toSearch.push( position_up , position_right , position_down , position_left );
+			// Si ya tengo todas las posiciones necesarias, listo.
+			if( params.numItems <= freePositions.length ){
+				break;
+			}
 
+			// Agrega posiciones a verificar de alrededor (son 4, en agujas del reloj) antes verifica si ya las miro.
+			position_cardinal = [ position_up , position_right , position_down , position_left ];
+			for( var p in position_cardinal ){
+				if( !(('p' + position_cardinal[p].x + '-' + position_cardinal[p].y ) in forgetPositions) ){
+					forgetPositions[ 'p' + position_cardinal[p].x + '-' + position_cardinal[p].y ] = null;
+					toSearch.push( position_cardinal[p] );
+				}
+			}
 			// Cuando ya verifico la posicion, la borra del array verificar y continua
 			toSearch.splice(0,1);
 
-		// Antes de continuar verifica si hace falta buscar mas posiciones libres
+		// Antes de continuar verifica si hace falta buscar mas posiciones libres (ya lo hace antes pero por las dudas)
 		}while( params.numItems > freePositions.length );
 
  		// encontro suficientes posiciones y las devuelve
@@ -325,6 +439,7 @@ function Being( params ){
 		this.dropAll();
 		this.state.alive = false;
 		if( this.controls == 'npc' ){
+			clearInterval(this.provisorio.timerCamina);
 			this.remove();
 		}
 	}
