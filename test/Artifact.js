@@ -30,7 +30,10 @@ function Artifact( params ){
 		"usable":false,
 
 		// Indica si una vez usado el objeto desaparece
-		"consumable":false
+		"consumable":false,
+
+		// Cantidad de items
+		"count" : 1,
 	}
 
 	/*Mezcla de los defaults con los parametros pasados al objeto*/

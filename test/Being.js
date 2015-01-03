@@ -511,9 +511,21 @@ function Being( params ){
 	this.take = function(){
 		var artifact = this.world.getTile( this.position ).artifact;
 		if( artifact ){
+			
+			// Si existe en inventario, suma cantidad
+			for( var item in this.inventory ){
+				if( this.inventory[item].constructor === artifact.constructor ){
+					this.inventory[item].count += artifact.count ;
+					this.world.getTile( this.position ).artifact = null;
+					console.log(artifact.name+" adquirida!");
+					return true;
+				}
+			}
+			// Si no lo tiene en inventario..
 			this.inventory.push(artifact);
 			this.world.getTile( this.position ).artifact = null;
 			console.log(artifact.name+" adquirida!");
+
 		}else{
 			console.log('No hay nada ahi');
 		}
@@ -521,22 +533,61 @@ function Being( params ){
 	}
 
 	// Tirar objeto al piso
-	this.drop = function(){
-		// Si hay artifact para tirar al piso
-		if( this.inventory.length ){
-			// Si hay espacio en el piso
-			if( !this.world.getTile( this.position ).artifact ){
-				var artifact_dropped = this.inventory[0];
-				this.inventory.splice(0,1);
-				this.world.getTile( this.position ).artifact = artifact_dropped;
-				console.log(artifact_dropped.name+" lanzada al piso.")
+	this.drop = function( params ){
+		var params = params || {};
+		var dropAmount = 1;
+		var tileArtifact = this.world.getTile( this.position ).artifact;
+		// Si no tiene equipado el artifact
+		if( !this.isEquipped({"artifact" : this.inventory[0]}) ){
+			// Si hay artifact para tirar al piso
+			if( this.inventory.length ){
+				// Si hay espacio en el piso, o si esta ocupado pero es el mismo item,  entonces puede tirarlo.
+				if( !tileArtifact || tileArtifact.construct == this.inventory[0].construct ){
+					var artifact_dropped = this.inventory[0];
+					artifact_dropped.position = this.position;
+					
+					// Si tiro mas de 1, resto cantidad
+					if( artifact_dropped.count > 1 ){
+						// params.dropAmount sirve para un futuro, lo otro pide un numero ( si no es mayor a 1 entonces lo toma como 1 igual)
+						dropAmount = + params.dropAmount || + Math.max( parseInt(prompt('Cantidad a tirar')) || 1 , 1 );
+					}
+
+					// Si tiro todos los que tengo, borra del inventario y lo deja en el piso
+					if( artifact_dropped.count == 1 || artifact_dropped.count <= dropAmount ){
+						this.inventory.splice(0,1);
+						// Si ya hay un item igual en el piso, le suma cantidad
+						if( tileArtifact ){
+							tileArtifact.count += dropAmount;
+						}else{
+							this.world.getTile( this.position ).artifact = artifact_dropped;
+						}
+					}else{
+					// Si tiro mas de 1, le agrega cuantos va a haber en el piso, y cuantos se le descuenta al inventario					
+						this.inventory[0].count -= dropAmount;
+						// Si ya hay un item igual en el piso, le suma cantidad
+						if( tileArtifact ){
+							tileArtifact.count += dropAmount;
+						}else{
+						// De lo contrario, clona el artifact
+							var clonedArtifact = cloneObject( artifact_dropped );
+							clonedArtifact.count = dropAmount;
+							tileArtifact = clonedArtifact;
+						}
+
+					}
+
+
+					console.log(artifact_dropped.name+" lanzada al piso.");
+				}else{
+					console.log('No hay espacio en el piso.');
+				}
 			}else{
-				console.log('No hay espacio en el piso.')
+				console.log('No tenes artefactos para tirar.');
 			}
 		}else{
-			console.log('No tenes artefactos para tirar.')
+			console.log('Tenes equipado el artifact');
 		}
-		console.log(this.inventory)
+		console.log(this.inventory);
 	}
 
 

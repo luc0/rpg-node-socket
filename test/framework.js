@@ -35,7 +35,15 @@
 		return newArray;
 	}
 
+	this.cloneObject = function( o ){
+		var params = {};
+		this.merge( o , params , params );
+		var newObject = new o.constructor( params );
+		return newObject;
+	}
+
 	// Encuentra una position en un array. function( array , position )
+	/*
 	this.findPositionInArray = function( params ) {
 		var array = params.array;
 		var position = params.position;
@@ -45,5 +53,5 @@
 	        }
 	    }
 	    return null;
-	}
+	}*/
 })(self);

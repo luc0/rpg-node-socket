@@ -25,6 +25,9 @@
 		#view{
 			width:80%;
 			margin:10px auto;
+			overflow:auto;
+			height:100%;
+			z-index:100;
 		}
 		body{
 			overflow: hidden;
@@ -148,6 +151,22 @@
 				"name": "miDaga",
 				"world": world
 			}),
+			"miDaga2" : new Daga({
+				"position":{
+					"x": 4,
+					"y": 3
+				},
+				"name": "miDaga",
+				"world": world
+			}),
+			"miDaga3" : new Daga({
+				"position":{
+					"x": 5,
+					"y": 3
+				},
+				"name": "miDaga",
+				"world": world
+			}),
 
 			"bicho" : new Aguila({
 				"position":{
@@ -205,6 +224,14 @@
 
 		//var miarray = createArray( 5 , 5 , Elfo );
 		var view = document.getElementById('view');
+		view.onmousedown = function(e){
+			var target = e.target.parentNode;
+			var x = target.dataset.x;
+			var y = target.dataset.y;
+			console.log( world.getTile({ "x" : x , "y" : y  }) )
+
+		}
+
 		setInterval(function(){
 			var tiles = ""
 			var beingClass, beingDirectionClass , beingSpan;
@@ -223,7 +250,7 @@
 					beingSpan = "<span class='" + beingClass+" "+ beingDirectionClass + "'></span>";
 					terrainSpan = "<span class='" + terrainClass + "'></span>";
 					artifactSpan = "<span class='" + artifactClass + "'></span>";
-					tiles+="<div class='tile'>" + beingSpan + terrainSpan + artifactSpan + "</div>";
+					tiles+="<div data-x='"+ x +"' data-y='"+ y +"' class='tile'>" + beingSpan + terrainSpan + artifactSpan + "</div>";
 
 					beingClass="";
 					terrainClass="";

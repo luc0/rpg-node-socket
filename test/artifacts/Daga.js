@@ -20,6 +20,7 @@ function Daga( params ){
 			"damage" : { "min" : 2 , "max" : 4 }
 		}
 
+
 	}
 
 	/*Mezcla de los defaults con los parametros pasados al objeto*/
