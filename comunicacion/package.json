@@ -1,0 +1,16 @@
+{
+  "name": "comunicacion",
+  "version": "0.0.0",
+  "description": "capa de comunicacion",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Luco y Facu",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.10.6",
+    "express3-handlebars": "^0.5.2",
+    "socket.io": "^1.2.1"
+  }
+}
