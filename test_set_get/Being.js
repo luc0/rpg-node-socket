@@ -110,6 +110,11 @@ function Being( params ){
 		/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 		set position( value ){
 			this._position = value;
+
+			/* Ejemplo de agregado a cola de comunicacion */
+			/*
+			SERVER.queue({ "user":this.name , "property":"position" , "value" = value });
+			*/
 		},
 		get position(){
 			return this._position;
