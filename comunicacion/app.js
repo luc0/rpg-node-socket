@@ -45,16 +45,15 @@ var server = http.createServer(app).listen(80, function(){
 */
 var io = socketio.listen(server);
 
-/*
-    Cargo clases
-*/
-//var User = require('class/User.js').User;
-//var Users = require('class/Users.js').Users;
-//var Server = require('class/Server.js').Server;
+// Plugins Node
+global.colors = require('colors');
 
 // Cargo controllers
 var userController = require('controllers/userController.js').userController;
 var gameController = require('controllers/gameController.js').gameController;
+
+// Cargo juego
+require('./game.js');
 
 /* ************************************************************************** */
 
