@@ -22,15 +22,11 @@ function Being( params ){
 			"y":0
 		},
 
-
 		/*Propiedad que define quien controla al Being*/
 		"controls":null,
 
 		/*Propiedad que define si el objeto puede Being atravesado*/
 		"solid":true,
-
-
-
 
 		"provisorio":{ // Vars PROVISORIAS que se borraran con three
 			"timerCamina": null
@@ -129,7 +125,6 @@ function Being( params ){
 		set inventory( value ){
 			this._inventory = value;
 		},
-
 		get inventory(){
 			return this._inventory;
 		},
