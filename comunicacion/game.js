@@ -27,8 +27,8 @@ var world = new World();
 
 world.createdObjects = {
 	"miElfo" : new Elfo({
-		"position":{
-			"x": 1,
+		"_position":{
+			"x": 16,
 			"y": 1
 		},
 		"name":"miElfo",
@@ -37,9 +37,9 @@ world.createdObjects = {
 	}),
 
 	"elfo2" : new Elfo({
-		"position":{
-			"x": 4,
-			"y": 5
+		"_position":{
+			"x": 15,
+			"y": 4
 		},
 		"name":"elfo2",
 		"controls":"npc",
@@ -47,7 +47,7 @@ world.createdObjects = {
 	}),
 
 	"miDaga" : new Daga({
-		"position":{
+		"_position":{
 			"x": 3,
 			"y": 3
 		},
@@ -55,7 +55,7 @@ world.createdObjects = {
 		"world": world
 	}),
 	"miDaga2" : new Daga({
-		"position":{
+		"_position":{
 			"x": 4,
 			"y": 3
 		},
@@ -63,7 +63,7 @@ world.createdObjects = {
 		"world": world
 	}),
 	"miDaga3" : new Daga({
-		"position":{
+		"_position":{
 			"x": 5,
 			"y": 3
 		},
@@ -72,7 +72,7 @@ world.createdObjects = {
 	}),
 
 	"bicho" : new Aguila({
-		"position":{
+		"_position":{
 			"x": 3,
 			"y": 10,
 		},
@@ -82,7 +82,7 @@ world.createdObjects = {
 	}),
 
 	"Manzana" : new Manzana({
-		"position":{
+		"_position":{
 			"x": 4,
 			"y": 10,
 		},
@@ -92,7 +92,7 @@ world.createdObjects = {
 	}),
 
 	"Escudo" : new Escudo({
-		"position":{
+		"_position":{
 			"x": 7,
 			"y": 4,
 		},
@@ -102,7 +102,7 @@ world.createdObjects = {
 	}),
 
 	"Casco" : new Casco({
-		"position":{
+		"_position":{
 			"x": 4,
 			"y": 5,
 		},
@@ -112,7 +112,7 @@ world.createdObjects = {
 	}),
 
 	"PocionRoja" : new PocionRoja({
-		"position":{
+		"_position":{
 			"x": 18,
 			"y": 4,
 		},

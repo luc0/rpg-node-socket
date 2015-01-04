@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"CLAS",
+				"clase1"
+			],
+			[
+				"get",
+				"getKeys"
+			],
+			[
+				"que",
+				"queueList"
+			],
+			[
 				"drop",
 				"dropAmount"
 			],
@@ -502,18 +514,6 @@
 			[
 				"ordern",
 				"ordenarPor"
-			],
-			[
-				"No",
-				"No"
-			],
-			[
-				"list",
-				"list-style"
-			],
-			[
-				"borrarEt",
-				"borrarEtiquetasFeas"
 			]
 		]
 	},
@@ -532,7 +532,87 @@
 			"file": "comunicacion/app.js",
 			"settings":
 			{
-				"buffer_size": 1270,
+				"buffer_size": 1765,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "comunicacion/node_modules/class/terrains/Tierra.js",
+			"settings":
+			{
+				"buffer_size": 453,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "comunicacion/node_modules/class/Terrain.js",
+			"settings":
+			{
+				"buffer_size": 1122,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "comunicacion/node_modules/class/Tile.js",
+			"settings":
+			{
+				"buffer_size": 840,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "comunicacion/node_modules/class/Being.js",
+			"settings":
+			{
+				"buffer_size": 24593,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "comunicacion/node_modules/class/beings/Elfo.js",
+			"settings":
+			{
+				"buffer_size": 662,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "comunicacion/game.js",
+			"settings":
+			{
+				"buffer_size": 2405,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "comunicacion/node_modules/class/World.js",
+			"settings":
+			{
+				"buffer_size": 16073,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "comunicacion/node_modules/class/framework.js",
+			"settings":
+			{
+				"buffer_size": 3375,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Users/luco/Desktop/testjuego/test.html",
+			"settings":
+			{
+				"buffer_size": 892,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "this.getKeys = function( params ){\n		var keys = {};\n		for( var o in params){\n			for( key in params[o]){\n				keys[key] = null;\n			}\n		}\n		return keys;\n	}\n\n	this.merge = function( origin , append , destiny ){\n		var origin = origin || {};\n		var append = append || {};\n		var allKeys = this.getKeys( [origin , append]);\n		\n		for( var o in allKeys ){\n			if( append[o] instanceof Object ){\n				destiny[o] = destiny[o] || {}\n				this.merge( origin[o] , append[o] , destiny[o] )\n			}else{\n				destiny[o] = append[o] || origin[o];\n			}\n		}\n\n		\n		this.setter_getter( destiny );\n		\n		//test( destiny.position.x );\n	}",
+			"settings":
+			{
+				"buffer_size": 604,
 				"line_ending": "Windows"
 			}
 		}
@@ -540,15 +620,15 @@
 	"build_system": "Packages/User/lesscomp.sublime-build",
 	"command_palette":
 	{
-		"height": 235.0,
+		"height": 35.0,
 		"selected_items":
 		[
 			[
-				"JS",
+				"js",
 				"Set Syntax: JavaScript"
 			],
 			[
-				"js",
+				"JS",
 				"Set Syntax: JavaScript"
 			],
 			[
@@ -628,7 +708,7 @@
 				"Set Syntax: LESS"
 			]
 		],
-		"width": 386.0
+		"width": 402.0
 	},
 	"console":
 	{
@@ -651,13 +731,67 @@
 	},
 	"file_history":
 	[
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/Being.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/beings/Elfo.js",
+		"/D/luco/programacion/rpgnode/comunicacion/game.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/artifacts/Casco.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/artifacts/Daga.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/artifacts/Escudo.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/artifacts/Manzana.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/artifacts/Papiro.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/artifacts/PocionRoja.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/artifacts/Pollo.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/Server.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/framework.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/World.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/terrains/Tierra.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/terrains/Agua.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/terrains/Lava.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/beings/Aguila.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/Terrain.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/Tile.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/controllers/userController.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/Artifact.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/Controls.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/beings/Enano.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/world.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/Users.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/tile.js",
+		"/D/luco/programacion/rpgnode/comunicacion/public/scripts/controllers/userController.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/User.js",
+		"/D/luco/programacion/rpgnode/test_set_get/Being.js",
+		"/D/luco/programacion/rpgnode/test_set_get/objetos.html",
+		"/D/luco/programacion/rpgnode/comunicacion/public/views/index.hbs",
+		"/D/luco/programacion/rpgnode/comunicacion/public/scripts/cliente.js",
+		"/D/luco/programacion/rpgnode/comunicacion/public/scripts/class/User.js",
+		"/D/luco/programacion/rpgnode/comunicacion/public/scripts/class/Client.js",
+		"/D/luco/programacion/rpgnode/comunicacion/public/views/game.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/controllers/gameController.js",
+		"/D/luco/programacion/rpgnode/comunicacion/public/views/objetos.html",
+		"/C/Users/luco/Desktop/clases_test,js.js",
+		"/C/Users/luco/Desktop/class_transacciones.js",
+		"/D/luco/programacion/rpgnode/comunicacion/public/scripts/controllers/gameController.js",
+		"/D/luco/programacion/juegoNodePhaser/juego.js",
+		"/D/luco/programacion/juegoNodePhaser/node_modules/funciones/index.js",
+		"/D/luco/programacion/juegoNodePhaser/node_modules/controllers/usuarioController.js",
+		"/D/luco/programacion/juegoNodePhaser/node_modules/clases/User.js",
+		"/D/luco/programacion/juegoNodePhaser/scripts/frontend.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/clases/Users.js",
+		"/D/luco/programacion/rpgnode/comunicacion/app.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/controllers/clientController.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/clases/User.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/clases/Server.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/clases/Client.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/clases/class_transacciones.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/clases/clases_test,js.js",
+		"/D/luco/programacion/rpgnode/node_modules/clases/User.js",
+		"/D/luco/programacion/rpgnode/node_modules/clases/clases_test,js.js",
+		"/D/luco/programacion/rpgnode/node_modules/clases/class_transacciones.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/clases/index.js",
 		"/D/luco/programacion/rpgnode/procfile",
 		"/D/luco/programacion/rpgnode/scripts/frontend.js",
 		"/D/luco/programacion/rpgnode/juego.js",
 		"/D/luco/programacion/rpgnode/node_modules/funciones/index.js",
-		"/D/luco/programacion/rpgnode/node_modules/clases/User.js",
-		"/D/luco/programacion/rpgnode/node_modules/clases/clases_test,js.js",
-		"/D/luco/programacion/rpgnode/node_modules/clases/class_transacciones.js",
 		"/D/luco/programacion/rpgnode/test/Being.js",
 		"/D/luco/programacion/rpgnode/test/world.js",
 		"/D/luco/programacion/rpgnode/test/artifacts/Daga.js",
@@ -724,61 +858,7 @@
 		"/C/xampp/htdocs/underbaires/app/views/usuario/perfil.blade.php",
 		"/C/xampp/htdocs/underbaires/app/views/errores/404.blade.php",
 		"/C/xampp/htdocs/underbaires/app/views/errores/500.blade.php",
-		"/C/xampp/htdocs/underbaires/app/controllers/BaseController.php",
-		"/C/xampp/htdocs/underbaires/ONLINE/app.php",
-		"/C/xampp/htdocs/underbaires/ONLINE/global.php",
-		"/C/xampp/htdocs/underbaires/app/controllers/.gitkeep",
-		"/C/xampp/htdocs/underbaires/public/js/usuario/perfil.js",
-		"/C/xampp/htdocs/underbaires/desarrollo/bootstrap/paths.php",
-		"/C/xampp/htdocs/underbaires/desarrollo/ONLINE/bootstrap/autoload.php",
-		"/C/xampp/htdocs/underbaires/desarrollo/ONLINE/bootstrap/start.php",
-		"/C/Users/luco/Downloads/underbai_db.sql",
-		"/C/xampp/htdocs/underbaires/desarrollo/ONLINE/database.php",
-		"/C/xampp/htdocs/underbaires/app/controllers/DenunciaController.php",
-		"/C/xampp/htdocs/underbaires/app/views/includes/pie.blade.php",
-		"/C/Users/luco/Downloads/personal_salefecha.sql",
-		"/C/xampp/htdocs/underbaires/desarrollo/ONLINE/index.php",
-		"/C/xampp/htdocs/underbaires/desarrollo/ONLINE/bootstrap/paths.php",
-		"/C/xampp/htdocs/underbaires/app/views/votable/subirFoto.blade.php",
-		"/C/xampp/htdocs/viejo/koodstudio_festivales/festivales/app/controllers/SvcJazzController.php",
-		"/C/xampp/htdocs/underbaires/app/views/estaticos/comoFunciona.blade.php",
-		"/C/xampp/htdocs/underbaires/app/config/mail.php",
-		"/C/xampp/htdocs/viejo/koodstudio_festivales/festivales/app/controllers/SvcBafici2015Controller.php",
-		"/C/xampp/htdocs/viejo/koodstudio_festivales/festivales/app/controllers/SvcBaficianimado2014Controller.php",
-		"/C/xampp/htdocs/underbaires/app/controllers/TestController.php",
-		"/C/xampp/htdocs/underbaires/app/views/layout.blade.php",
-		"/C/xampp/htdocs/viejo/koodstudio_festivales/festivales/app/controllers/SvcBaficiController.php",
-		"/C/xampp/htdocs/underbaires/public/js/home/home.js",
-		"/C/xampp/htdocs/salefecha/app/routes.php",
-		"/C/xampp/htdocs/salefecha/app/models/Comentario.php",
-		"/C/xampp/htdocs/salefecha/app/models/Usuario.php",
-		"/C/xampp/htdocs/salefecha/app/models/Votable.php",
-		"/C/xampp/htdocs/salefecha/app/models/Localidad.php",
-		"/C/xampp/htdocs/salefecha/app/models/Provincias.php",
-		"/C/xampp/htdocs/salefecha/app/models/Denuncia.php",
-		"/C/xampp/htdocs/salefecha/app/models/Respuesta.php",
-		"/C/xampp/htdocs/salefecha/app/models/Modalidad.php",
-		"/C/xampp/htdocs/salefecha/app/controllers/UsuarioController.php",
-		"/C/xampp/htdocs/salefecha/app/controllers/VotableController.php",
-		"/C/xampp/htdocs/salefecha/app/controllers/BaseController.php",
-		"/C/xampp/htdocs/salefecha/app/controllers/ComentarioController.php",
-		"/C/xampp/htdocs/salefecha/app/controllers/DenunciaController.php",
-		"/C/xampp/htdocs/salefecha/app/controllers/EstaticoController.php",
-		"/C/xampp/htdocs/salefecha/app/controllers/HomeController.php",
-		"/C/xampp/htdocs/salefecha/app/controllers/LocalidadController.php",
-		"/C/xampp/htdocs/salefecha/app/controllers/TestController.php",
-		"/C/xampp/htdocs/salefecha/app/views/votable/comentar.blade.php",
-		"/C/xampp/htdocs/salefecha/app/views/votable/perfil.blade.php",
-		"/C/xampp/htdocs/salefecha/public/js/votable/editarMapa.js",
-		"/C/xampp/htdocs/salefecha/app/views/votable/editarMapa.blade.php",
-		"/C/xampp/htdocs/salefecha/public/js/votable/comentar.js",
-		"/C/Users/luco/Desktop/underbaires.sql",
-		"/C/xampp/htdocs/salefecha/public/js/votable/perfil.js",
-		"/C/xampp/htdocs/salefecha/app/views/includes/head.blade.php",
-		"/C/xampp/htdocs/salefecha/app/views/includes/cabecera.blade.php",
-		"/C/xampp/htdocs/salefecha/app/views/votable/lista.blade.php",
-		"/C/xampp/htdocs/salefecha/app/views/votable/subirFoto.blade.php",
-		"/C/xampp/htdocs/salefecha/app/views/votable/reportar.blade.php"
+		"/C/xampp/htdocs/underbaires/app/controllers/BaseController.php"
 	],
 	"find":
 	{
@@ -789,6 +869,8 @@
 		"height": 90.0,
 		"where_history":
 		[
+			"D:\\luco\\programacion\\rpgnode\\comunicacion",
+			"D:\\luco\\programacion\\rpgnode",
 			"D:\\luco\\programacion\\rpgnode\\test",
 			" ",
 			"",
@@ -801,6 +883,25 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"test",
+			"\" ",
+			"position",
+			"bgwhite",
+			"console.",
+			"object.defineproperty",
+			"aca!",
+			"console.de",
+			"alert",
+			"var",
+			"self",
+			"var",
+			"require",
+			"<script",
+			"script",
+			"	<",
+			"webSocket",
+			"io",
+			"socket",
 			"this.move",
 			"data",
 			"login",
@@ -909,26 +1010,7 @@
 			"confirmar",
 			"responder",
 			"limite_opinar_dia",
-			".alert",
-			"alert",
-			"localidad",
-			"looks like something went wrong",
-			"Whoops, looks like something went wrong.",
-			"show",
-			"perfil",
-			".perfil",
-			"userImg",
-			"avatar",
-			"imgvalidarform",
-			"con_votos",
-			"ssl",
-			"body",
-			".modal",
-			"scroll",
-			"overflow",
-			"ajax_respuesta",
-			"for",
-			"as"
+			".alert"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -995,7 +1077,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 9,
 			"sheets":
 			[
 				{
@@ -1031,15 +1113,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1270,
+						"buffer_size": 1765,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								1327,
+								1327
 							]
 						],
 						"settings":
@@ -1047,6 +1129,285 @@
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 810.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "comunicacion/node_modules/class/terrains/Tierra.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 453,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								335,
+								335
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "comunicacion/node_modules/class/Terrain.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1122,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1018,
+								1018
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 54.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "comunicacion/node_modules/class/Tile.js",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 840,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								305,
+								305
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "comunicacion/node_modules/class/Being.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 24593,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								943,
+								943
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 486.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "comunicacion/node_modules/class/beings/Elfo.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 662,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								8,
+								12
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 378.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "comunicacion/game.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2405,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1188,
+								1188
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 648.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "comunicacion/node_modules/class/World.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 16073,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								438,
+								438
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 378.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "comunicacion/node_modules/class/framework.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3375,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								924,
+								924
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 432.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "/C/Users/luco/Desktop/testjuego/test.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 892,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								814,
+								814
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 324.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 604,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								525,
+								525
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -1103,6 +1464,46 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"being",
+				"node_modules\\class\\Being.js"
+			],
+			[
+				"frame",
+				"node_modules\\class\\framework.js"
+			],
+			[
+				"world",
+				"node_modules\\class\\World.js"
+			],
+			[
+				"elfo",
+				"node_modules\\class\\beings\\Elfo.js"
+			],
+			[
+				"server",
+				"node_modules\\class\\Server.js"
+			],
+			[
+				"usercontro",
+				"node_modules\\controllers\\userController.js"
+			],
+			[
+				"tile.",
+				"node_modules\\class\\Tile.js"
+			],
+			[
+				"terrain",
+				"node_modules\\class\\Terrain.js"
+			],
+			[
+				"tierra.js",
+				"node_modules\\class\\terrains\\Tierra.js"
+			],
+			[
+				"gme.j",
+				"game.js"
+			],
 			[
 				"usuario",
 				"app\\models\\Usuario.php"
@@ -1176,15 +1577,6 @@
 	},
 	"settings":
 	{
-		"last_automatic_layout":
-		[
-			[
-				0,
-				0,
-				1,
-				1
-			]
-		]
 	},
 	"show_minimap": false,
 	"show_open_files": true,

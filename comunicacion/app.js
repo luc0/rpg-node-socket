@@ -48,6 +48,13 @@ var io = socketio.listen(server);
 // Plugins Node
 global.colors = require('colors');
 
+// Test - devuelve texto coloreado para la consola!
+global.test = function( value ){
+  console.log('');
+  console.log( (value+'').bold.red.underline );
+  console.log('');
+}
+
 // Cargo controllers
 var userController = require('controllers/userController.js').userController;
 var gameController = require('controllers/gameController.js').gameController;
