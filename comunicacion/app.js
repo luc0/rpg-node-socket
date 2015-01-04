@@ -45,13 +45,30 @@ var server = http.createServer(app).listen(80, function(){
 */
 var io = socketio.listen(server);
 
+/*
+    Cargo clases
+*/
+//var User = require('class/User.js').User;
+//var Users = require('class/Users.js').Users;
+//var Server = require('class/Server.js').Server;
+
+// Cargo controllers
+var userController = require('controllers/userController.js').userController;
+var gameController = require('controllers/gameController.js').gameController;
+
 /* ************************************************************************** */
 
 /*
     Manejo de la comunicacion
 */
-//console.log (io.sockets);
 io.sockets.on('connection', function(socket){
-  socket.emit('message' , {"message":"Bienvenido"});
-  //Evento creado por nosotros se puede llamar 'pepito'
+
+  // Configuracion
+  //socket.hearthbeatTimeout = 5000;
+  io.set('heartbeat timeout', 5000);
+  io.set('heartbeat interval', 1000);
+
+  userController( socket );
+  gameController( socket );
+
 });

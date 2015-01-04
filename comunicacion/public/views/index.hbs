@@ -1,13 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Comunicacion</title>
-    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
-    <script type="text/javascript" src="/public/scripts/cliente.js"></script>
+    <head>
+        <meta charset="UTF-8">
+        <title>Comunicacion</title>
+    </head>
+    
+    <body>
+        <h1>Llegaste</h1>
+    </body>
 
-</head>
-<body>
-    <h1>Llegaste</h1>
-</body>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+
+    <!-- Conexion socket -->
+    <script type="text/javascript" src="/public/scripts/cliente.js"></script>
+    
+    <!-- Cargo clases y controllers-->
+    <script type="text/javascript" src="/public/scripts/class/User.js"></script>
+    <script type="text/javascript" src="/public/scripts/class/Client.js"></script>
+    <script type="text/javascript" src="/public/scripts/controllers/userController.js"></script>
+    <script type="text/javascript" src="/public/scripts/controllers/gameController.js"></script>
+
 </html>
