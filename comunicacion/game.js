@@ -1,5 +1,4 @@
 // Require modulos juego.
-
 global.framework = require('class/framework.js').framework.bind( global );
 global.Being = require('class/Being.js').Being;
 global.Terrain = require('class/Terrain.js').Terrain;
@@ -23,63 +22,58 @@ framework();
 
 // Juego
 
-var world = new World();
-
+world = new World();
 world.createdObjects = {
 	"miElfo" : new Elfo({
 		"_position":{
-			"x": 16,
+			"x": 1,
 			"y": 1
 		},
 		"name":"miElfo",
 		"controls":"pc",
-		"world": world
-	}),
+	},world),
 
 	"elfo2" : new Elfo({
 		"_position":{
-			"x": 15,
-			"y": 4
+			"x": 2,
+			"y": 2
 		},
 		"name":"elfo2",
 		"controls":"npc",
-		"world": world
-	}),
+	},world),
 
 	"miDaga" : new Daga({
 		"_position":{
 			"x": 3,
 			"y": 3
 		},
-		"name": "miDaga",
-		"world": world
-	}),
+		"name": "miDaga",	
+	},world),
+
 	"miDaga2" : new Daga({
 		"_position":{
 			"x": 4,
 			"y": 3
 		},
-		"name": "miDaga",
-		"world": world
-	}),
+		"name": "miDaga",	
+	},world),
+	
 	"miDaga3" : new Daga({
 		"_position":{
 			"x": 5,
 			"y": 3
 		},
-		"name": "miDaga",
-		"world": world
-	}),
+		"name": "miDaga",	
+	},world),
 
 	"bicho" : new Aguila({
 		"_position":{
 			"x": 3,
-			"y": 10,
+			"y": 3,
 		},
 		"controls":"npc",
 		"name" : "bicho",
-		"world": world,
-	}),
+	},world),
 
 	"Manzana" : new Manzana({
 		"_position":{
@@ -88,8 +82,7 @@ world.createdObjects = {
 		},
 		"controls":"npc",
 		"name" : "Manzana",
-		"world": world,
-	}),
+	},world),
 
 	"Escudo" : new Escudo({
 		"_position":{
@@ -98,8 +91,7 @@ world.createdObjects = {
 		},
 		"controls":"npc",
 		"name" : "Escudo",
-		"world": world,
-	}),
+	},world),
 
 	"Casco" : new Casco({
 		"_position":{
@@ -108,8 +100,7 @@ world.createdObjects = {
 		},
 		"controls":"npc",
 		"name" : "Casco",
-		"world": world,
-	}),
+	},world),
 
 	"PocionRoja" : new PocionRoja({
 		"_position":{
@@ -118,9 +109,15 @@ world.createdObjects = {
 		},
 		"controls":"npc",
 		"name" : "PocionRoja",
-		"world": world,
-	})
+	},world)
 };
 
-
 world.createdObjects.bicho.createArtifact({"artifact":Pollo});
+
+test('MUNDO CARGADO!')
+//test('npc')
+//console.log(world.createdObjects.elfo2.position)
+//console.log(world.getTile(world.createdObjects.elfo2.position))
+//test('pj')
+//console.log(world.createdObjects.miElfo.position)
+//console.log(world.getTile(world.createdObjects.miElfo.position))
