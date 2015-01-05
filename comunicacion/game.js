@@ -36,7 +36,7 @@ world.createdObjects = {
 	"elfo2" : new Elfo({
 		"position":{
 			"x": 2,
-			"y": 2
+			"y": 4
 		},
 		"name":"elfo2",
 		"controls":"npc",

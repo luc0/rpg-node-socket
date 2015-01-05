@@ -4,6 +4,7 @@
 
 websocket.on( 'world_update' , world_update );
 
-var world_update = function( params ){
-
+function world_update( params ){
+	console.log( 'aqui viene lo bueno joven' );
+	console.log( params );
 }

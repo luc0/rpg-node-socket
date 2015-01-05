@@ -37,7 +37,8 @@ function old_server(){
 
 // login
 (function(){
-	var tmp_name = 'u'+parseInt(Math.random()*10000)//prompt('Nombre');
+	//var tmp_name = 'u'+parseInt(Math.random()*10000)//prompt('Nombre');
+	tmp_name = 'miElfo';
 	console.log('USUARIO:',tmp_name)
 	user = new User({ "username" : tmp_name });
 	var data = { "user" : user };
