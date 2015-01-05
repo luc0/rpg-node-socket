@@ -25,7 +25,7 @@ framework();
 world = new World();
 world.createdObjects = {
 	"miElfo" : new Elfo({
-		"_position":{
+		"position":{
 			"x": 1,
 			"y": 1
 		},
@@ -34,7 +34,7 @@ world.createdObjects = {
 	},world),
 
 	"elfo2" : new Elfo({
-		"_position":{
+		"position":{
 			"x": 2,
 			"y": 2
 		},
@@ -43,7 +43,7 @@ world.createdObjects = {
 	},world),
 
 	"miDaga" : new Daga({
-		"_position":{
+		"position":{
 			"x": 3,
 			"y": 3
 		},
@@ -51,7 +51,7 @@ world.createdObjects = {
 	},world),
 
 	"miDaga2" : new Daga({
-		"_position":{
+		"position":{
 			"x": 4,
 			"y": 3
 		},
@@ -59,7 +59,7 @@ world.createdObjects = {
 	},world),
 	
 	"miDaga3" : new Daga({
-		"_position":{
+		"position":{
 			"x": 5,
 			"y": 3
 		},
@@ -67,7 +67,7 @@ world.createdObjects = {
 	},world),
 
 	"bicho" : new Aguila({
-		"_position":{
+		"position":{
 			"x": 3,
 			"y": 3,
 		},
@@ -76,7 +76,7 @@ world.createdObjects = {
 	},world),
 
 	"Manzana" : new Manzana({
-		"_position":{
+		"position":{
 			"x": 4,
 			"y": 10,
 		},
@@ -85,7 +85,7 @@ world.createdObjects = {
 	},world),
 
 	"Escudo" : new Escudo({
-		"_position":{
+		"position":{
 			"x": 7,
 			"y": 4,
 		},
@@ -94,7 +94,7 @@ world.createdObjects = {
 	},world),
 
 	"Casco" : new Casco({
-		"_position":{
+		"position":{
 			"x": 4,
 			"y": 5,
 		},
@@ -103,7 +103,7 @@ world.createdObjects = {
 	},world),
 
 	"PocionRoja" : new PocionRoja({
-		"_position":{
+		"position":{
 			"x": 18,
 			"y": 4,
 		},
