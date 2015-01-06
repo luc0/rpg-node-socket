@@ -11,5 +11,8 @@ function world_update( params ){
 }
 
 function init_client( params ){
-	 console.log( JSON.parse( params.world ) );
+	 console.log( params.world );
+	 remote_world = params.world;
+	 world.create();
+	 draw();
 }

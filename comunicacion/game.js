@@ -1,5 +1,9 @@
 // Require modulos juego.
 global.framework = require('class/framework.js').framework.bind( global );
+framework();
+global.World = require('class/World.js').World;
+global.world = new World();
+
 global.Being = require('class/Being.js').Being;
 global.Terrain = require('class/Terrain.js').Terrain;
 global.Artifact = require('class/Artifact.js').Artifact;
@@ -15,14 +19,11 @@ global.Escudo = require('class/artifacts/Escudo.js').Escudo;
 global.Casco = require('class/artifacts/Casco.js').Casco;
 global.PocionRoja = require('class/artifacts/PocionRoja.js').PocionRoja;
 global.Tile = require('class/Tile.js').Tile;
-global.World = require('class/World.js').World;
 
-framework();
-
+world.create();
 
 // Juego
 
-global.world = new World();
 world.createdObjects = {
 	"miElfo" : new Elfo({
 		"position":{
@@ -31,7 +32,7 @@ world.createdObjects = {
 		},
 		"name":"miElfo",
 		"controls":"pc",
-	},world),
+	}),
 
 	"elfo2" : new Elfo({
 		"position":{
@@ -40,7 +41,7 @@ world.createdObjects = {
 		},
 		"name":"elfo2",
 		"controls":"npc",
-	},world),
+	}),
 
 	"miDaga" : new Daga({
 		"position":{
@@ -48,7 +49,7 @@ world.createdObjects = {
 			"y": 3
 		},
 		"name": "miDaga",	
-	},world),
+	}),
 
 	"miDaga2" : new Daga({
 		"position":{
@@ -56,7 +57,7 @@ world.createdObjects = {
 			"y": 3
 		},
 		"name": "miDaga",	
-	},world),
+	}),
 	
 	"miDaga3" : new Daga({
 		"position":{
@@ -64,7 +65,7 @@ world.createdObjects = {
 			"y": 3
 		},
 		"name": "miDaga",	
-	},world),
+	}),
 
 	"bicho" : new Aguila({
 		"position":{
@@ -73,7 +74,7 @@ world.createdObjects = {
 		},
 		"controls":"npc",
 		"name" : "bicho",
-	},world),
+	}),
 
 	"Manzana" : new Manzana({
 		"position":{
@@ -82,7 +83,7 @@ world.createdObjects = {
 		},
 		"controls":"npc",
 		"name" : "Manzana",
-	},world),
+	}),
 
 	"Escudo" : new Escudo({
 		"position":{
@@ -91,7 +92,7 @@ world.createdObjects = {
 		},
 		"controls":"npc",
 		"name" : "Escudo",
-	},world),
+	}),
 
 	"Casco" : new Casco({
 		"position":{
@@ -100,7 +101,7 @@ world.createdObjects = {
 		},
 		"controls":"npc",
 		"name" : "Casco",
-	},world),
+	}),
 
 	"PocionRoja" : new PocionRoja({
 		"position":{
@@ -109,10 +110,10 @@ world.createdObjects = {
 		},
 		"controls":"npc",
 		"name" : "PocionRoja",
-	},world)
+	})
 };
 
-world.createdObjects.bicho.createArtifact({"artifact":Pollo});
+//world.createdObjects.bicho.createArtifact({"artifact":Pollo});
 
 test('MUNDO CARGADO!')
 //test('npc')
