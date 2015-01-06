@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <title>Comunicacion</title>
     </head>
-    
+
     <body>
         <h1>Llegaste</h1>
     </body>
@@ -13,11 +13,183 @@
 
     <!-- Conexion socket -->
     <script type="text/javascript" src="/public/scripts/cliente.js"></script>
-    
+
     <!-- Cargo clases y controllers-->
     <script type="text/javascript" src="/public/scripts/class/User.js"></script>
     <script type="text/javascript" src="/public/scripts/class/Client.js"></script>
     <script type="text/javascript" src="/public/scripts/controllers/userController.js"></script>
     <script type="text/javascript" src="/public/scripts/controllers/gameController.js"></script>
+    <script src="/public/scripts/class/framework.js"></script>
+    <script src="/public/scripts/class/Controls.js"></script>
+    <script src="/public/scripts/class/Being.js"></script>
+    <script src="/public/scripts/class/Terrain.js"></script>
+    <script src="/public/scripts/class/Artifact.js"></script>
+    <script src="/public/scripts/class/beings/Elfo.js"></script>
+    <script src="/public/scripts/class/beings/Aguila.js"></script>
+    <script src="/public/scripts/class/terrains/Tierra.js"></script>
+    <script src="/public/scripts/class/terrains/Agua.js"></script>
+    <script src="/public/scripts/class/artifacts/Daga.js"></script>
+    <script src="/public/scripts/class/artifacts/Pollo.js"></script>
+    <script src="/public/scripts/class/artifacts/Manzana.js"></script>
+    <script src="/public/scripts/class/artifacts/Papiro.js"></script>
+    <script src="/public/scripts/class/artifacts/Escudo.js"></script>
+    <script src="/public/scripts/class/artifacts/Casco.js"></script>
+    <script src="/public/scripts/class/artifacts/PocionRoja.js"></script>
+    <script src="/public/scripts/class/Tile.js"></script>
+    <script src="/public/scripts/class/World.js"></script>
+    <style>
+        #view{
+            width:80%;
+            margin:10px auto;
+            overflow:auto;
+            height:100%;
+            z-index:100;
+        }
+        body{
+            overflow: hidden;
+        }
+        div{
+            margin:0;
+            padding:0;
+            height:32px;
+        }
+        .tile{
+            display:inline-block;
+            width:32px;
+            height:32px;
+            outline:1px solid rgba(0,0,0,0.2);
+            position:relative;
+        }
+        span{
+            position:absolute;
+            left:0;
+            top:0;
+            width:100%;
+            height:100%;
+            /*background-color:rgba(255,0,0,0.2);*/
+            display:block;
+        }
 
+        .Agua{
+            background-color:rgba(0,0,255,0.7);
+            z-index:1;
+        }
+
+        .Tierra{
+            background-color:rgba(100,80,30,0.7);
+            z-index:1;
+        }
+
+        .Daga{
+            background:url(sprites/daga.png) no-repeat;
+            background-size: contain;
+            z-index:2;
+        }
+
+        .Escudo{
+            background:url(sprites/escudo.png) no-repeat;
+            background-size: contain;
+            z-index:2;
+        }
+
+        .Casco{
+            background:url(sprites/casco.png) no-repeat;
+            background-size: contain;
+            z-index:2;
+        }
+
+        .PocionRoja{
+            background:url(sprites/pocionRoja.png) no-repeat;
+            background-size: contain;
+            z-index:2;
+        }
+
+        .Aguila,.Elfo{
+            z-index:3;
+            background-size: contain;
+            background-repeat:no-repeat;
+        }
+
+        .Aguila.up{ background-image:url(../public/sprites/aguila-up.png); }
+        .Aguila.right{ background-image:url(../public/sprites/aguila-right.png); }
+        .Aguila.down{ background-image:url(../public/sprites/aguila-down.png); }
+        .Aguila.left{ background-image:url(../public/sprites/aguila-left.png); }
+        .Elfo.up{ background-image:url(../public/sprites/elfo-up.png); }
+        .Elfo.right{ background-image:url(../public/sprites/elfo-right.png); }
+        .Elfo.down{ background-image:url(../public/sprites/elfo-down.png); }
+        .Elfo.left{ background-image:url(../public/sprites/elfo-left.png); }
+
+        .Manzana{
+            background:url(sprites/manzana.png) no-repeat;
+            background-size: contain;
+            z-index:2;
+        }
+
+        .Pollo{
+            background:url(sprites/pollo.png) no-repeat;
+            background-size: contain;
+            z-index:2;
+        }
+    </style>
+</head>
+<body>
+    <div id="view"></div>
+    <script>
+
+        var world = new World();
+
+        world.createdObjects = {
+        /*
+            "miElfo" : new Elfo({
+                "position":{
+                    "x": 1,
+                    "y": 1
+                },
+                "name":"miElfo",
+                "controls":"pc",
+                "world": world
+            })
+        */
+        }
+
+        //var miarray = createArray( 5 , 5 , Elfo );
+        var view = document.getElementById('view');
+        view.onmousedown = function(e){
+            var target = e.target.parentNode;
+            var x = target.dataset.x;
+            var y = target.dataset.y;
+            console.log( world.getTile({ "x" : x , "y" : y  }) )
+
+        }
+
+        setInterval(function(){
+            var tiles = ""
+            var beingClass, beingDirectionClass , beingSpan;
+            var artifactClass , artifactSpan;
+            var terrainClass , terrainSpan;
+
+
+            for( var y = 0 ; y < 30 ; y++ ){
+                tiles+="<div>";
+                for( var x = 0 ; x < 30 ; x++ ){
+                    beingClass = world.getTile({"x":x , "y":y}).being && world.getTile({"x":x , "y":y}).being.specie;
+                    beingDirectionClass = world.getTile({"x":x , "y":y}).being && world.getTile({"x":x , "y":y}).being.direction;
+                    terrainClass = world.getTile({"x":x , "y":y}).terrain && world.getTile({"x":x , "y":y}).terrain.specie;
+                    artifactClass = world.getTile({"x":x , "y":y}).artifact && world.getTile({"x":x , "y":y}).artifact.specie;
+
+                    beingSpan = "<span class='" + beingClass+" "+ beingDirectionClass + "'></span>";
+                    terrainSpan = "<span class='" + terrainClass + "'></span>";
+                    artifactSpan = "<span class='" + artifactClass + "'></span>";
+                    tiles+="<div data-x='"+ x +"' data-y='"+ y +"' class='tile'>" + beingSpan + terrainSpan + artifactSpan + "</div>";
+
+                    beingClass="";
+                    terrainClass="";
+                    artifactClass="";
+                }
+                tiles+="</div>";
+
+            }
+            view.innerHTML = tiles;
+        },60)
+    </script>
 </html>
