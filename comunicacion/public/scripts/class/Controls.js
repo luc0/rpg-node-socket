@@ -1,4 +1,4 @@
-exports.Controls = function(){
+var Controls = function(){
     this.keysNames = {
         38  :  "up",
         39  :  "right",
