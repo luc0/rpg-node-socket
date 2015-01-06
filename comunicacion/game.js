@@ -22,7 +22,7 @@ framework();
 
 // Juego
 
-world = new World();
+global.world = new World();
 world.createdObjects = {
 	"miElfo" : new Elfo({
 		"position":{
