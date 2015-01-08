@@ -23,95 +23,107 @@ global.Tile = require('class/Tile.js').Tile;
 world.create();
 
 // Juego
+	var temporalObject;
 
-world.createdObjects = {
-	"miElfo" : new Elfo({
+	temporalObject = new Elfo({
 		"position":{
 			"x": 1,
 			"y": 1
 		},
 		"name":"miElfo",
 		"controls":"pc",
-	}),
+	})
+	console.log(temporalObject.id);
+	world.createdObjects[temporalObject.id] = temporalObject;
 
-	"elfo2" : new Elfo({
+	temporalObject = new Elfo({
 		"position":{
 			"x": 5,
 			"y": 5
 		},
 		"name":"elfo2",
 		"controls":"npc",
-	}),
+	});
+	world.createdObjects[temporalObject.id] = temporalObject;
 
-	"miDaga" : new Daga({
+	temporalObject = new Daga({
 		"position":{
 			"x": 6,
 			"y": 6
 		},
 		"name": "miDaga",
-	}),
+	});
+	world.createdObjects[temporalObject.id] = temporalObject;
 
-	"miDaga2" : new Daga({
+	temporalObject = new Daga({
 		"position":{
 			"x": 4,
 			"y": 3
 		},
 		"name": "miDaga",
-	}),
+	});
+	world.createdObjects[temporalObject.id] = temporalObject;
 
-	"miDaga3" : new Daga({
+	temporalObject = new Daga({
 		"position":{
 			"x": 5,
 			"y": 3
 		},
 		"name": "miDaga",
-	}),
+	});
+	world.createdObjects[temporalObject.id] = temporalObject;
 
-	"bicho" : new Aguila({
+	temporalObject = new Aguila({
 		"position":{
 			"x": 3,
 			"y": 3,
 		},
 		"controls":"npc",
 		"name" : "bicho",
-	}),
+	});
+	world.createdObjects[temporalObject.id] = temporalObject;
 
-	"Manzana" : new Manzana({
+	temporalObject = new Manzana({
 		"position":{
 			"x": 4,
 			"y": 10,
 		},
 		"controls":"npc",
 		"name" : "Manzana",
-	}),
+	});
+	world.createdObjects[temporalObject.id] = temporalObject;
 
-	"Escudo" : new Escudo({
+	temporalObject = new Escudo({
 		"position":{
 			"x": 7,
 			"y": 4,
 		},
 		"controls":"npc",
 		"name" : "Escudo",
-	}),
+	});
+	world.createdObjects[temporalObject.id] = temporalObject;
 
-	"Casco" : new Casco({
+	temporalObject = new Casco({
 		"position":{
 			"x": 4,
 			"y": 5,
 		},
 		"controls":"npc",
 		"name" : "Casco",
-	}),
+	});
+	world.createdObjects[temporalObject.id] = temporalObject;
 
-	"PocionRoja" : new PocionRoja({
+	temporalObject = new PocionRoja({
 		"position":{
 			"x": 18,
 			"y": 4,
 		},
 		"controls":"npc",
 		"name" : "PocionRoja",
-	})
-};
+	});
+	world.createdObjects[temporalObject.id] = temporalObject;
+	test('id');
+
 
 //world.createdObjects.bicho.createArtifact({"artifact":Pollo});
 

@@ -26,7 +26,7 @@ var World = function( params ){
 
 	// Borra objeto del mapa
 	this.removeObject = function( params ){
-		this.createdObjects[ params.object.name ] = null;
+		this.createdObjects[ params.object.id ] = null;
 	}
 
 	// Carga los tiles desde un array en donde se le define el terrain de cada uno.
@@ -65,7 +65,7 @@ var World = function( params ){
 		this.getTile( params.lastPosition )[element_type] = null;
 		// lo crea en la nueva posicion.
 		this.getTile( params.element.position )[element_type] = element_type;
-		
+
 	}
 
 	//-------------------------------------------------------------------------------------
@@ -74,7 +74,8 @@ var World = function( params ){
 	// Crea objetos en base a la data recibida recorriendo todos los tiles
 	this.createObjects = function(){
 		for( object in world.createdObjects){
-			this.getTile( object.position )[ object.type ] = object;
+			o = world.createdObjects[object]
+			this.getTile( o.position )[ o.type ] = o;
 		}
 	}
 

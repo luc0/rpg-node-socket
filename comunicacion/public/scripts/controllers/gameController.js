@@ -6,23 +6,21 @@ websocket.on( 'world_update' , world_update );
 websocket.on( 'init_client' , init_client );
 
 function world_update( data ){
-	console.log( 'update' );
 	var propertyReference;
 	var treeArray;
 	var value;
-	console.log(data)
 	if( data.being !== undefined ){
 	// Actualización de las propiedades del BEING
-	
+
 
 		//Busca el objeto en el mundo que coincida con el id
 		var being = world.createdObjects[ data.being ];
 		var properties = data.data.all;
 
-		console.log( 'being', world.createdObjects,data.being );
 		//console.log( 'BEING',being,properties );
 		//Recorre todas las propiedades que se van a actualizar
 		for( var prop in properties ){
+
 
 			treeArray = properties[prop].tree;
 			value = properties[prop].value;
@@ -32,30 +30,28 @@ function world_update( data ){
 			objeto
 			*/
 			propertyReference = being;
-			console.log('being2',propertyReference)
 
 			/*Recorre todo el arbol sin incluir al ultimo elemento de la ruta*/
+
 			for( var level = 0 ; level < treeArray.length-1 ; level++ ){
 				// va agregando los distintos niveles en la ruta al objeto
 				propertyReference = propertyReference[ treeArray[level] ];
+
 			}
-
-			/*La ultima propiedad la refiere aparte para evitar el reemplazo de la
-			referencia por el valor value*/
-			propertyReference[ treeArray[++level] ] = value;
-
-			propertyReference = value;
-
+			propertyReference[ treeArray[level] ] = value;
 		}
 
 	}else if( data.artifact !== undefined ){
 	// Actualización de las propiedades del ARTIFACT
 
-		//Busca el objeto en el mundo que coincida con el id
+	//Busca el objeto en el mundo que coincida con el id
 		var artifact = world.createdObjects[ data.artifact ];
 		var properties = data.data.all;
+
+		//console.log( 'BEING',artifact,properties );
 		//Recorre todas las propiedades que se van a actualizar
 		for( var prop in properties ){
+
 
 			treeArray = properties[prop].tree;
 			value = properties[prop].value;
@@ -67,18 +63,18 @@ function world_update( data ){
 			propertyReference = artifact;
 
 			/*Recorre todo el arbol sin incluir al ultimo elemento de la ruta*/
+
 			for( var level = 0 ; level < treeArray.length-1 ; level++ ){
 				// va agregando los distintos niveles en la ruta al objeto
 				propertyReference = propertyReference[ treeArray[level] ];
+
 			}
-
-			/*La ultima propiedad la refiere aparte para evitar el reemplazo de la
-			referencia por el valor value*/
-			propertyReference[ treeArray[++level] ] = value;
-
-			propertyReference = value;
+			propertyReference[ treeArray[level] ] = value;
 
 		}
+
+
+
 
 	}else if( data.tile !== undefined ){
 	// Actualización de las propiedades del TILE
@@ -91,26 +87,27 @@ function world_update( data ){
 	}else if( data.world !== undefined ){
 	// Actualización de las propiedades del WORLD
 
-		treeArray = data.data.tree;
-		value = data.data.value;
+		treeArray = properties[prop].tree;
+		value = properties[prop].value;
 
 		/*
 		Comienza la referencia a la propiedad del objeto desde el mismo
 		objeto
 		*/
-		propertyReference = world;
+		propertyReference = tile;
 
 		/*Recorre todo el arbol sin incluir al ultimo elemento de la ruta*/
+
 		for( var level = 0 ; level < treeArray.length-1 ; level++ ){
 			// va agregando los distintos niveles en la ruta al objeto
 			propertyReference = propertyReference[ treeArray[level] ];
+
 		}
+		console.log("antes " + treeArray[level] , tile)
+		propertyReference[ treeArray[level] ] = value;
+		console.log("nuevo" + treeArray[level] , data)
+		console.log("despues" + treeArray[level] , tile)
 
-		/*La ultima propiedad la refiere aparte para evitar el reemplazo de la
-		referencia por el valor value*/
-		propertyReference[ treeArray[++level] ] = value;
-
-		propertyReference = value;
 
 	}
 
