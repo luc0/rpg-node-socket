@@ -2,9 +2,8 @@ var Being = function( params ){
 
 	var defaults = {
 
-		"type":Being,
+		"type":"being",
 
-		"world":null,
 
 		/*Objeto que contiene el sprite de THREE.JS*/
 		"sprite":null,
@@ -124,10 +123,6 @@ var Being = function( params ){
 
 
 
-	this.setWorld = function( params ){
-		this.world = params;
-	}
-	this.setWorld( params.world );
 
 	//----------------------------------------------------------------------------------
 	// Metodos

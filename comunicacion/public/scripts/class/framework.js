@@ -16,7 +16,6 @@
 	}
 
 	self.merge = function( base , added , merged ){
-
 		var base = (base !== undefined ) ? base : {};
 		var added = (added !== undefined ) ? added : {};
 

@@ -13,10 +13,8 @@ var Artifact = function( params ){
 			"y":0
 		},
 
-		// no lo estamos usando, lo dejamos por si las moscas
-		"world":null,
 
-		"type":Artifact,
+		"type":"artifact",
 
 		/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 		/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
@@ -51,11 +49,7 @@ var Artifact = function( params ){
 	/*Mezcla de los defaults con los parametros pasados al objeto*/
 	merge( defaults , params , this );
 
-	this.setWorld = function( params ){
-		this.world = params;
-	}
 
-	this.setWorld( params.world );
 
 
 }

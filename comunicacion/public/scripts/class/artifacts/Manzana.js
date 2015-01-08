@@ -1,4 +1,4 @@
-var Manzana = function( params , world ){
+var Manzana = function( params ){
 
 	// Props del hijo (con mas valor que las del Padre)
 	var defaults = {
@@ -20,6 +20,5 @@ var Manzana = function( params , world ){
 	merge( this , params , this );
 
 	// Se agrega en el mapa
-	this.world = world;
-	this.world.getTile( this.position ).append({ 'artifact' : this });
+	world.getTile( this.position ).append({ 'artifact' : this });
 }

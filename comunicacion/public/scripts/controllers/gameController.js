@@ -11,8 +11,25 @@ function world_update( params ){
 }
 
 function init_client( params ){
-	 console.log( params.world );
-	 remote_world = params.world;
-	 world.create();
-	 draw();
+
+
+
+
+	//console.log( world );
+	world.create();
+	copyProperties( params.world , world );
+	draw();
+}
+
+function copyProperties( origin , destiny ){
+	for( prop in origin ){
+		if( origin[prop] instanceof Object ){
+			if(origin[prop] instanceof Array) destiny[prop]=[];
+			if(destiny[prop] === undefined) destiny[prop]= {}
+
+			copyProperties( origin[prop] , destiny[prop] )
+			continue;
+		}
+		destiny[prop] = origin[prop];
+	}
 }

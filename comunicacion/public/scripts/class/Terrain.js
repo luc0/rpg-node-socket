@@ -1,4 +1,4 @@
-var Terrain = function( params , world ){
+var Terrain = function( params ){
 
 
 	var defaults = {
@@ -16,10 +16,8 @@ var Terrain = function( params , world ){
 		/*Propiedad que define si el objeto puede Terrain atravesado*/
 		"solid":true,
 
-		// no lo estamos usando, lo dejamos por si las moscas
-		"world":null,
 
-		"type":Terrain,
+		"type":"terrain",
 
 		/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 		/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
@@ -42,11 +40,6 @@ var Terrain = function( params , world ){
 	/*Mezcla de los defaults con los parametros pasados al objeto*/
 	merge( defaults , params , this );
 
-	//this.world = world;
-	this.setWorld = function( params ){
-		this.world = params;
-	}
 
-	this.setWorld( world );
 
 }

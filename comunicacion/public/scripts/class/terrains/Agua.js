@@ -1,4 +1,4 @@
-var Agua = function( params , world ){
+var Agua = function( params ){
 
 	// Props del hijo (con mas valor que las del Padre)
 	var defaults = {
@@ -15,6 +15,6 @@ var Agua = function( params , world ){
 	merge( this , params , this );
 
 	// Se agrega en el mundo
-	this.world = world;
-	this.world.getTile( this.position ).append({ 'terrain' : this })
+	
+	world.getTile( this.position ).append({ 'terrain' : this })
 }

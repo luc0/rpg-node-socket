@@ -1,4 +1,4 @@
-var Tierra = function( params , world ){
+var Tierra = function( params ){
 
 	// Props del hijo (con mas valor que las del Padre)
 	var defaults = {
@@ -16,6 +16,7 @@ var Tierra = function( params , world ){
 
 
 	// Se agrega en el mapa
-	this.world = world;
-	this.world.getTile( this.position ).append({ 'terrain' : this })
+	console.log("get tile")
+
+	world.getTile( this.position ).append({ 'terrain' : this })
 }

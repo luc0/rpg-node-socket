@@ -1,4 +1,4 @@
-var Enano = function( params , world ){
+var Enano = function( params ){
 
 	// Props del hijo (con mas valor que las del Padre)
 	var defaults = {
@@ -14,6 +14,5 @@ var Enano = function( params , world ){
 	merge( this , params , this );
 
 	// Se agrega en el mapa
-	this.world = world;
-	this.world.getTile( this.position ).append({ 'being' : this });
+	world.getTile( this.position ).append({ 'being' : this });
 }

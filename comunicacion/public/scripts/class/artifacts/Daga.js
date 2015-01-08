@@ -1,4 +1,4 @@
-var Daga = function( params , world ){
+var Daga = function( params ){
 
 	// Props del hijo (con mas valor que las del Padre)
 	var defaults = {
@@ -29,8 +29,6 @@ var Daga = function( params , world ){
 	// Sobreescribe las propiedades con los valores pasados en params cuando se instancia.
 	merge( this , params , this );
 
-	// Se agrega en el mapa
-	this.world = world;
-	this.world.getTile( this.position ).append({ 'artifact' : this });
+	world.getTile( this.position ).append({ 'artifact' : this });
 
 }

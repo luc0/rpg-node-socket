@@ -81,25 +81,25 @@
         }
 
         .Daga{
-            background:url(sprites/daga.png) no-repeat;
+            background:url(../public/sprites/daga.png) no-repeat;
             background-size: contain;
             z-index:2;
         }
 
         .Escudo{
-            background:url(sprites/escudo.png) no-repeat;
+            background:url(../public/sprites/escudo.png) no-repeat;
             background-size: contain;
             z-index:2;
         }
 
         .Casco{
-            background:url(sprites/casco.png) no-repeat;
+            background:url(../public/sprites/casco.png) no-repeat;
             background-size: contain;
             z-index:2;
         }
 
         .PocionRoja{
-            background:url(sprites/pocionRoja.png) no-repeat;
+            background:url(../public/sprites/pocionRoja.png) no-repeat;
             background-size: contain;
             z-index:2;
         }
@@ -120,13 +120,13 @@
         .Elfo.left{ background-image:url(../public/sprites/elfo-left.png); }
 
         .Manzana{
-            background:url(sprites/manzana.png) no-repeat;
+            background:url(../public/sprites/manzana.png) no-repeat;
             background-size: contain;
             z-index:2;
         }
 
         .Pollo{
-            background:url(sprites/pollo.png) no-repeat;
+            background:url(../public/sprites/pollo.png) no-repeat;
             background-size: contain;
             z-index:2;
         }
@@ -135,9 +135,10 @@
 <body>
     <div id="view"></div>
     <script>
-
-        var remoteWorld = new remoteWorld()
         var world = new World();
+        console.log("define world")
+
+
 
         world.createdObjects = {
         /*

@@ -36,8 +36,8 @@ world.createdObjects = {
 
 	"elfo2" : new Elfo({
 		"position":{
-			"x": 2,
-			"y": 4
+			"x": 5,
+			"y": 5
 		},
 		"name":"elfo2",
 		"controls":"npc",
@@ -45,10 +45,10 @@ world.createdObjects = {
 
 	"miDaga" : new Daga({
 		"position":{
-			"x": 3,
-			"y": 3
+			"x": 6,
+			"y": 6
 		},
-		"name": "miDaga",	
+		"name": "miDaga",
 	}),
 
 	"miDaga2" : new Daga({
@@ -56,15 +56,15 @@ world.createdObjects = {
 			"x": 4,
 			"y": 3
 		},
-		"name": "miDaga",	
+		"name": "miDaga",
 	}),
-	
+
 	"miDaga3" : new Daga({
 		"position":{
 			"x": 5,
 			"y": 3
 		},
-		"name": "miDaga",	
+		"name": "miDaga",
 	}),
 
 	"bicho" : new Aguila({
