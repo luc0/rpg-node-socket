@@ -78,11 +78,11 @@ function world_update( data ){
 
 	}else if( data.tile !== undefined ){
 	// Actualización de las propiedades del TILE
-
-		var tile = world.getTile( data.data.object.position );
+		var position = (data.data.lastPosition !== undefined ) ? data.data.lastPosition : data.data.object.position;
+		var tile = world.getTile( position );
 		var tileObject = data.data.object;
 
-		tile[ tileObject.type ] = tileObject;
+		tile[ tileObject.type ] = (data.data.lastPosition !== undefined ) ? null : tileObject;
 
 	}else if( data.world !== undefined ){
 	// Actualización de las propiedades del WORLD
