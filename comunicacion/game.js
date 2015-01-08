@@ -38,8 +38,8 @@ world.create();
 
 	temporalObject = new Elfo({
 		"position":{
-			"x": 5,
-			"y": 5
+			"x": 7,
+			"y": 1
 		},
 		"name":"elfo2",
 		"controls":"npc",
