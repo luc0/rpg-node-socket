@@ -78,15 +78,11 @@ function world_update( data ){
 
 	}else if( data.tile !== undefined ){
 	// Actualización de las propiedades del TILE
+		var position = (data.data.lastPosition !== undefined ) ? data.data.lastPosition : data.data.object.position;
+		var tile = world.getTile( position );
 		var tileObject = data.data.object;
 
-		if(data.data.lastPosition !== undefined){
-			var tileOld = world.getTile( data.data.lastPosition );
-			tileOld[ tileObject.type ] = null ;
-		}
-
-		var tileNew = world.getTile( data.data.object.position );
-		tileNew[ tileObject.type ] = tileObject;
+		tile[ tileObject.type ] = (data.data.lastPosition !== undefined ) ? null : tileObject;
 
 	}else if( data.world !== undefined ){
 	// Actualización de las propiedades del WORLD
