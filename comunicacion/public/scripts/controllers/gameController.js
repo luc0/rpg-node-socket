@@ -90,28 +90,7 @@ function world_update( data ){
 
 	}else if( data.world !== undefined ){
 	// Actualización de las propiedades del WORLD
-
-		treeArray = properties[prop].tree;
-		value = properties[prop].value;
-
-		/*
-		Comienza la referencia a la propiedad del objeto desde el mismo
-		objeto
-		*/
-		propertyReference = tile;
-
-		/*Recorre todo el arbol sin incluir al ultimo elemento de la ruta*/
-
-		for( var level = 0 ; level < treeArray.length-1 ; level++ ){
-			// va agregando los distintos niveles en la ruta al objeto
-			propertyReference = propertyReference[ treeArray[level] ];
-
-		}
-		console.log("antes " + treeArray[level] , tile)
-		propertyReference[ treeArray[level] ] = value;
-		console.log("nuevo" + treeArray[level] , data)
-		console.log("despues" + treeArray[level] , tile)
-
+		delete world.createdObjects[ data.object.id ];
 
 	}
 
