@@ -68,5 +68,15 @@ var World = function( params ){
 		
 	}
 
+	//-------------------------------------------------------------------------------------
+	// CLIENTE SOLAMENTE
+	//-------------------------------------------------------------------------------------
+	// Crea objetos en base a la data recibida recorriendo todos los tiles
+	this.createObjects = function(){
+		for( object in world.createdObjects){
+			this.getTile( object.position )[ object.type ] = object;
+		}
+	}
+
 
 }

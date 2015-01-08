@@ -8,7 +8,8 @@ var Being = function( params ){
 		/*Objeto que contiene el sprite de THREE.JS*/
 		"sprite":null,
 
-
+		"id":null,
+		
 		/*Angulo del Being*/
 		"rotation":{
 			"x":0,

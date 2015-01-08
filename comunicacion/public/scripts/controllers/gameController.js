@@ -6,18 +6,21 @@ websocket.on( 'world_update' , world_update );
 websocket.on( 'init_client' , init_client );
 
 function world_update( data ){
-	console.log( 'aqui viene lo bueno joven' );
-	console.log( data );
+	console.log( 'update' );
 	var propertyReference;
 	var treeArray;
 	var value;
+	console.log(data)
 	if( data.being !== undefined ){
 	// Actualización de las propiedades del BEING
-
+	
 
 		//Busca el objeto en el mundo que coincida con el id
 		var being = world.createdObjects[ data.being ];
 		var properties = data.data.all;
+
+		console.log( 'being', world.createdObjects,data.being );
+		//console.log( 'BEING',being,properties );
 		//Recorre todas las propiedades que se van a actualizar
 		for( var prop in properties ){
 
@@ -29,6 +32,7 @@ function world_update( data ){
 			objeto
 			*/
 			propertyReference = being;
+			console.log('being2',propertyReference)
 
 			/*Recorre todo el arbol sin incluir al ultimo elemento de la ruta*/
 			for( var level = 0 ; level < treeArray.length-1 ; level++ ){
@@ -114,12 +118,10 @@ function world_update( data ){
 
 function init_client( data ){
 
-
-
-
 	//console.log( world );
 	world.create();
 	copyProperties( data.world , world );
+	world.createObjects();
 	draw();
 }
 
