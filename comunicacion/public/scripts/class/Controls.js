@@ -11,10 +11,18 @@ var Controls = function(){
     this.keys = {};
     this.eventsDown = {
         "nothing":function(){},
-        "up":function(){},
-        "right":function(){},
-        "down":function(){},
-        "left":function(){},
+        "up":function(){
+            client.sendControls({ "control" : "up" });
+        },
+        "right":function(){
+            client.sendControls({ "control" : "right" });
+        },
+        "down":function(){
+            client.sendControls({ "control" : "down" });
+        },
+        "left":function(){
+            client.sendControls({ "control" : "left" });
+        },
         "attack":function(){},
         "take":function(){}, // INVENTARIO
         "drop":function(){} // INVENTARIO

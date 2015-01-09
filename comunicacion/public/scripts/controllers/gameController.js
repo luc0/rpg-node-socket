@@ -4,7 +4,13 @@
 
 websocket.on( 'world_update' , world_update );
 websocket.on( 'init_client' , init_client );
+websocket.on( 'ping' , ping );
 
+function ping( data ){
+	var fechalocal = (new Date()).getMilliseconds();
+	var fecharemota = data.fecha;
+	console.log( fechalocal - fecharemota );
+}
 function world_update( data ){
 	var propertyReference;
 	var treeArray;
@@ -77,16 +83,18 @@ function world_update( data ){
 
 
 	}else if( data.tile !== undefined ){
+
 	// Actualización de las propiedades del TILE
-		var position = (data.data.lastPosition !== undefined ) ? data.data.lastPosition : data.data.object.position;
+		var tileObject = world.createdObjects[data.data.object];
+		var position = (data.data.lastPosition !== undefined ) ? data.data.lastPosition : tileObject.position;
 		var tile = world.getTile( position );
-		var tileObject = data.data.object;
+		
 
 		tile[ tileObject.type ] = (data.data.lastPosition !== undefined ) ? null : tileObject;
 
 	}else if( data.world !== undefined ){
 	// Actualización de las propiedades del WORLD
-		delete world.createdObjects[ data.object.id ];
+		delete world.createdObjects[ tileObject.id ];
 
 	}
 
@@ -94,7 +102,6 @@ function world_update( data ){
 
 function init_client( data ){
 
-	//console.log( world );
 	world.create();
 	copyProperties( data.world , world );
 	world.createObjects();
@@ -113,3 +120,12 @@ function copyProperties( origin , destiny ){
 		destiny[prop] = origin[prop];
 	}
 }
+
+
+
+
+
+//------------------------------------------------------------------------------------------------
+// ENVIA AL SERVER
+//------------------------------------------------------------------------------------------------
+

@@ -25,6 +25,7 @@ world.create();
 // Juego
 	var temporalObject;
 
+/*
 	temporalObject = new Elfo({
 		"position":{
 			"x": 1,
@@ -35,10 +36,10 @@ world.create();
 	})
 	console.log(temporalObject.id);
 	world.createdObjects[temporalObject.id] = temporalObject;
-
+*/
 	temporalObject = new Elfo({
 		"position":{
-			"x": 7,
+			"x": 20,
 			"y": 1
 		},
 		"name":"elfo2",
@@ -73,10 +74,23 @@ world.create();
 	});
 	world.createdObjects[temporalObject.id] = temporalObject;
 
+	
+	for(var i = 0 ; i < 300 ; i++){
+		temporalObject = new Aguila({
+		"position":{
+			"x": Math.floor(Math.random()*15)+15,
+			"y": Math.floor(Math.random()*15)+15,
+		},
+		"controls":"npc",
+		"name" : "bicho",
+	});
+	world.createdObjects[temporalObject.id] = temporalObject;
+	}
+
 	temporalObject = new Aguila({
 		"position":{
-			"x": 3,
-			"y": 3,
+			"x": 2,
+			"y": 13,
 		},
 		"controls":"npc",
 		"name" : "bicho",
@@ -122,7 +136,6 @@ world.create();
 		"name" : "PocionRoja",
 	});
 	world.createdObjects[temporalObject.id] = temporalObject;
-	test('id');
 
 
 //world.createdObjects.bicho.createArtifact({"artifact":Pollo});

@@ -12,8 +12,10 @@ websocket.on( 'get_client_date' , get_client_date );
 
 function user_login( params ){
 
-	if( params.success ){
-		console.log( 'SERVER: logueado!' )
+	if( params ){
+		// Guardo identificador del pj.
+		client.userId = params.userId;
+		console.log( 'SERVER: logueado! userId:' , client.userId )
 	}
 
 }
@@ -37,9 +39,9 @@ function old_server(){
 
 // login
 (function(){
-	//var tmp_name = 'u'+parseInt(Math.random()*10000)//prompt('Nombre');
-	tmp_name = 'miElfo';
-	console.log('USUARIO:',tmp_name)
+	var tmp_name = 'u'+parseInt(Math.random()*10000);//prompt('Nombre');
+	//tmp_name = 'miElfo';
+	console.log('USUARIO:',tmp_name);
 	user = new User({ "username" : tmp_name });
 	var data = { "user" : user };
 	websocket.emit( 'user_login' , data );

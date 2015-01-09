@@ -43,7 +43,7 @@ var server = http.createServer(app).listen(80, function(){
 /*
     Escucha peticiones al servidor a traves de socket.io
 */
-var io = socketio.listen(server);
+global.io = socketio.listen(server);
 
 // Plugins Node
 global.colors = require('colors');

@@ -29,4 +29,5 @@ var Elfo = function( params ){
 
 	// Se agrega en el mapa
 	world.getTile( this.position ).append({ 'being' : this });
+	
 }

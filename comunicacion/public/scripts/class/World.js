@@ -40,6 +40,7 @@ var World = function( params ){
 
 	// Devuelve tile en base a una posicion dada.
 	this.getTile = function( position ){
+		
 		if( this.tiles[ position.x ] && this.tiles[ position.x ][ position.y ] ){
 			return this.tiles[ position.x ][ position.y ];
 		}else{
@@ -47,7 +48,7 @@ var World = function( params ){
 		}
 
 	}
-
+/*
 	// refresca posicion de un elemento ( being , terrain u object)
 	this.refresh = function( params ){
 
@@ -67,17 +68,26 @@ var World = function( params ){
 		this.getTile( params.element.position )[element_type] = element_type;
 
 	}
-
+*/
 	//-------------------------------------------------------------------------------------
 	// CLIENTE SOLAMENTE
 	//-------------------------------------------------------------------------------------
 	// Crea objetos en base a la data recibida recorriendo todos los tiles
 	this.createObjects = function(){
+		console.log("for createObjects");
 		for( object in world.createdObjects){
 			o = world.createdObjects[object]
 			this.getTile( o.position )[ o.type ] = o;
 		}
 	}
+
+
+
+	//----------------------------------------------------------------------------------
+	// Controles
+	//----------------------------------------------------------------------------------
+	this.controls = new Controls();
+	this.controls.init();
 
 
 }
