@@ -127,6 +127,11 @@ function world_update( data ){
 		var newBeing = data.newBeing;
 		console.log("Creando nuevo " + newBeing.type + " con el id " + newBeing.id);
 		world.createdObjects[newBeing.id] = newBeing;
+	}else if( data.newArtifact !== undefined ){
+
+		var newArtifact = data.newArtifact;
+		console.log("Creando nuevo " + newArtifact.type + " con el id " + newArtifact.id);
+		world.createdObjects[newArtifact.id] = newArtifact;
 	}
 
 }
