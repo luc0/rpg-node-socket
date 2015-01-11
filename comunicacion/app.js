@@ -32,6 +32,10 @@ app.get('/', function(req, res){
   res.render('index');
 });
 
+app.get('/three', function(req, res){
+  res.render('indexThree');
+});
+
 
 /*
     Crea un nuevo servidor web

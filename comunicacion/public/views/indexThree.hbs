@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Comunicacion</title>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+
+    <!-- Conexion socket -->
+    <script type="text/javascript" src="/public/scripts/cliente.js"></script>
+
+    <!-- Cargo clases y controllers-->
+    <script type="text/javascript" src="/public/scripts/class/User.js"></script>
+    <script type="text/javascript" src="/public/scripts/class/Client.js"></script>
+    <script type="text/javascript" src="/public/scripts/controllers/userController.js"></script>
+    <script type="text/javascript" src="/public/scripts/controllers/gameController.js"></script>
+    <script src="/public/scripts/class/framework.js"></script>
+    <script src="/public/scripts/class/Controls.js"></script>
+    <script src="/public/scripts/class/Being.js"></script>
+    <script src="/public/scripts/class/Terrain.js"></script>
+    <script src="/public/scripts/class/Artifact.js"></script>
+    <script src="/public/scripts/class/beings/Elfo.js"></script>
+    <script src="/public/scripts/class/beings/Aguila.js"></script>
+    <script src="/public/scripts/class/terrains/Tierra.js"></script>
+    <script src="/public/scripts/class/terrains/Agua.js"></script>
+    <script src="/public/scripts/class/artifacts/Daga.js"></script>
+    <script src="/public/scripts/class/artifacts/Pollo.js"></script>
+    <script src="/public/scripts/class/artifacts/Manzana.js"></script>
+    <script src="/public/scripts/class/artifacts/Papiro.js"></script>
+    <script src="/public/scripts/class/artifacts/Escudo.js"></script>
+    <script src="/public/scripts/class/artifacts/Casco.js"></script>
+    <script src="/public/scripts/class/artifacts/PocionRoja.js"></script>
+    <script src="/public/scripts/class/Tile.js"></script>
+    <script src="/public/scripts/class/World.js"></script>
+    <style>
+        #view{
+            width:90%;
+            margin:10px auto;
+            height:100%;
+            z-index:100;
+            overflow:hidden !important;
+        }
+        window,body{
+            overflow: hidden !important;
+        }
+        div{
+            margin:0;
+            padding:0;
+            height:32px;
+        }
+        .tile{
+            display:inline-block;
+            width:32px;
+            height:32px;
+            outline:1px solid rgba(0,0,0,0.2);
+            position:relative;
+        }
+        span{
+            position:absolute;
+            left:0;
+            top:0;
+            width:100%;
+            height:100%;
+            /*background-color:rgba(255,0,0,0.2);*/
+            display:block;
+        }
+        .Agua{
+            background-color:rgba(0,0,255,0.7);
+            z-index:1;
+        }
+        .Tierra{
+            background-color:rgba(100,80,30,0.7);
+            z-index:1;
+        }
+        .Daga{
+            background:url(../public/sprites/daga.png) no-repeat;
+            background-size: contain;
+            z-index:2;
+        }
+        .Escudo{
+            background:url(../public/sprites/escudo.png) no-repeat;
+            background-size: contain;
+            z-index:2;
+        }
+        .Casco{
+            background:url(../public/sprites/casco.png) no-repeat;
+            background-size: contain;
+            z-index:2;
+        }
+        .PocionRoja{
+            background:url(../public/sprites/pocionRoja.png) no-repeat;
+            background-size: contain;
+            z-index:2;
+        }
+        .Aguila,.Elfo{
+            z-index:3;
+            background-size: contain;
+            background-repeat:no-repeat;
+        }
+        .Aguila.up{ background-image:url(../public/sprites/aguila-up.png); }
+        .Aguila.right{ background-image:url(../public/sprites/aguila-right.png); }
+        .Aguila.down{ background-image:url(../public/sprites/aguila-down.png); }
+        .Aguila.left{ background-image:url(../public/sprites/aguila-left.png); }
+        .Elfo.up{ background-image:url(../public/sprites/elfo-up.png); }
+        .Elfo.right{ background-image:url(../public/sprites/elfo-right.png); }
+        .Elfo.down{ background-image:url(../public/sprites/elfo-down.png); }
+        .Elfo.left{ background-image:url(../public/sprites/elfo-left.png); }
+        .Manzana{
+            background:url(../public/sprites/manzana.png) no-repeat;
+            background-size: contain;
+            z-index:2;
+        }
+        .Pollo{
+            background:url(../public/sprites/pollo.png) no-repeat;
+            background-size: contain;
+            z-index:2;
+        }
+
+        .modal{
+            height:250px;
+            position:absolute;
+            top:50%;
+            left:50%;
+            -webkit-transform: translate3d( -50% , -50% , 0 );
+            transform: translate3d( -50% , -50% , 0 );
+            background-color:#ffffff;
+            padding:20px;
+            z-index:100;
+            border:2px solid rgba(0,0,0,0.3);
+        }
+
+        .modal input{
+            width:300px;
+            height:30px;
+            margin:20px;
+            display:block;
+        }
+    </style>
+</head>
+<body>
+    <script src="/public/lib/three.min.js"></script>
+    <script>
+        var Finn;
+        var world = new World();
+        console.log("define world");
+        world.createdObjects = {};
+
+        function draw(){
+
+            // Our Javascript will go here.
+            var angle = 0;
+            var scene = new THREE.Scene();
+            var camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 3000 );
+
+            var renderer = new THREE.WebGLRenderer();
+            renderer.setSize( window.innerWidth, window.innerHeight );
+            document.body.appendChild( renderer.domElement );
+
+
+
+            var geometryFinn = new THREE.PlaneGeometry(18, 23);
+            var geometryTerreno = new THREE.PlaneGeometry(10, 10);
+            var textureFinn = new THREE.ImageUtils.loadTexture("/public/images/finn.png");
+            var textureTerrenoTierra = new THREE.ImageUtils.loadTexture("/public/images/pasto.jpg");
+            var textureTerrenoAgua = new THREE.ImageUtils.loadTexture("/public/images/agua.jpg");
+
+
+            materialFinn = new THREE.MeshLambertMaterial( { map: textureFinn , transparent:true , side:THREE.FrontSide } );
+            materialTerrenoTierra = new THREE.MeshLambertMaterial({ map:textureTerrenoTierra, side:THREE.FrontSide });
+            materialTerrenoAgua = new THREE.MeshLambertMaterial({ map:textureTerrenoAgua, side:THREE.FrontSide });
+
+            Finn = new THREE.Mesh( geometryFinn, materialFinn );
+            scene.add( Finn );
+
+            var tw=30,th = 30
+            var Terreno = [];
+            for( var tx = 0 ; tx < tw ; tx++ ){
+                Terreno[tx] = []
+                for( var ty = 0 ; ty < th ; ty++ ){
+                    if(world.getTile({"x" : tx , "y" : ty }).terrain.specie == "Tierra"){
+                        Terreno[tx][ty] = new THREE.Mesh( geometryTerreno , materialTerrenoTierra );
+                    } else {
+                        Terreno[tx][ty] = new THREE.Mesh( geometryTerreno , materialTerrenoAgua );
+                    }
+                    scene.add( Terreno[tx][ty] );
+                    Terreno[tx][ty].position.x = tx*10-tw*10/2+5;
+                    Terreno[tx][ty].position.z = ty*10-th*10/2+5;
+                    Terreno[tx][ty].position.y = -150;
+                    Terreno[tx][ty].rotation.x = -Math.PI/2;
+                }
+            }
+
+
+            var omnilight = new THREE.AmbientLight(0x404040);
+            scene.add(omnilight);
+
+            var directionallight = new THREE.DirectionalLight(0xffffff,0.8);
+            directionallight.position.set(1,1,1).normalize();
+            scene.add(directionallight);
+
+            var spotlight = new THREE.SpotLight(0xffffff,0.3);
+
+            spotlight.position.set(1,1,1).normalize();
+            scene.add(spotlight);
+
+            camera.position.z = 800;
+            camera.position.y = 10;
+            var angulo = -Math.PI;
+            var cangulo = 0;
+
+
+            Finn.position.z = 0;
+            Finn.position.x = -100;
+            Finn.rotation.z = 0;
+            Finn.position.y = -140;
+
+            spotlight.target.position.x = Finn.position.x;
+            spotlight.target.position.y = Finn.position.y;
+            spotlight.target.position.z = Finn.position.z;
+
+            spotlight.target.updateMatrixWorld();
+            
+            function render() {
+
+
+                camera.lookAt( Finn.position )
+                cangulo+=0.01;
+                requestAnimationFrame( render );
+                renderer.render( scene, camera );
+
+                camera.position.z = 200//100*Math.cos(cangulo)+200;
+                camera.position.y = -50//50*Math.sin(cangulo*3)-99;
+                camera.position.x = 20//100*Math.sin(cangulo);
+
+                spotlight.position.x = camera.position.x;
+                spotlight.position.y = camera.position.y;
+                spotlight.position.z = camera.position.z;
+                Finn.position.x = world.createdObjects[client.userId].position.x*10-150;
+                Finn.position.z = world.createdObjects[client.userId].position.y*10+5-150;
+
+            }
+            render();
+        }
+
+    </script>
+</body>
+</html>
