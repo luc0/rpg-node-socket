@@ -105,6 +105,11 @@ function world_update( data ){
 	// Actualización de las propiedades del WORLD
 		delete world.createdObjects[ tileObject.id ];
 
+	}else if( data.newBeing !== undefined ){
+
+		var newBeing = data.newBeing;
+		console.log("Creando nuevo " + newBeing.type + " con el id " + newBeing.id);
+		world.createdObjects[newBeing.id] = newBeing;
 	}
 
 }
