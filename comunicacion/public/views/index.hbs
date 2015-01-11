@@ -33,13 +33,14 @@
     <script src="/public/scripts/class/World.js"></script>
     <style>
         #view{
-            width:80%;
+            width:90%;
             margin:10px auto;
             height:100%;
             z-index:100;
+            overflow:hidden !important;
         }
-        body{
-            overflow: hidden;
+        window,body{
+            overflow: hidden !important;
         }
         div{
             margin:0;
@@ -62,47 +63,39 @@
             /*background-color:rgba(255,0,0,0.2);*/
             display:block;
         }
-
         .Agua{
             background-color:rgba(0,0,255,0.7);
             z-index:1;
         }
-
         .Tierra{
             background-color:rgba(100,80,30,0.7);
             z-index:1;
         }
-
         .Daga{
             background:url(../public/sprites/daga.png) no-repeat;
             background-size: contain;
             z-index:2;
         }
-
         .Escudo{
             background:url(../public/sprites/escudo.png) no-repeat;
             background-size: contain;
             z-index:2;
         }
-
         .Casco{
             background:url(../public/sprites/casco.png) no-repeat;
             background-size: contain;
             z-index:2;
         }
-
         .PocionRoja{
             background:url(../public/sprites/pocionRoja.png) no-repeat;
             background-size: contain;
             z-index:2;
         }
-
         .Aguila,.Elfo{
             z-index:3;
             background-size: contain;
             background-repeat:no-repeat;
         }
-
         .Aguila.up{ background-image:url(../public/sprites/aguila-up.png); }
         .Aguila.right{ background-image:url(../public/sprites/aguila-right.png); }
         .Aguila.down{ background-image:url(../public/sprites/aguila-down.png); }
@@ -111,13 +104,11 @@
         .Elfo.right{ background-image:url(../public/sprites/elfo-right.png); }
         .Elfo.down{ background-image:url(../public/sprites/elfo-down.png); }
         .Elfo.left{ background-image:url(../public/sprites/elfo-left.png); }
-
         .Manzana{
             background:url(../public/sprites/manzana.png) no-repeat;
             background-size: contain;
             z-index:2;
         }
-
         .Pollo{
             background:url(../public/sprites/pollo.png) no-repeat;
             background-size: contain;
@@ -130,11 +121,7 @@
     <script>
         var world = new World();
         console.log("define world");
-
-
-
         world.createdObjects = {};
-
         //var miarray = createArray( 5 , 5 , Elfo );
         var view = document.getElementById('view');
         view.onmousedown = function(e){
@@ -142,17 +129,13 @@
             var x = target.dataset.x;
             var y = target.dataset.y;
             console.log( world.getTile({ "x" : x , "y" : y  }) )
-
         }
-
         function draw(){
             setInterval(function(){
                 var tiles = ""
                 var beingClass, beingDirectionClass , beingSpan;
                 var artifactClass , artifactSpan;
                 var terrainClass , terrainSpan;
-
-
                 for( var y = 0 ; y < 30 ; y++ ){
                     tiles+="<div>";
                     for( var x = 0 ; x < 30 ; x++ ){
@@ -160,21 +143,18 @@
                         beingDirectionClass = world.getTile({"x":x , "y":y}).being && world.getTile({"x":x , "y":y}).being.direction;
                         terrainClass = world.getTile({"x":x , "y":y}).terrain && world.getTile({"x":x , "y":y}).terrain.specie;
                         artifactClass = world.getTile({"x":x , "y":y}).artifact && world.getTile({"x":x , "y":y}).artifact.specie;
-
                         beingSpan = "<span class='" + beingClass+" "+ beingDirectionClass + "'></span>";
                         terrainSpan = "<span class='" + terrainClass + "'></span>";
                         artifactSpan = "<span class='" + artifactClass + "'></span>";
                         tiles+="<div data-x='"+ x +"' data-y='"+ y +"' class='tile'>" + beingSpan + terrainSpan + artifactSpan + "</div>";
-
                         beingClass="";
                         terrainClass="";
                         artifactClass="";
                     }
                     tiles+="</div>";
-
                 }
                 view.innerHTML = tiles;
-            },33)
+            },60)
         }
     </script>
 </body>
