@@ -1,14 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Comunicacion</title>
-    </head>
-
-    <body>
-        <h1>Llegaste</h1>
-    </body>
-
+<head>
+    <meta charset="UTF-8">
+    <title>Comunicacion</title>
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
 
     <!-- Conexion socket -->
@@ -41,7 +35,6 @@
         #view{
             width:80%;
             margin:10px auto;
-            overflow:auto;
             height:100%;
             z-index:100;
         }
@@ -140,19 +133,7 @@
 
 
 
-        world.createdObjects = {
-        /*
-            "miElfo" : new Elfo({
-                "position":{
-                    "x": 1,
-                    "y": 1
-                },
-                "name":"miElfo",
-                "controls":"pc",
-                "world": world
-            })
-        */
-        }
+        world.createdObjects = {};
 
         //var miarray = createArray( 5 , 5 , Elfo );
         var view = document.getElementById('view');
@@ -196,4 +177,5 @@
             },33)
         }
     </script>
+</body>
 </html>
