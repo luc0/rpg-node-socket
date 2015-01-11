@@ -55,9 +55,10 @@ function world_update( data ){
 		}
 
 	}else if( data.artifact !== undefined ){
-		console.log("haciendo artifact");
-	// Actualización de las propiedades del ARTIFACT
-	//Busca el objeto en el mundo que coincida con el id
+// Actualización de las propiedades del BEING
+
+
+		//Busca el objeto en el mundo que coincida con el id
 		var artifact = world.createdObjects[ data.artifact ];
 		var properties = data.data.all;
 
@@ -83,12 +84,7 @@ function world_update( data ){
 
 			}
 			propertyReference[ treeArray[level] ] = value;
-
 		}
-
-
-
-
 	}else if( data.tile !== undefined ){
 		if(data.tile === "swap"){
 
