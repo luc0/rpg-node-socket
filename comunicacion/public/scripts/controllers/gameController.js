@@ -14,7 +14,7 @@ function ping( data ){
 
 function queue_world_update( data ){
 	for( var q in data.queue ){
-		wolrd_update( data.queue[q] );
+		world_update( data.queue[q] );
 	}
 }
 function world_update( data ){
