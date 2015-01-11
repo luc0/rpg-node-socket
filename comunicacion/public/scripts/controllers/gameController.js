@@ -2,7 +2,7 @@
 // RECIBE DEL SERVER
 //------------------------------------------------------------------------------------------------
 
-websocket.on( 'world_update' , world_update );
+websocket.on( 'world_update' , queue_world_update );
 websocket.on( 'init_client' , init_client );
 websocket.on( 'ping' , ping );
 
@@ -10,6 +10,12 @@ function ping( data ){
 	var fechalocal = (new Date()).getMilliseconds();
 	var fecharemota = data.fecha;
 	console.log( fechalocal - fecharemota );
+}
+
+function queue_world_update( data ){
+	for( var q in data.queue ){
+		wolrd_update( data.queue[q] );
+	}
 }
 function world_update( data ){
 	var propertyReference;
