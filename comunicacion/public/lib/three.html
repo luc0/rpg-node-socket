@@ -1,0 +1,99 @@
+<html>
+	<head>
+		<title>My first Three.js app</title>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			// Our Javascript will go here.
+			var angle = 0;
+			var scene = new THREE.Scene();
+			var camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 3000 );
+
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+
+
+
+			var geometryFinn = new THREE.PlaneGeometry(18, 23);
+			var geometryTerreno = new THREE.PlaneGeometry(10, 10);
+			var textureFinn = new THREE.ImageUtils.loadTexture("finn.png");
+			var textureTerreno = new THREE.ImageUtils.loadTexture("pasto.jpg");
+
+
+			materialFinn = new THREE.MeshLambertMaterial( { map: textureFinn , transparent:true , side:THREE.FrontSide } );
+			materialTerreno = new THREE.MeshLambertMaterial({ map:textureTerreno, side:THREE.FrontSide });
+
+			var Finn = new THREE.Mesh( geometryFinn, materialFinn );
+			scene.add( Finn );
+
+			var tw=100,th = 100
+			var Terreno = [];
+			for( var tx = 0 ; tx < tw ; tx++ ){
+				Terreno[tx] = []
+				for( var ty = 0 ; ty < th ; ty++ ){
+					Terreno[tx][ty] = new THREE.Mesh( geometryTerreno , materialTerreno );
+					scene.add( Terreno[tx][ty] );
+					Terreno[tx][ty].position.x = tx*10-tw*10/2+5;
+					Terreno[tx][ty].position.z = ty*10-th*10/2+5;
+					Terreno[tx][ty].position.y = -150;
+					Terreno[tx][ty].rotation.x = -Math.PI/2;
+				}
+			}
+
+
+			var omnilight = new THREE.AmbientLight(0x404040);
+			scene.add(omnilight);
+
+			var directionallight = new THREE.DirectionalLight(0xffffff,0.8);
+			directionallight.position.set(1,1,1).normalize();
+			scene.add(directionallight);
+
+			var spotlight = new THREE.SpotLight(0xffffff,0.3);
+
+			spotlight.position.set(1,1,1).normalize();
+			scene.add(spotlight);
+
+			camera.position.z = 800;
+			camera.position.y = 10;
+			var angulo = -Math.PI;
+			var cangulo = 0;
+
+
+			Finn.position.z = 0;
+			Finn.position.x = -100;
+			Finn.rotation.z = 0;
+			Finn.position.y = -140;
+
+			spotlight.target.position.x = Finn.position.x;
+			spotlight.target.position.y = Finn.position.y;
+			spotlight.target.position.z = Finn.position.z;
+
+			spotlight.target.updateMatrixWorld();
+
+			function render() {
+				camera.lookAt( Finn.position )
+				cangulo+=0.01;
+				requestAnimationFrame( render );
+				renderer.render( scene, camera );
+
+				camera.position.z = 100*Math.cos(cangulo)+200;
+				camera.position.y = 50*Math.sin(cangulo*3)-99;
+				camera.position.x = 100*Math.sin(cangulo);
+
+				spotlight.position.x = camera.position.x;
+				spotlight.position.y = camera.position.y;
+				spotlight.position.z = camera.position.z;
+
+
+			}
+			render();
+
+		</script>
+	</body>
+</html>
