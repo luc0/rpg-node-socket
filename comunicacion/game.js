@@ -89,8 +89,8 @@ world.create();
 
 	temporalObject = new Aguila({
 		"position":{
-			"x": 2,
-			"y": 13,
+			"x": 1,
+			"y": 18,
 		},
 		"controls":"npc",
 		"name" : "bicho",
