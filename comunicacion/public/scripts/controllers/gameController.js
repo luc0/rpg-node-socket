@@ -61,7 +61,10 @@ function world_update( data ){
 				propertyReference = propertyReference[ treeArray[level] ];
 
 			}
+			reproducirSonidos({ "property" : treeArray[level] , 'newValue' : value , 'oldValue' : propertyReference[ treeArray[level] ] });
+
 			propertyReference[ treeArray[level] ] = value;
+
 		}
 
 	}else if( data.artifact !== undefined ){
@@ -165,5 +168,22 @@ function copyProperties( origin , destiny ){
 
 
 //------------------------------------------------------------------------------------------------
-// ENVIA AL SERVER
+// FUNCIONES
 //------------------------------------------------------------------------------------------------
+
+var reproducirSonidos = function( params ){
+	var p = params.property;
+	var oldValue = params.oldValue;
+	var newValue = params.newValue;
+	if( p == 'life'){
+		// Si se redujo..
+		if( oldValue.min > newValue.min ){
+			audio['pegar'].play();
+		}
+		return;
+	}
+	if( p == 'position'){
+		audio['caminar'].play();
+		return;
+	}
+}
