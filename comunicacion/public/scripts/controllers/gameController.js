@@ -9,10 +9,11 @@ websocket.on( 'ask_drop' , ask_drop );
 
 
 function ask_drop(){
-	var answerDrop = parseInt( prompt( 'Cuántos artefactos tiro?' ) );
-	if( !(answerDrop > 0) ) answerDrop = 1;
+	inputPrompt( function( answerDrop ){
+		if( !(answerDrop > 0) ) answerDrop = 1;
+		client.sendAnswer({ 'answer' : answerDrop} );
+	});
 
-	client.sendAnswer({ 'answer' : answerDrop} );
 
 }
 function ping( data ){

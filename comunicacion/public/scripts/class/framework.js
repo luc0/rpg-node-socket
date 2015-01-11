@@ -70,6 +70,22 @@
 		return newObject;
 	}
 
+	self.inputPrompt = function( callback ){
+		var div = document.createElement('div');
+		div.innerHTML = "<div class='modal'><div><input id='input_value' type='text'></div><div><input id='input_button' type='button' value='Tirar'></div></div>";
+		var modal = div.firstChild;
+		var input_button = modal.querySelector('#input_button');
+		var input_value = modal.querySelector('#input_value');
+		input_button.onclick = function(){
+			callback(+modal.querySelector('#input_value').value);
+			modal.parentNode.removeChild(modal);
+		}
+
+		input_value.onchange = input_button.onclick;
+		document.body.appendChild(modal);
+		input_value.focus();
+	}
+
 	// Encuentra una position en un array. function( array , position )
 	/*
 	self.findPositionInArray = function( params ) {
