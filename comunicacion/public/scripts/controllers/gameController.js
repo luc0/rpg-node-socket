@@ -5,7 +5,14 @@
 websocket.on( 'world_update' , queue_world_update );
 websocket.on( 'init_client' , init_client );
 websocket.on( 'ping' , ping );
+websocket.on( 'ask_drop' , ask_drop );
 
+
+function ask_drop(){
+	var answerDrop = Math.max( 1 , parseInt( prompt( 'Cuántos artefactos tiro?' ) ) );
+	client.sendAnswer({ 'answer' : answerDrop} );
+
+}
 function ping( data ){
 	var fechalocal = (new Date()).getMilliseconds();
 	var fecharemota = data.fecha;

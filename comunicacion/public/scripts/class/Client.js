@@ -17,4 +17,12 @@ var Client = function(){
 		websocket.emit( 'user_keydown' , data );
 	}
 
+	this.sendAnswer = function( params ){
+		var data = { "answer" : params.answer };
+		websocket.emit( 'answer_drop' , data );
+		console.log('Respondiendo... Tira ' + data.answer);
+	}
+
+
+
 }
