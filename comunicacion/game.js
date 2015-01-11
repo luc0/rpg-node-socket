@@ -37,6 +37,7 @@ world.create();
 	console.log(temporalObject.id);
 	world.createdObjects[temporalObject.id] = temporalObject;
 */
+/*
 	temporalObject = new Elfo({
 		"position":{
 			"x": 20,
@@ -46,7 +47,7 @@ world.create();
 		"controls":"npc",
 	});
 	world.createdObjects[temporalObject.id] = temporalObject;
-
+*/
 	temporalObject = new Daga({
 		"position":{
 			"x": 6,
@@ -87,6 +88,7 @@ world.create();
 	world.createdObjects[temporalObject.id] = temporalObject;
 	}
 
+/*
 	temporalObject = new Aguila({
 		"position":{
 			"x": 1,
@@ -96,7 +98,7 @@ world.create();
 		"name" : "bicho",
 	});
 	world.createdObjects[temporalObject.id] = temporalObject;
-
+*/
 	temporalObject = new Manzana({
 		"position":{
 			"x": 4,
