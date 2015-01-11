@@ -23,9 +23,15 @@ var Controls = function(){
         "left":function(){
             client.sendControls({ "control" : "left" });
         },
-        "attack":function(){},
-        "take":function(){}, // INVENTARIO
-        "drop":function(){} // INVENTARIO
+        "attack":function(){
+            client.sendControls({ "control" : "attack" });
+        },
+        "take":function(){
+            client.sendControls({ "control" : "take" });
+        }, // INVENTARIO
+        "drop":function(){
+            client.sendControls({ "control" : "drop" });
+        } // INVENTARIO
     }
     this.eventsUp = {
         "nothing":function(){},

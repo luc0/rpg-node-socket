@@ -18,6 +18,7 @@ function queue_world_update( data ){
 	}
 }
 function world_update( data ){
+	console.log("MIRA ESTOOO!!! " , data);
 	var propertyReference;
 	var treeArray;
 	var value;
@@ -54,8 +55,8 @@ function world_update( data ){
 		}
 
 	}else if( data.artifact !== undefined ){
+		console.log("haciendo artifact");
 	// Actualización de las propiedades del ARTIFACT
-
 	//Busca el objeto en el mundo que coincida con el id
 		var artifact = world.createdObjects[ data.artifact ];
 		var properties = data.data.all;
@@ -89,17 +90,30 @@ function world_update( data ){
 
 
 	}else if( data.tile !== undefined ){
+		if(data.tile === "swap"){
 
-	// Actualización de las propiedades del TILE
-		var tileObject = world.createdObjects[data.data.object];
-		var lastPosition = data.data.lastPosition;
-		var position = tileObject.position;
-		var lastTile = world.getTile( lastPosition );
-		var tile = world.getTile( position );
+		// Actualización de las propiedades del TILE
+			var tileObject = world.createdObjects[data.data.object];
+			var lastPosition = data.data.lastPosition;
+			var position = tileObject.position;
+			var lastTile = world.getTile( lastPosition );
+			var tile = world.getTile( position );
 
 
-		lastTile[ tileObject.type ] = null;
-		tile[ tileObject.type ] = tileObject;
+			lastTile[ tileObject.type ] = null;
+			tile[ tileObject.type ] = tileObject;
+			return;
+		}
+		if(data.tile === "remove"){
+
+		// Actualización de las propiedades del TILE
+			var tileObject = world.createdObjects[data.data.object];
+			var lastPosition = data.data.lastPosition;
+			var lastTile = world.getTile( lastPosition );
+
+			lastTile[ tileObject.type ] = null;
+			return;
+		}
 
 	}else if( data.world !== undefined ){
 	// Actualización de las propiedades del WORLD
