@@ -86,11 +86,14 @@ function world_update( data ){
 
 	// Actualización de las propiedades del TILE
 		var tileObject = world.createdObjects[data.data.object];
-		var position = (data.data.lastPosition !== undefined ) ? data.data.lastPosition : tileObject.position;
+		var lastPosition = data.data.lastPosition;
+		var position = tileObject.position;
+		var lastTile = world.getTile( lastPosition );
 		var tile = world.getTile( position );
-		
 
-		tile[ tileObject.type ] = (data.data.lastPosition !== undefined ) ? null : tileObject;
+
+		lastTile[ tileObject.type ] = null;
+		tile[ tileObject.type ] = tileObject;
 
 	}else if( data.world !== undefined ){
 	// Actualización de las propiedades del WORLD
@@ -128,4 +131,3 @@ function copyProperties( origin , destiny ){
 //------------------------------------------------------------------------------------------------
 // ENVIA AL SERVER
 //------------------------------------------------------------------------------------------------
-
