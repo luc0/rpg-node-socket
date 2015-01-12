@@ -175,6 +175,8 @@ var reproducirSonidos = function( params ){
 	var p = params.property;
 	var oldValue = params.oldValue;
 	var newValue = params.newValue;
+
+
 	if( p == 'life'){
 		// Si se redujo..
 		if( oldValue.min > newValue.min ){
@@ -182,6 +184,7 @@ var reproducirSonidos = function( params ){
 		}
 		return;
 	}
+	
 	if( p == 'position'){
 		audio['caminar'].play();
 		return;
