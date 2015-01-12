@@ -33,7 +33,7 @@ var Sprites = function(){
         objectSprite.character.position.y = -150;
         objectSprite.character.rotation.x = -Math.PI / 2;
         this.scene.add( objectSprite.character );
-        if( object.controls === "pc" ){
+        if( object.type === "being" ){
 
             objectSprite.character.rotation.x = 0;
             objectSprite.character.position.y = -140;
@@ -71,9 +71,6 @@ var Sprites = function(){
     function render() {
         requestAnimationFrame( render );
 
-        sprites.camera.position.z = 200//100*Math.cos(cangulo)+200;
-        sprites.camera.position.y = -50//50*Math.sin(cangulo*3)-99;
-        sprites.camera.position.x = 20//100*Math.sin(cangulo);
 
         sprites.spotLight.position.x = sprites.camera.position.x;
         sprites.spotLight.position.y = sprites.camera.position.y;
@@ -85,10 +82,15 @@ var Sprites = function(){
                 actualObject = world.createdObjects[ object ];
                 actualObject.sprite.hasToCalculatePosition = false;
                 if( actualObject.sprite.character == undefined ) continue;
-                sprites.camera.lookAt( world.createdObjects[client.userId].sprite.character.position );
-
                 actualObject.sprite.character.position.x = actualObject.position.x * 10 - 150 + 5;
                 actualObject.sprite.character.position.z = actualObject.position.y * 10 - 150 + 5 ;
+                if(actualObject.id == client.userId){
+                    sprites.camera.position.z = actualObject.sprite.character.position.z+150//100*Math.cos(cangulo)+200;
+                    sprites.camera.position.y = -50//50*Math.sin(cangulo*3)-99;
+                    sprites.camera.position.x = actualObject.sprite.character.position.x//100*Math.sin(cangulo);
+                    sprites.camera.lookAt( world.createdObjects[client.userId].sprite.character.position );
+                }
+
 
             }
         }

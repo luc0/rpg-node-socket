@@ -3,7 +3,7 @@ var Aguila = function( params ){
 	// Props del hijo (con mas valor que las del Padre)
 	var defaults = {
 		"sprite":{
-			"images":"public/sprites/elfo-down.png",
+			"images":"../public/sprites/aguila-down.png",
 			"hasToCalculatePosition":true
 		},
 		/*Nombre del elfo*/

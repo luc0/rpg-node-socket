@@ -77,6 +77,7 @@ var World = function( params ){
 		var o;
 		for( var object in world.createdObjects){
 			o = world.createdObjects[object];
+			console.log("aguila es ", o)
 			if(o.id != client.userId) sprites.initSprite( {"object" : o} );
 			this.getTile( o.position )[ o.type ] = o;
 		}
