@@ -182,6 +182,9 @@ var reproducirSonidos = function( params ){
 		if( oldValue.min > newValue.min ){
 			audio['pegar'].play();
 		}
+		if( newValue.min <= 0 ){
+			audio['muerte'].play();
+		}
 		return;
 	}
 	
