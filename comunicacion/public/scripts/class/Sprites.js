@@ -11,13 +11,22 @@ var Sprites = function(){
         var object = params.object;
         var objectSprite = object.sprite;
 
-        objectSprite.geometry = new THREE.PlaneGeometry(18, 23);
         objectSprite.texture = new THREE.ImageUtils.loadTexture(objectSprite.images);
-        objectSprite.material = new THREE.MeshLambertMaterial( {
-            map: objectSprite.texture,
-            transparent:true,
-            side:THREE.FrontSide
-        });
+        if(object.type == "being"){
+            objectSprite.geometry = new THREE.PlaneGeometry(18, 23);
+            objectSprite.material = new THREE.MeshLambertMaterial( {
+                map: objectSprite.texture,
+                transparent:true,
+                side:THREE.FrontSide
+            });
+        }else{
+            objectSprite.geometry = new THREE.PlaneGeometry(10, 10);
+            objectSprite.material = new THREE.MeshLambertMaterial( {
+                map: objectSprite.texture,
+                transparent:false,
+                side:THREE.FrontSide
+            });
+        }
         objectSprite.character = new THREE.Mesh( objectSprite.geometry, objectSprite.material );
         objectSprite.character.position.x = object.position.x * 10 - 30 * 10 / 2 + 5 ;
         objectSprite.character.position.z = object.position.y * 10 - 30 * 10 / 2 + 5 ;
@@ -25,9 +34,9 @@ var Sprites = function(){
         objectSprite.character.rotation.x = -Math.PI / 2;
         this.scene.add( objectSprite.character );
         if( object.controls === "pc" ){
-            this.camera.lookAt( objectSprite.character.position );
 
             objectSprite.character.rotation.x = 0;
+            objectSprite.character.position.y = -140;
             this.spotLight.target.position.x = objectSprite.character.position.x;
             this.spotLight.target.position.y = objectSprite.character.position.y;
             this.spotLight.target.position.z = objectSprite.character.position.z;
@@ -60,9 +69,7 @@ var Sprites = function(){
     this.render = render;
         var a=0;
     function render() {
-
         requestAnimationFrame( render );
-        sprites.renderer.render( sprites.scene, sprites.camera );
 
         sprites.camera.position.z = 200//100*Math.cos(cangulo)+200;
         sprites.camera.position.y = -50//50*Math.sin(cangulo*3)-99;
@@ -73,19 +80,19 @@ var Sprites = function(){
         sprites.spotLight.position.z = sprites.camera.position.z;
         for( var object in world.createdObjects ){
             if( world.createdObjects[ object ].sprite.hasToCalculatePosition ){
+
                 console.log("nueva posicion");
                 actualObject = world.createdObjects[ object ];
-                console.log(actualObject);
                 actualObject.sprite.hasToCalculatePosition = false;
                 if( actualObject.sprite.character == undefined ) continue;
+                sprites.camera.lookAt( world.createdObjects[client.userId].sprite.character.position );
 
-                console.log('acutal' , actualObject);
-                console.log('character' , actualObject.sprite.character);
-                actualObject.sprite.character.position.x = actualObject.position.x * 10 - 150;
-                actualObject.sprite.character.position.z = actualObject.position.y * 10 - 150 + 5;
+                actualObject.sprite.character.position.x = actualObject.position.x * 10 - 150 + 5;
+                actualObject.sprite.character.position.z = actualObject.position.y * 10 - 150 + 5 ;
 
             }
         }
+        sprites.renderer.render( sprites.scene, sprites.camera );
 
     }
 

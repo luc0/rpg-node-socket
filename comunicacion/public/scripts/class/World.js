@@ -74,15 +74,20 @@ var World = function( params ){
 	//-------------------------------------------------------------------------------------
 	// Crea objetos en base a la data recibida recorriendo todos los tiles
 	this.createObjects = function(){
-		console.log("for createObjects");
 		var o;
 		for( var object in world.createdObjects){
-			o = world.createdObjects[object]
-			sprites.initSprite( {"object" : o} );
+			o = world.createdObjects[object];
+			if(o.id != client.userId) sprites.initSprite( {"object" : o} );
 			this.getTile( o.position )[ o.type ] = o;
 		}
-		console.log(world.createdObjects);
-		console.log(no.se)
+
+	}
+	this.initTerrainSprites = function(){
+		for(var x in world.tiles ){
+			for(var y in world.tiles[x]){
+				sprites.initSprite( {"object" : world.tiles[x][y].terrain} );
+			}
+		}
 	}
 
 

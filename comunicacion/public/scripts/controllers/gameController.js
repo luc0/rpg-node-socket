@@ -132,12 +132,12 @@ function world_update( data ){
 	}else if( data.newBeing !== undefined ){
 
 		var newBeing = data.newBeing;
-		console.log("Creando nuevo " + newBeing.type + " con el id " + newBeing.id);
+		sprites.initSprite( {"object" : newBeing} );
 		world.createdObjects[newBeing.id] = newBeing;
 	}else if( data.newArtifact !== undefined ){
 
 		var newArtifact = data.newArtifact;
-		console.log("Creando nuevo " + newArtifact.type + " con el id " + newArtifact.id);
+		sprites.initSprite( {"object" : newArtifact} );
 		world.createdObjects[newArtifact.id] = newArtifact;
 	}
 
@@ -148,6 +148,7 @@ function init_client( data ){
 	world.create();
 	copyProperties( data.world , world );
 	world.createObjects();
+	world.initTerrainSprites();
 	console.log("crea el mundo")
 	sprites.render();
 }
