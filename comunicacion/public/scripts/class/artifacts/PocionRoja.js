@@ -2,7 +2,7 @@ var PocionRoja = function( params ){
 
 	// Props del hijo (con mas valor que las del Padre)
 	var defaults = {
-
+		
 		/*Nombre de la daga*/
 		"name":"PocionRoja",
 		"specie":"PocionRoja",

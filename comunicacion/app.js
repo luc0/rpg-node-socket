@@ -29,6 +29,10 @@ app.use(express.static(__dirname));
     Routes
 */
 app.get('/', function(req, res){
+  res.render('game');
+});
+
+app.get('/index', function(req, res){
   res.render('index');
 });
 

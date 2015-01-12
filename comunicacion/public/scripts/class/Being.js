@@ -9,7 +9,7 @@ var Being = function( params ){
 		"sprite":null,
 
 		"id":null,
-		
+
 		/*Angulo del Being*/
 		"rotation":{
 			"x":0,

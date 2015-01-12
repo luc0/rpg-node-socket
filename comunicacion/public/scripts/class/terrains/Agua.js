@@ -2,6 +2,10 @@ var Agua = function( params ){
 
 	// Props del hijo (con mas valor que las del Padre)
 	var defaults = {
+		"sprite":{
+			"images":"public/sprites/agua.jpg",
+			"hasToCalculatePosition":false
+		},
 		"name": 'agua',
 		"descripcion": "Agua profunda",
 		"solid": true,
@@ -15,6 +19,6 @@ var Agua = function( params ){
 	merge( this , params , this );
 
 	// Se agrega en el mundo
-	
+
 	world.getTile( this.position ).append({ 'terrain' : this })
 }

@@ -2,7 +2,10 @@ var Elfo = function( params ){
 
 	// Props del hijo (con mas valor que las del Padre)
 	var defaults = {
-
+		"sprite":{
+			"images":"public/sprites/elfo-down.png",
+			"hasToCalculatePosition":true
+		},
 		/*Nombre del elfo*/
 		"name":"Elfo",
 		"specie":"Elfo",
@@ -29,5 +32,5 @@ var Elfo = function( params ){
 
 	// Se agrega en el mapa
 	world.getTile( this.position ).append({ 'being' : this });
-	
+
 }

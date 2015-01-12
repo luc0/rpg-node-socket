@@ -48,6 +48,7 @@ world.create();
 	});
 	world.createdObjects[temporalObject.id] = temporalObject;
 */
+/*
 	temporalObject = new Daga({
 		"position":{
 			"x": 6,
@@ -75,7 +76,7 @@ world.create();
 	});
 	world.createdObjects[temporalObject.id] = temporalObject;
 
-	
+
 	for(var i = 0 ; i < 300 ; i++){
 		temporalObject = new Aguila({
 		"position":{
@@ -99,6 +100,7 @@ world.create();
 	});
 	world.createdObjects[temporalObject.id] = temporalObject;
 */
+/*
 	temporalObject = new Manzana({
 		"position":{
 			"x": 4,
@@ -138,7 +140,7 @@ world.create();
 		"name" : "PocionRoja",
 	});
 	world.createdObjects[temporalObject.id] = temporalObject;
-
+*/
 
 //world.createdObjects.bicho.createArtifact({"artifact":Pollo});
 

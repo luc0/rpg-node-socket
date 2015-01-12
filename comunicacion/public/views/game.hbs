@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Comunicacion</title>
+    <script src="/public/lib/three.min.js"></script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+
+    <!-- Conexion socket -->
+    <script type="text/javascript" src="/public/scripts/cliente.js"></script>
+
+    <!-- Cargo clases y controllers-->
+    <script type="text/javascript" src="/public/scripts/class/User.js"></script>
+    <script type="text/javascript" src="/public/scripts/class/Client.js"></script>
+    <script type="text/javascript" src="/public/scripts/controllers/userController.js"></script>
+    <script type="text/javascript" src="/public/scripts/controllers/gameController.js"></script>
+    <script src="/public/scripts/class/framework.js"></script>
+    <script src="/public/scripts/class/Sprites.js"></script>
+    <script src="/public/scripts/class/Controls.js"></script>
+    <script src="/public/scripts/class/Being.js"></script>
+    <script src="/public/scripts/class/Terrain.js"></script>
+    <script src="/public/scripts/class/Artifact.js"></script>
+    <script src="/public/scripts/class/beings/Elfo.js"></script>
+    <script src="/public/scripts/class/beings/Aguila.js"></script>
+    <script src="/public/scripts/class/terrains/Tierra.js"></script>
+    <script src="/public/scripts/class/terrains/Agua.js"></script>
+    <script src="/public/scripts/class/artifacts/Daga.js"></script>
+    <script src="/public/scripts/class/artifacts/Pollo.js"></script>
+    <script src="/public/scripts/class/artifacts/Manzana.js"></script>
+    <script src="/public/scripts/class/artifacts/Papiro.js"></script>
+    <script src="/public/scripts/class/artifacts/Escudo.js"></script>
+    <script src="/public/scripts/class/artifacts/Casco.js"></script>
+    <script src="/public/scripts/class/artifacts/PocionRoja.js"></script>
+    <script src="/public/scripts/class/Tile.js"></script>
+    <script src="/public/scripts/class/World.js"></script>
+    <!--<script src="/public/lib/three.min.js"></script>
+    <script src="/public/lib/threeSound.js"></script>-->
+    <script>
+        var audio = [];
+        audio['pegar'] = new Audio('/public/sonidos/pegar.wav');
+        audio['caminar'] = new Audio('/public/sonidos/caminar_arena.wav');
+        audio['muerte'] = new Audio('/public/sonidos/muerte.wav');
+
+    </script>
+<body>
+    <script>
+        var sprites = new Sprites();
+        var world = new World();
+    </script>
+</body>
+</html>

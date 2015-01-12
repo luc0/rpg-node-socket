@@ -2,6 +2,10 @@ var Tierra = function( params ){
 
 	// Props del hijo (con mas valor que las del Padre)
 	var defaults = {
+		"sprite":{
+			"images":"public/sprites/pasto.jpg",
+			"hasToCalculatePosition":false
+		},
 		"name": 'tierra',
 		"descripcion": "Tierra común y silvestre",
 		"solid": false,

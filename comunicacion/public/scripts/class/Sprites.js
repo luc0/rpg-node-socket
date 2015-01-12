@@ -25,8 +25,9 @@ var Sprites = function(){
         objectSprite.character.rotation.x = -Math.PI / 2;
         this.scene.add( objectSprite.character );
         if( object.controls === "pc" ){
-            camera.lookAt( objectSprite.character.position );
+            this.camera.lookAt( objectSprite.character.position );
 
+            objectSprite.character.rotation.x = 0;
             this.spotLight.target.position.x = objectSprite.character.position.x;
             this.spotLight.target.position.y = objectSprite.character.position.y;
             this.spotLight.target.position.z = objectSprite.character.position.z;
@@ -36,44 +37,50 @@ var Sprites = function(){
     }
 
 
-    renderer.setSize( window.innerWidth, window.innerHeight );
-    document.body.appendChild( renderer.domElement );
+    this.renderer.setSize( window.innerWidth-100, window.innerHeight-100 );
+    document.body.appendChild( this.renderer.domElement );
 
     this.omniLight = new THREE.AmbientLight(0x404040);
-    scene.add(this.omniLight);
+    this.scene.add(this.omniLight);
 
     this.directionalLight = new THREE.DirectionalLight(0xffffff,0.8);
     this.directionalLight.position.set(1,1,1).normalize();
-    scene.add(this.directionalLight);
+    this.scene.add(this.directionalLight);
 
     this.spotLight = new THREE.SpotLight(0xffffff,0.3);
 
     this.spotLight.position.set(1,1,1).normalize();
-    scene.add(this.spotLight);
+    this.scene.add(this.spotLight);
 
-    camera.position.z = 800;
-    camera.position.y = 10;
+    this.camera.position.z = 800;
+    this.camera.position.y = 10;
 
     var actualObject;
 
-    this.render = function() {
+    this.render = render;
+        var a=0;
+    function render() {
 
         requestAnimationFrame( render );
-        renderer.render( this.scene, this.camera );
+        sprites.renderer.render( sprites.scene, sprites.camera );
 
-        this.camera.position.z = 200//100*Math.cos(cangulo)+200;
-        this.camera.position.y = -50//50*Math.sin(cangulo*3)-99;
-        this.camera.position.x = 20//100*Math.sin(cangulo);
+        sprites.camera.position.z = 200//100*Math.cos(cangulo)+200;
+        sprites.camera.position.y = -50//50*Math.sin(cangulo*3)-99;
+        sprites.camera.position.x = 20//100*Math.sin(cangulo);
 
-        this.spotLight.position.x = this.camera.position.x;
-        this.spotLight.position.y = this.camera.position.y;
-        this.spotLight.position.z = this.camera.position.z;
-
-        for( object in world.createdObjects ){
+        sprites.spotLight.position.x = sprites.camera.position.x;
+        sprites.spotLight.position.y = sprites.camera.position.y;
+        sprites.spotLight.position.z = sprites.camera.position.z;
+        for( var object in world.createdObjects ){
             if( world.createdObjects[ object ].sprite.hasToCalculatePosition ){
+                console.log("nueva posicion");
                 actualObject = world.createdObjects[ object ];
+                console.log(actualObject);
                 actualObject.sprite.hasToCalculatePosition = false;
+                if( actualObject.sprite.character == undefined ) continue;
 
+                console.log('acutal' , actualObject);
+                console.log('character' , actualObject.sprite.character);
                 actualObject.sprite.character.position.x = actualObject.position.x * 10 - 150;
                 actualObject.sprite.character.position.z = actualObject.position.y * 10 - 150 + 5;
 
@@ -82,6 +89,6 @@ var Sprites = function(){
 
     }
 
-    this.render();
+
 
 }

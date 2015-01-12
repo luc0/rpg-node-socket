@@ -40,7 +40,7 @@ var World = function( params ){
 
 	// Devuelve tile en base a una posicion dada.
 	this.getTile = function( position ){
-		
+
 		if( this.tiles[ position.x ] && this.tiles[ position.x ][ position.y ] ){
 			return this.tiles[ position.x ][ position.y ];
 		}else{
@@ -75,10 +75,14 @@ var World = function( params ){
 	// Crea objetos en base a la data recibida recorriendo todos los tiles
 	this.createObjects = function(){
 		console.log("for createObjects");
-		for( object in world.createdObjects){
+		var o;
+		for( var object in world.createdObjects){
 			o = world.createdObjects[object]
+			sprites.initSprite( {"object" : o} );
 			this.getTile( o.position )[ o.type ] = o;
 		}
+		console.log(world.createdObjects);
+		console.log(no.se)
 	}
 
 

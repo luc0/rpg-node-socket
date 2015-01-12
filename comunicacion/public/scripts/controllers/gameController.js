@@ -66,6 +66,7 @@ function world_update( data ){
 			propertyReference[ treeArray[level] ] = value;
 
 		}
+		being.sprite.hasToCalculatePosition = true;
 
 	}else if( data.artifact !== undefined ){
 // Actualización de las propiedades del BEING
@@ -147,7 +148,8 @@ function init_client( data ){
 	world.create();
 	copyProperties( data.world , world );
 	world.createObjects();
-	draw();
+	console.log("crea el mundo")
+	sprites.render();
 }
 
 function copyProperties( origin , destiny ){
@@ -187,7 +189,7 @@ var reproducirSonidos = function( params ){
 		}
 		return;
 	}
-	
+
 	if( p == 'position'){
 		audio['caminar'].play();
 		return;
