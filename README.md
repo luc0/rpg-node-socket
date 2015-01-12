@@ -2,9 +2,5 @@ rpgnode
 =======
 
 <ol>
-  <li>Dibujar Cliente en base a lo que le pasaamos del SERVER</li>
-  <li>Enviar datos al CLIENTE al final de las funciones que modifican propiedades</li>
-  <li>Vaciar la cola. Para no estar constipados de datos.</li>
-  <li>Creacion de pj's cuando se conecta el usuario.</li>
-  <li>Procesar y guardar propiedades en el CLIENTE.</li>
+  <li>El servidor envía todo el WORLD incluyendo los BEING y después también manda la instruccion newBeing, entonces esta enviando 2 veces a los BEINGS. Esto hace que el BEING creado en el createdObjects se reemplace por el nuevo BEING con la referencia del nuevo id. Una vez arreglado esto, sacar el parche en el World.js del cliente (linea 80)</li>
 </ol>
