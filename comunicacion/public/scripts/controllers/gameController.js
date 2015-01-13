@@ -19,6 +19,7 @@ function ask_drop(){
 function ping( data ){
 	var fechalocal = (new Date()).getMilliseconds();
 	var fecharemota = data.fecha;
+	document.getElementById('ping').innerHTML = fechalocal - fecharemota + 'ms';
 	console.log( fechalocal - fecharemota );
 }
 
