@@ -4,6 +4,54 @@
 		"selected_items":
 		[
 			[
+				"ans",
+				"answerDrop"
+			],
+			[
+				"fecha",
+				"fechalocal"
+			],
+			[
+				"tile",
+				"tileObject"
+			],
+			[
+				"create",
+				"createObjects"
+			],
+			[
+				"last",
+				"lastPosition"
+			],
+			[
+				"las",
+				"lastPosition"
+			],
+			[
+				"dele",
+				"deletePosition"
+			],
+			[
+				"pro",
+				"properties"
+			],
+			[
+				"funcion",
+				"function"
+			],
+			[
+				"refre",
+				"refreshInventory"
+			],
+			[
+				"queue",
+				"queueList"
+			],
+			[
+				"queu",
+				"queueList"
+			],
+			[
 				"CLAS",
 				"clase1"
 			],
@@ -466,54 +514,6 @@
 			[
 				"comentar",
 				"comentariosPaginados"
-			],
-			[
-				"usuario",
-				"usuario_id"
-			],
-			[
-				"votoso",
-				"votoSonidoTexto"
-			],
-			[
-				"pro",
-				"provincia"
-			],
-			[
-				"provincia",
-				"provinciaVotable"
-			],
-			[
-				"marign",
-				"margin-top"
-			],
-			[
-				"font-s",
-				"font-size"
-			],
-			[
-				"localidad",
-				"localidad_id"
-			],
-			[
-				"argin",
-				"margin-top"
-			],
-			[
-				"busqueda",
-				"busquedaHeader"
-			],
-			[
-				"direccion",
-				"direccion_calleNum"
-			],
-			[
-				"direcc",
-				"direccion_calleNum"
-			],
-			[
-				"ordern",
-				"ordenarPor"
 			]
 		]
 	},
@@ -529,34 +529,10 @@
 			}
 		},
 		{
-			"file": "comunicacion/app.js",
+			"file": "comunicacion/node_modules/class/Server.js",
 			"settings":
 			{
-				"buffer_size": 1765,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "comunicacion/node_modules/class/terrains/Tierra.js",
-			"settings":
-			{
-				"buffer_size": 453,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "comunicacion/node_modules/class/Terrain.js",
-			"settings":
-			{
-				"buffer_size": 1122,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "comunicacion/node_modules/class/Tile.js",
-			"settings":
-			{
-				"buffer_size": 840,
+				"buffer_size": 1759,
 				"line_ending": "Windows"
 			}
 		},
@@ -564,55 +540,81 @@
 			"file": "comunicacion/node_modules/class/Being.js",
 			"settings":
 			{
-				"buffer_size": 24593,
+				"buffer_size": 28554,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "comunicacion/node_modules/class/beings/Elfo.js",
+			"contents": "	this.equip = function( params ){\n		var artifact = this.inventory[ params.slot ];\n		var placeEquip = this.canEquip({ \"artifact\" : artifact });\n\n		// Si no existe nada equipado en el mismo lugar\n		for( var place in placeEquip ){\n			// Equipa\n			this.equipped[placeEquip[place]] = artifact;\n			console.log(\"equipado\")\n		}\n\n		// Agrega modificadores del objeto al being\n		for( modificator in artifact.modificators ){\n			this.modificators[ modificator ].min += artifact.modificators[ modificator ].min;\n			this.modificators[ modificator ].max += artifact.modificators[ modificator ].max;\n		}\n\n		this.updateEquipment();\n\n	}\n\n\n\n	this.unEquip = function( params ){\n		var artifact = this.inventory[ params.slot ];\n		// Verifica si ya tiene equipado ese mismo objeto\n		if( this.isEquipped({ \"artifact\" : artifact }) ){\n			// Busca en donde se equipa el objeto y lo desequipa\n			for( var place in artifact.equipable){\n				this.equipped[artifact.equipable[place]] = false;\n				console.log(\"desequipado\")\n			}\n		}\n\n		// Resetea modificadores\n		for( modificator in artifact.modificators ){\n			this.modificators[ modificator ].min -= artifact.modificators[ modificator ].min;\n			this.modificators[ modificator ].max -= artifact.modificators[ modificator ].max;\n		}\n\n		this.updateEquipment();\n	}",
 			"settings":
 			{
-				"buffer_size": 662,
+				"buffer_size": 1280,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "comunicacion/game.js",
+			"file": "comunicacion/public/scripts/controllers/gameController.js",
 			"settings":
 			{
-				"buffer_size": 2405,
+				"buffer_size": 5224,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "comunicacion/node_modules/class/World.js",
+			"file": "comunicacion/public/scripts/class/World.js",
 			"settings":
 			{
-				"buffer_size": 16073,
+				"buffer_size": 17101,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "comunicacion/node_modules/class/framework.js",
+			"file": "comunicacion/public/scripts/class/Sprites.js",
 			"settings":
 			{
-				"buffer_size": 3375,
+				"buffer_size": 4107,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/C/Users/luco/Desktop/testjuego/test.html",
+			"file": "comunicacion/public/views/index.hbs",
 			"settings":
 			{
-				"buffer_size": 892,
+				"buffer_size": 7534,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"contents": "this.getKeys = function( params ){\n		var keys = {};\n		for( var o in params){\n			for( key in params[o]){\n				keys[key] = null;\n			}\n		}\n		return keys;\n	}\n\n	this.merge = function( origin , append , destiny ){\n		var origin = origin || {};\n		var append = append || {};\n		var allKeys = this.getKeys( [origin , append]);\n		\n		for( var o in allKeys ){\n			if( append[o] instanceof Object ){\n				destiny[o] = destiny[o] || {}\n				this.merge( origin[o] , append[o] , destiny[o] )\n			}else{\n				destiny[o] = append[o] || origin[o];\n			}\n		}\n\n		\n		this.setter_getter( destiny );\n		\n		//test( destiny.position.x );\n	}",
+			"file": "comunicacion/public/views/game.hbs",
 			"settings":
 			{
-				"buffer_size": 604,
+				"buffer_size": 2470,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "Searching 1727 files for \"generateId\"\n\nD:\\luco\\programacion\\rpgnode\\comunicacion\\node_modules\\class\\Artifact.js:\n   47  	// Genera un id aleatorio que no exista.\n   48  	//----------------------------------------------------------------------------------\n   49: 	this.generateId = function(){\n   50  		var id;\n   51  		do{\n\nD:\\luco\\programacion\\rpgnode\\comunicacion\\node_modules\\class\\artifacts\\Casco.js:\n   31  	merge( this , params , this );\n   32  \n   33: 	this.id = this.generateId();\n   34  \n   35  	// Se agrega en el mapa\n\nD:\\luco\\programacion\\rpgnode\\comunicacion\\node_modules\\class\\artifacts\\Daga.js:\n   33  	merge( this , params , this );\n   34  \n   35: 	this.id = this.generateId();\n   36  \n   37  	// Se agrega en el mapa\n\nD:\\luco\\programacion\\rpgnode\\comunicacion\\node_modules\\class\\artifacts\\Escudo.js:\n   31  	merge( this , params , this );\n   32  \n   33: 	this.id = this.generateId();\n   34  \n   35  	// Se agrega en el mapa\n\nD:\\luco\\programacion\\rpgnode\\comunicacion\\node_modules\\class\\artifacts\\Manzana.js:\n   23  	merge( this , params , this );\n   24  \n   25: 	this.id = this.generateId();\n   26  \n   27  	// Se agrega en el mapa\n\nD:\\luco\\programacion\\rpgnode\\comunicacion\\node_modules\\class\\artifacts\\Papiro.js:\n   18  	merge( this , params , this );\n   19  \n   20: 	this.id = this.generateId();\n   21  \n   22  	// Se agrega en el mapa\n\nD:\\luco\\programacion\\rpgnode\\comunicacion\\node_modules\\class\\artifacts\\PocionRoja.js:\n   24  	merge( this , params , this );\n   25  \n   26: 	this.id = this.generateId();\n   27  \n   28  	// Se agrega en el mapa\n\nD:\\luco\\programacion\\rpgnode\\comunicacion\\node_modules\\class\\artifacts\\Pollo.js:\n   23  	merge( this , params , this );\n   24  \n   25: 	this.id = this.generateId();\n   26  \n   27  	// Se agrega en el mapa\n\nD:\\luco\\programacion\\rpgnode\\comunicacion\\node_modules\\class\\User.js:\n   11  \n   12  	/*\n   13: 	this.generateId = function(){\n   14  		console.log('generando id...')\n   15  		var id;\n\nD:\\luco\\programacion\\rpgnode\\comunicacion\\node_modules\\controllers\\userController.js:\n   56  				test( 'Nuevo user.' );\n   57  \n   58: 				var userId = user.username;//user.generateId();\n   59  \n   60  				var data = { \"userId\" : userId };\n\nD:\\luco\\programacion\\rpgnode\\comunicacion\\node_modules\\socket.io\\node_modules\\engine.io\\lib\\server.js:\n  220  \n  221  Server.prototype.handshake = function(transport, req){\n  222:   var id = base64id.generateId();\n  223  \n  224    debug('handshaking client \"%s\"', id);\n\nD:\\luco\\programacion\\rpgnode\\comunicacion\\node_modules\\socket.io\\node_modules\\engine.io\\node_modules\\base64id\\lib\\base64id.js:\n   78   */\n   79  \n   80: Base64Id.prototype.generateId = function () {\n   81    var rand = new Buffer(15); // multiple of 3 for base64\n   82    if (!rand.writeInt32BE) {\n\nD:\\luco\\programacion\\rpgnode\\comunicacion\\node_modules\\socket.io\\node_modules\\engine.io\\node_modules\\base64id\\package.json:\n   15      \"node\": \">= 0.4.0\"\n   16    },\n   17:   \"readme\": \"base64id\\n========\\n\\nNode.js module that generates a base64 id.\\n\\nUses crypto.randomBytes when available, falls back to unsafe methods for node.js <= 0.4.\\n\\nTo increase performance, random bytes are buffered to minimize the number of synchronous calls to crypto.randomBytes.\\n\\n## Installation\\n\\n   $ npm install mongoose\\n\\n## Usage\\n\\n   var base64id = require('base64id');\\n\\n   var id = base64id.generateId();\\n\",\n   18    \"readmeFilename\": \"README.md\",\n   19    \"bugs\": {\n\nD:\\luco\\programacion\\rpgnode\\comunicacion\\node_modules\\socket.io\\node_modules\\engine.io\\node_modules\\base64id\\README.md:\n   16     var base64id = require('base64id');\n   17  \n   18:    var id = base64id.generateId();\n   19  \n\n14 matches across 14 files\n",
+			"settings":
+			{
+				"buffer_size": 3690,
+				"line_ending": "Windows",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "comunicacion/node_modules/class/Artifact.js",
+			"settings":
+			{
+				"buffer_size": 1057,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "comunicacion/node_modules/class/Users.js",
+			"settings":
+			{
+				"buffer_size": 1639,
 				"line_ending": "Windows"
 			}
 		}
@@ -620,9 +622,13 @@
 	"build_system": "Packages/User/lesscomp.sublime-build",
 	"command_palette":
 	{
-		"height": 35.0,
+		"height": 210.0,
 		"selected_items":
 		[
+			[
+				"java",
+				"Set Syntax: JavaScript"
+			],
 			[
 				"js",
 				"Set Syntax: JavaScript"
@@ -708,7 +714,7 @@
 				"Set Syntax: LESS"
 			]
 		],
-		"width": 402.0
+		"width": 386.0
 	},
 	"console":
 	{
@@ -731,9 +737,13 @@
 	},
 	"file_history":
 	[
+		"/D/luco/programacion/rpgnode/comunicacion/public/scripts/controllers/gameController.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/Server.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/controllers/gameController.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/Users.js",
 		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/Being.js",
-		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/beings/Elfo.js",
-		"/D/luco/programacion/rpgnode/comunicacion/game.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/framework.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/Artifact.js",
 		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/artifacts/Casco.js",
 		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/artifacts/Daga.js",
 		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/artifacts/Escudo.js",
@@ -741,43 +751,48 @@
 		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/artifacts/Papiro.js",
 		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/artifacts/PocionRoja.js",
 		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/artifacts/Pollo.js",
-		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/Server.js",
-		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/framework.js",
+		"/D/luco/programacion/rpgnode/comunicacion/game.js",
 		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/World.js",
-		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/terrains/Tierra.js",
+		"/D/luco/programacion/rpgnode/comunicacion/app.js",
+		"/D/luco/programacion/rpgnode/comunicacion/public/scripts/class/World.js",
+		"/D/luco/programacion/rpgnode/comunicacion/public/scripts/controllers/userController.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/controllers/userController.js",
+		"/D/luco/programacion/rpgnode/comunicacion/public/views/indexThree.hbs",
+		"/D/luco/programacion/rpgnode/comunicacion/public/scripts/class/beings/Elfo.js",
+		"/D/luco/programacion/rpgnode/comunicacion/public/views/index.hbs",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/User.js",
+		"/D/luco/programacion/rpgnode/comunicacion/public/scripts/class/Controls.js",
+		"/D/luco/programacion/rpgnode/comunicacion/public/scripts/class/Client.js",
+		"/D/luco/programacion/rpgnode/comunicacion/package.json",
+		"/D/luco/programacion/rpgnode/comunicacion/public/scripts/class/Being.js",
+		"/D/luco/programacion/rpgnode/comunicacion/public/scripts/class/Artifact.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/beings/Aguila.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/beings/Elfo.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/beings/Enano.js",
 		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/terrains/Agua.js",
 		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/terrains/Lava.js",
-		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/beings/Aguila.js",
+		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/terrains/Tierra.js",
 		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/Terrain.js",
 		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/Tile.js",
-		"/D/luco/programacion/rpgnode/comunicacion/node_modules/controllers/userController.js",
-		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/Artifact.js",
+		"/D/luco/programacion/rpgnode/rpgNode.sublime-project",
+		"/C/Users/luco/Desktop/testjuego/test.html",
 		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/Controls.js",
-		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/beings/Enano.js",
 		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/world.js",
-		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/Users.js",
 		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/tile.js",
-		"/D/luco/programacion/rpgnode/comunicacion/public/scripts/controllers/userController.js",
-		"/D/luco/programacion/rpgnode/comunicacion/node_modules/class/User.js",
 		"/D/luco/programacion/rpgnode/test_set_get/Being.js",
 		"/D/luco/programacion/rpgnode/test_set_get/objetos.html",
-		"/D/luco/programacion/rpgnode/comunicacion/public/views/index.hbs",
 		"/D/luco/programacion/rpgnode/comunicacion/public/scripts/cliente.js",
 		"/D/luco/programacion/rpgnode/comunicacion/public/scripts/class/User.js",
-		"/D/luco/programacion/rpgnode/comunicacion/public/scripts/class/Client.js",
 		"/D/luco/programacion/rpgnode/comunicacion/public/views/game.js",
-		"/D/luco/programacion/rpgnode/comunicacion/node_modules/controllers/gameController.js",
 		"/D/luco/programacion/rpgnode/comunicacion/public/views/objetos.html",
 		"/C/Users/luco/Desktop/clases_test,js.js",
 		"/C/Users/luco/Desktop/class_transacciones.js",
-		"/D/luco/programacion/rpgnode/comunicacion/public/scripts/controllers/gameController.js",
 		"/D/luco/programacion/juegoNodePhaser/juego.js",
 		"/D/luco/programacion/juegoNodePhaser/node_modules/funciones/index.js",
 		"/D/luco/programacion/juegoNodePhaser/node_modules/controllers/usuarioController.js",
 		"/D/luco/programacion/juegoNodePhaser/node_modules/clases/User.js",
 		"/D/luco/programacion/juegoNodePhaser/scripts/frontend.js",
 		"/D/luco/programacion/rpgnode/comunicacion/node_modules/clases/Users.js",
-		"/D/luco/programacion/rpgnode/comunicacion/app.js",
 		"/D/luco/programacion/rpgnode/comunicacion/node_modules/controllers/clientController.js",
 		"/D/luco/programacion/rpgnode/comunicacion/node_modules/clases/User.js",
 		"/D/luco/programacion/rpgnode/comunicacion/node_modules/clases/Server.js",
@@ -849,26 +864,19 @@
 		"/C/xampp/htdocs/underbaires/app/start/global.php",
 		"/C/xampp/htdocs/underbaires/app/views/votable/comentar.blade.php",
 		"/C/xampp/htdocs/underbaires/app/controllers/ComentarioController.php",
-		"/C/xampp/htdocs/underbaires/public/js/votable/editarMapa.js",
-		"/C/xampp/htdocs/underbaires/app/views/estaticos/terminos.blade.php",
-		"/C/xampp/htdocs/underbaires/app/views/estaticos/privacidad.blade.php",
-		"/C/xampp/htdocs/underbaires/app/views/includes/head.blade.php",
-		"/C/xampp/htdocs/underbaires/app/views/estaticos/contacto.blade.php",
-		"/C/xampp/htdocs/underbaires/public/js/votable/perfil.js",
-		"/C/xampp/htdocs/underbaires/app/views/usuario/perfil.blade.php",
-		"/C/xampp/htdocs/underbaires/app/views/errores/404.blade.php",
-		"/C/xampp/htdocs/underbaires/app/views/errores/500.blade.php",
-		"/C/xampp/htdocs/underbaires/app/controllers/BaseController.php"
+		"/C/xampp/htdocs/underbaires/public/js/votable/editarMapa.js"
 	],
 	"find":
 	{
-		"height": 36.0
+		"height": 38.0
 	},
 	"find_in_files":
 	{
 		"height": 90.0,
 		"where_history":
 		[
+			"D:\\luco\\programacion\\rpgnode\\comunicacion",
+			"D:\\luco\\programacion\\rpgnode\\comunicacion\\public",
 			"D:\\luco\\programacion\\rpgnode\\comunicacion",
 			"D:\\luco\\programacion\\rpgnode",
 			"D:\\luco\\programacion\\rpgnode\\test",
@@ -883,134 +891,134 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"test",
-			"\" ",
-			"position",
-			"bgwhite",
-			"console.",
-			"object.defineproperty",
-			"aca!",
-			"console.de",
-			"alert",
-			"var",
-			"self",
-			"var",
-			"require",
-			"<script",
-			"script",
-			"	<",
-			"webSocket",
-			"io",
-			"socket",
-			"this.move",
-			"data",
-			"login",
-			"login_success",
+			"generateId",
+			"objectSprite",
+			"npc",
+			"this.equip",
+			"findNearest",
 			"this.drop",
-			"this.world.getTile( this.position ).artifact",
-			"candrop",
-			"take",
-			"calculeStat",
-			"calculestat",
-			"isaffected",
-			"calculeStat",
-			"calculestat",
-			"calcule",
-			"isaffected",
-			"think",
-			"up",
-			"think",
-			"giveex",
-			"60px",
-			"giveexp",
-			"this.remove",
-			"this.remove(",
+			"this.throw",
+			"this.drop",
+			"updateBeing",
+			"updateArtifact",
+			"updateBeing",
+			"updateArtifact",
+			"refreshtiles",
+			"updateArtifact",
+			"this.drop",
+			"this.throw",
+			"created",
+			"createob",
+			"create",
+			"this.drop",
+			"this.throw",
+			"this.drop",
+			"many",
+			"throw",
+			"this.drop",
+			"this.throw",
+			"throw",
+			"construct",
+			"this.drop",
+			"isEquipped",
+			"nada para",
+			"this.throw",
+			"throw",
+			"this.drop",
+			"updatetile",
+			"updateremove",
+			"updatetile",
+			"worldobj",
+			"updateWorldObjects",
 			"this.move",
-			"move(",
-			"previsorio",
-			"forge",
-			"forget",
-			"freepositions",
+			"updateremove",
+			"removeobject",
+			"removeObject",
+			"removeobject",
+			"this.take",
+			"for createdob",
+			"for creat",
+			"daño",
+			"refreshTiles",
+			"this.move",
+			"Math.floor(Math.random*30)",
+			"data.data.object",
+			"updateT",
+			"update",
+			"this.move",
+			"updateTile",
+			"updateposition",
+			"this.move",
+			"updateTile",
+			"updatetile",
+			"updateposition",
+			"this.move",
+			"console",
+			"being id",
+			"being que",
+			"console",
+			"getTile",
+			"console",
+			"socket",
+			"getT",
+			"getTile",
 			"refresh",
-			"remove",
-			"isaffected",
-			"calcule",
-			"luck",
-			"isAffected",
-			"experience",
-			"damage",
-			"life",
-			"experience",
-			"level",
-			"stats",
-			"experienc",
-			"Event",
+			"getTile",
+			"init_client",
+			"createObjects",
+			"getTile",
+			"init",
+			"Ref",
+			"createObjects",
+			"getTile",
+			"refresh",
+			"getTile",
+			"refresh",
+			"getTile",
+			"createBeing",
+			"refreshTiles(",
+			"// Actualización de las propiedades del TILE",
+			"console",
+			"clientSendUp",
+			"console",
+			"refreshTiles",
+			"update",
+			"createBeing",
+			"findBeing",
+			"socket",
+			"createcontrols",
+			"controls",
+			"this.controls",
+			"boton",
+			"update wor",
+			"users",
 			"console.log",
+			"updateTile",
+			"updateRemoveTile",
+			"updatetile",
+			"updateTile",
+			"updateWorldObjects",
+			"updateTile",
+			"updateState",
+			"refresh(",
+			"refresh",
+			"updateTile",
+			"this.move",
+			"updatePosition",
+			"deletePosition",
+			"lastPosition",
+			"this.move",
+			"deletePosition",
+			"lastPosition",
+			"updatePosition",
+			"updatetile",
+			"this.move",
+			"createObjects",
+			"updateStat",
+			"console",
+			"console.lo",
 			"console.lof",
-			"artifact.equi",
-			"artifact.equipped",
-			"equiped",
-			"hits",
-			"elfo",
-			"attack",
-			"usado",
-			"ocupado",
-			"verificar_pos",
-			"levantar",
-			"inventa",
-			"SPRITE_PLANE",
-			"pj",
-			"SPRITE_PLANE",
-			"mesh",
-			"AnimatedSprites",
-			"clock",
-			"time",
-			"startImage",
-			"SPRITE_PLANE",
-			"SPRITE_IMAGE",
-			"SPRITE_PLANE",
-			"width",
-			"camera",
-			"getSettingsSpriteParams",
-			"$",
-			"renderer",
-			"container",
-			"render(",
-			"render",
-			"time",
-			"refreshAnimation",
-			"delta",
-			"render",
-			"refreshAnimation",
-			"startImage",
-			"refreshAnimation",
-			"image",
-			"refreshanimation",
-			"image",
-			"annie",
-			"boomer",
-			"cube",
-			"reglas",
-			"login",
-			".login",
-			"login",
-			"modal",
-			"modal_general",
-			"reglas",
-			"ajax_respuesta",
-			"Nuevo",
-			"showComentarNuevo",
-			"nuevo",
-			"comentar",
-			"opinar",
-			"str_random",
-			"password",
-			"olvidepassword",
-			"opin",
-			"confirmar",
-			"responder",
-			"limite_opinar_dia",
-			".alert"
+			"queueList"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1077,7 +1085,7 @@
 	"groups":
 	[
 		{
-			"selected": 9,
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -1109,48 +1117,47 @@
 				},
 				{
 					"buffer": 1,
-					"file": "comunicacion/app.js",
+					"file": "comunicacion/node_modules/class/Server.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1765,
+						"buffer_size": 1759,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1327,
-								1327
+								1237,
+								1237
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 810.0,
+						"translation.y": 300.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "comunicacion/node_modules/class/terrains/Tierra.js",
+					"file": "comunicacion/node_modules/class/Being.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 453,
+						"buffer_size": 28554,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								335,
-								335
+								20918,
+								20918
 							]
 						],
 						"settings":
@@ -1159,26 +1166,25 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 13560.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 3,
-					"file": "comunicacion/node_modules/class/Terrain.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1122,
+						"buffer_size": 1280,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1018,
-								1018
+								1199,
+								1199
 							]
 						],
 						"settings":
@@ -1187,32 +1193,244 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 54.0,
+						"translation.y": 60.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 4,
-					"file": "comunicacion/node_modules/class/Tile.js",
-					"semi_transient": true,
+					"file": "comunicacion/public/scripts/controllers/gameController.js",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 840,
+						"buffer_size": 5224,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								305,
-								305
+								5208,
+								5184
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
 							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3540.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "comunicacion/public/scripts/class/World.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 17101,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1260.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "comunicacion/public/scripts/class/Sprites.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4107,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 240.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "comunicacion/public/views/index.hbs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7534,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5560,
+								5560
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1080.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "comunicacion/public/views/game.hbs",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 2470,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2334,
+								2111
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 540.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3690,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										268,
+										278
+									],
+									[
+										475,
+										485
+									],
+									[
+										680,
+										690
+									],
+									[
+										887,
+										897
+									],
+									[
+										1095,
+										1105
+									],
+									[
+										1302,
+										1312
+									],
+									[
+										1513,
+										1523
+									],
+									[
+										1719,
+										1729
+									],
+									[
+										1876,
+										1886
+									],
+									[
+										2132,
+										2142
+									],
+									[
+										2400,
+										2410
+									],
+									[
+										2642,
+										2652
+									],
+									[
+										3359,
+										3369
+									],
+									[
+										3640,
+										3650
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								273,
+								273
+							]
+						],
+						"settings":
+						{
+							"detect_indentation": false,
+							"line_numbers": false,
+							"output_tag": 1,
+							"result_base_dir": "",
+							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -1221,187 +1439,48 @@
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "comunicacion/node_modules/class/Being.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 24593,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								943,
-								943
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 486.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "comunicacion/node_modules/class/beings/Elfo.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 662,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								8,
-								12
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 378.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "comunicacion/game.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2405,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1188,
-								1188
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 648.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "comunicacion/node_modules/class/World.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 16073,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								438,
-								438
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 378.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "comunicacion/node_modules/class/framework.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3375,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								924,
-								924
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 432.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
 					"buffer": 10,
-					"file": "/C/Users/luco/Desktop/testjuego/test.html",
+					"file": "comunicacion/node_modules/class/Artifact.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 892,
+						"buffer_size": 1057,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								814,
-								814
+								1053,
+								688
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 324.0,
+						"translation.y": 540.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 11,
+					"file": "comunicacion/node_modules/class/Users.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 604,
+						"buffer_size": 1639,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								525,
-								525
+								0,
+								0
 							]
 						],
 						"settings":
@@ -1420,7 +1499,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 26.0
+		"height": 28.0
 	},
 	"input":
 	{
@@ -1456,7 +1535,7 @@
 	"project": "rpgNode.sublime-project",
 	"replace":
 	{
-		"height": 48.0
+		"height": 52.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1466,6 +1545,26 @@
 		[
 			[
 				"being",
+				"node_modules\\class\\Being.js"
+			],
+			[
+				"gamecon",
+				"public\\scripts\\controllers\\gameController.js"
+			],
+			[
+				"gamecontro",
+				"public\\scripts\\controllers\\gameController.js"
+			],
+			[
+				"public",
+				"public\\views\\index.hbs"
+			],
+			[
+				"client.js",
+				"public\\scripts\\class\\Client.js"
+			],
+			[
+				"bein",
 				"node_modules\\class\\Being.js"
 			],
 			[
@@ -1582,7 +1681,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 196.0,
+	"side_bar_width": 194.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
