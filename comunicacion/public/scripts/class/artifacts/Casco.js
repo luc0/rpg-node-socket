@@ -3,7 +3,7 @@ var Casco = function( params ){
 	// Props del hijo (con mas valor que las del Padre)
 	var defaults = {
 		"sprite":{
-			"images":"public/sprites/elfo-down.png",
+			"images":"public/sprites/casco.png",
 			"hasToCalculatePosition":true
 		},
 		/*Nombre de la daga*/
