@@ -4,7 +4,7 @@
 
 websocket.on( 'world_update' , queue_world_update );
 websocket.on( 'init_client' , init_client );
-websocket.on( 'ping' , ping );
+websocket.on( 'pong' , pong );
 websocket.on( 'ask_drop' , ask_drop );
 
 
@@ -16,11 +16,9 @@ function ask_drop(){
 
 
 }
-function ping( data ){
-	var fechalocal = (new Date()).getMilliseconds();
-	var fecharemota = data.fecha;
-	document.getElementById('ping').innerHTML = fechalocal - fecharemota + 'ms';
-	console.log( fechalocal - fecharemota );
+function pong( data ){
+	var pong = (new Date()).getMilliseconds();
+	document.getElementById('ping').innerHTML = (pong - client.ping) + 'ms';
 }
 
 function queue_world_update( data ){

@@ -10,6 +10,7 @@ var Client = function(){
 	this.startDate = (new Date()).getTime();
 
 	this.userId = null;
+	this.ping = 0;
 
 	// Cada vez que apreta una tecla.
 	this.sendControls = function( params ){
@@ -24,6 +25,10 @@ var Client = function(){
 		console.log('Respondiendo... Tira ' + data.answer);
 	}
 
+	setInterval(function(){
+		client.ping = (new Date()).getMilliseconds();
+		websocket.emit( 'ping' );
+	},1000)
 
 
 }
