@@ -150,6 +150,7 @@ function init_client( data ){
 	world.createObjects();
 	world.initTerrainSprites();
 	console.log("crea el mundo")
+	document.querySelector(".loading").parentNode.removeChild(document.querySelector(".loading"));
 	sprites.render();
 }
 

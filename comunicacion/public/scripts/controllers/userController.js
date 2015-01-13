@@ -11,7 +11,7 @@ websocket.on( 'old_server' , old_server );
 websocket.on( 'get_client_date' , get_client_date );
 
 function user_login( params ){
-
+	console.log("LOADED User login")
 	if( params ){
 		// Guardo identificador del pj.
 		client.userId = params.userId;
@@ -22,6 +22,7 @@ function user_login( params ){
 
 // El server pide date
 function get_client_date(){
+	console.log("LOADED client date")
 	var data = { "startDate" : client.startDate };
 	websocket.emit( 'check_date' , data );
 }

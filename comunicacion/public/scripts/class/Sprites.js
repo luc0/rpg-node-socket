@@ -98,6 +98,14 @@ var Sprites = function(){
 
     }
 
+    this.preloadImages = function(){
+        var textureLoader = new THREE.TextureLoader();
+        textureLoader.load('public/sprites/elfo-down.png');
+        textureLoader.load('public/sprites/aguila-down.png');
+        textureLoader.load('public/sprites/agua.jpg');
+        textureLoader.load('public/sprites/pasto.jpg');
+    }
 
+    this.preloadImages();
 
 }
