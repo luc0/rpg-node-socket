@@ -60,6 +60,8 @@ function world_update( data ){
 				propertyReference = propertyReference[ treeArray[level] ];
 
 			}
+
+			reproducirAnimaciones({ "property" : treeArray[level] , "newValue" : value , "being" : being });
 			reproducirSonidos({ "property" : treeArray[level] , 'newValue' : value , 'oldValue' : propertyReference[ treeArray[level] ] });
 
 			propertyReference[ treeArray[level] ] = value;
@@ -185,6 +187,15 @@ function copyProperties( origin , destiny ){
 // FUNCIONES
 //------------------------------------------------------------------------------------------------
 
+var reproducirAnimaciones = function( params ){
+	var p = params.property;
+	var being = params.being;
+	var newValue = params.newValue;
+
+	if( p == 'direction'){
+		sprites.changeAnimation({ "target" : being.sprite , "animation" : newValue })
+	}
+}
 var reproducirSonidos = function( params ){
 	var p = params.property;
 	var oldValue = params.oldValue;

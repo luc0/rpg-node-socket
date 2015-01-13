@@ -76,20 +76,25 @@ var Sprites = function(){
                                     "sprites" : params.return.animation
                                 }
                         );
-                    sprite = sprGroup.getNewSprite("walk",{position: new THREE.Vector3(params.position.x,params.position.y,params.position.z)});
+                    params.return.group = sprGroup;
+                    sprite = sprGroup.getNewSprite("up",{position: new THREE.Vector3(params.position.x,params.position.y,params.position.z)});
                     params.return.character = sprite;
 
                     // Asigno posiciones
-                    sprite.position.x = params.position.x;
-                    sprite.position.y = params.position.y;
-                    sprite.position.z = params.position.z;
-                    sprite.rotation.x = params.rotation.x;
+                    params.return.character.position.x = params.position.x;
+                    params.return.character.position.y = params.position.y;
+                    params.return.character.position.z = params.position.z;
+                    params.return.character.rotation.x = params.rotation.x;
 
                     // Creo en el mapa
-                    params.padre.add( sprite );
+                    params.padre.add( params.return.character );
                 }
             })(params);
         }
+    }
+
+    this.changeAnimation = function( params ){
+        params.target.character.changeSprite( params.animation ,{position: new THREE.Vector3(0,0,0)});
     }
 
 

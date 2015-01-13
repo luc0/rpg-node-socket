@@ -43,7 +43,7 @@ THREE.AnimatedSprites = (function(){
         time: { type: "f", value: 1.0 }
     };
     //var geometry = new THREE.Geometry();
-    var geometry = new THREE.PlaneBufferGeometry(1,1);
+    var geometry = new THREE.PlaneGeometry(1,1);
     /*
     geometry.vertices.push(new THREE.Vector3(-1,-1,0));
     geometry.vertices.push(new THREE.Vector3(-1,1,0));
