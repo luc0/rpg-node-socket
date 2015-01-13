@@ -17,6 +17,7 @@ var Client = function(){
 		websocket.emit( 'user_keydown' , data );
 	}
 
+	// Le dice al server cuantos items tira.
 	this.sendAnswer = function( params ){
 		var data = { "answer" : params.answer };
 		websocket.emit( 'answer_drop' , data );

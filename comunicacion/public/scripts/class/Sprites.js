@@ -12,37 +12,24 @@ var Sprites = function(){
         var objectSprite = object.sprite;
 
         objectSprite.texture = new THREE.ImageUtils.loadTexture(objectSprite.images);
-        if(object.type == "being" || object.type === "artifact"){
-            objectSprite.geometry = new THREE.PlaneGeometry(18, 23);
-            objectSprite.material = new THREE.MeshLambertMaterial( {
-                map: objectSprite.texture,
-                transparent:true,
-                side:THREE.FrontSide
-            });
-        }else{
-            objectSprite.geometry = new THREE.PlaneGeometry(10, 10);
-            objectSprite.material = new THREE.MeshLambertMaterial( {
-                map: objectSprite.texture,
-                transparent:false,
-                side:THREE.FrontSide
-            });
-        }
+        objectSprite.geometry = new THREE.PlaneGeometry(objectSprite.width, objectSprite.height);
+
+        objectSprite.material = new THREE.MeshLambertMaterial( {
+            map: objectSprite.texture,
+            transparent:( object.type == "being" || object.type === "artifact" ),
+            side:THREE.FrontSide
+        });
+
         objectSprite.character = new THREE.Mesh( objectSprite.geometry, objectSprite.material );
+
         objectSprite.character.position.x = object.position.x * 10 - 30 * 10 / 2 + 5 ;
         objectSprite.character.position.z = object.position.y * 10 - 30 * 10 / 2 + 5 ;
-        objectSprite.character.position.y = -150;
-        objectSprite.character.rotation.x = -Math.PI / 2;
+        objectSprite.character.position.y = -145 + objectSprite.offsetHeight;
+        objectSprite.character.rotation.x = objectSprite.rotation;
+
         this.scene.add( objectSprite.character );
-        if( object.type === "being" || object.type === "artifact" ){
 
-            objectSprite.character.rotation.x = 0;
-            objectSprite.character.position.y = -140;
-            this.spotLight.target.position.x = objectSprite.character.position.x;
-            this.spotLight.target.position.y = objectSprite.character.position.y;
-            this.spotLight.target.position.z = objectSprite.character.position.z;
 
-            this.spotLight.target.updateMatrixWorld();
-        }
     }
 
 
@@ -62,7 +49,7 @@ var Sprites = function(){
     this.scene.add(this.spotLight);
 
     this.camera.position.z = 800;
-    this.camera.position.y = 10;
+    this.camera.position.y = -40;
 
     var actualObject;
 
@@ -70,7 +57,6 @@ var Sprites = function(){
         var a=0;
     function render() {
         requestAnimationFrame( render );
-
 
         sprites.spotLight.position.x = sprites.camera.position.x;
         sprites.spotLight.position.y = sprites.camera.position.y;
@@ -85,12 +71,10 @@ var Sprites = function(){
                 actualObject.sprite.character.position.x = actualObject.position.x * 10 - 150 + 5;
                 actualObject.sprite.character.position.z = actualObject.position.y * 10 - 150 + 5 ;
                 if(actualObject.id == client.userId){
-                    sprites.camera.position.z = actualObject.sprite.character.position.z+150//100*Math.cos(cangulo)+200;
-                    sprites.camera.position.y = -50//50*Math.sin(cangulo*3)-99;
-                    sprites.camera.position.x = actualObject.sprite.character.position.x//100*Math.sin(cangulo);
+                    sprites.camera.position.z = actualObject.sprite.character.position.z+140;
+                    sprites.camera.position.x = actualObject.sprite.character.position.x;
                     sprites.camera.lookAt( world.createdObjects[client.userId].sprite.character.position );
                 }
-
 
             }
         }
