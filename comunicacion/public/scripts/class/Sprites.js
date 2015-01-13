@@ -2,12 +2,23 @@ var Sprites = function(){
 
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 3000 );
-    this.renderer = new THREE.WebGLRenderer();
+    this.renderer = webglAvailable() ? new THREE.WebGLRenderer() : new THREE.CanvasRenderer();
     this.time = new Date().getTime();
     this.textures = {};
     this.geometry = {};
     this.material = {};
 
+    function webglAvailable() {
+        try {
+            var canvas = document.createElement("canvas");
+            return !!
+                window.WebGLRenderingContext &&
+                (canvas.getContext("webgl") ||
+                    canvas.getContext("experimental-webgl"));
+        } catch(e) {
+            return false;
+        }
+    }
     /*
         sprites.initSprite( { "object" : being } )
     */
