@@ -77,7 +77,7 @@ world.create();
 	world.createdObjects[temporalObject.id] = temporalObject;
 
 
-	for(var i = 0 ; i < 300 ; i++){
+	for(var i = 0 ; i < 50 ; i++){
 		temporalObject = new Aguila({
 		"position":{
 			"x": Math.floor(Math.random()*15)+15,

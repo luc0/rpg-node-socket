@@ -3,7 +3,7 @@ var Sprites = function(){
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 3000 );
     this.renderer = new THREE.WebGLRenderer();
-    this.time = 0;
+    this.time = new Date().getTime();
 
     /*
         sprites.initSprite( { "object" : being } )
@@ -32,7 +32,7 @@ var Sprites = function(){
         // Sino es una imagen estatica.
 
             objectSprite.texture = new THREE.ImageUtils.loadTexture(objectSprite.images);
-            objectSprite.geometry = new THREE.PlaneGeometry(objectSprite.width, objectSprite.height);
+            objectSprite.geometry = new THREE.PlaneBufferGeometry(objectSprite.width, objectSprite.height);
             objectSprite.material = new THREE.MeshLambertMaterial( {
                 map: objectSprite.texture,
                 transparent:( object.type == "being" || object.type === "artifact" ),
@@ -53,9 +53,8 @@ var Sprites = function(){
     }
 
     this.animatedSprites = function( params ){
-        this.time = Date.now();
+        sprites.time = Date.now();
 
-        console.log('dibuja',params.target);
         sprite( { 
             'img' : params.target.images,
             'padre' : this.scene,
@@ -119,11 +118,8 @@ var Sprites = function(){
     this.render = render;
 
     function render() {
-        requestAnimationFrame( render );
 
-        sprites.spotLight.position.x = sprites.camera.position.x;
-        sprites.spotLight.position.y = sprites.camera.position.y;
-        sprites.spotLight.position.z = sprites.camera.position.z;
+        sprites.spotLight.position = sprites.camera.position;
         for( var object in world.createdObjects ){
             if( world.createdObjects[ object ].sprite.hasToCalculatePosition ){
 
@@ -137,16 +133,17 @@ var Sprites = function(){
                     sprites.camera.position.x = actualObject.sprite.character.position.x;
                     sprites.camera.lookAt( world.createdObjects[client.userId].sprite.character.position );
                 }
-
             }
         }
+
+        requestAnimationFrame( render );
         // Animacion sprite
-        var delta = new Date().getTime() - this.time;
+        var delta = new Date().getTime() - sprites.time;
         THREE.AnimatedSprites.update(delta);
         //
         sprites.renderer.render( sprites.scene, sprites.camera );
 
-        this.time = new Date().getTime();
+        sprites.time = new Date().getTime();
     }
 
     this.preloadImages = function(){
