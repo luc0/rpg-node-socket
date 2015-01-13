@@ -3,6 +3,7 @@ var Sprites = function(){
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 3000 );
     this.renderer = new THREE.WebGLRenderer();
+    this.time = 0;
 
     /*
         sprites.initSprite( { "object" : being } )
@@ -11,26 +12,88 @@ var Sprites = function(){
         var object = params.object;
         var objectSprite = object.sprite;
 
-        objectSprite.texture = new THREE.ImageUtils.loadTexture(objectSprite.images);
-        objectSprite.geometry = new THREE.PlaneGeometry(objectSprite.width, objectSprite.height);
+        // Si tiene definida una Animacion.
+        if( objectSprite.animation !== undefined ){
+            
+            this.animatedSprites({ 
+                "target" : objectSprite , 
+                "position" :  { 
+                    "x" : object.position.x * 10 - 30 * 10 / 2 + 5 , 
+                    "z" : object.position.y * 10 - 30 * 10 / 2 + 5 ,
+                    "y" : -145 + objectSprite.offsetHeight
+                },
+                "rotation" : {
+                    "x" : 0//objectSprite.rotation
+                }
+            });
 
-        objectSprite.material = new THREE.MeshLambertMaterial( {
-            map: objectSprite.texture,
-            transparent:( object.type == "being" || object.type === "artifact" ),
-            side:THREE.FrontSide
-        });
+        }else{
 
-        objectSprite.character = new THREE.Mesh( objectSprite.geometry, objectSprite.material );
+        // Sino es una imagen estatica.
 
-        objectSprite.character.position.x = object.position.x * 10 - 30 * 10 / 2 + 5 ;
-        objectSprite.character.position.z = object.position.y * 10 - 30 * 10 / 2 + 5 ;
-        objectSprite.character.position.y = -145 + objectSprite.offsetHeight;
-        objectSprite.character.rotation.x = objectSprite.rotation;
+            objectSprite.texture = new THREE.ImageUtils.loadTexture(objectSprite.images);
+            objectSprite.geometry = new THREE.PlaneGeometry(objectSprite.width, objectSprite.height);
+            objectSprite.material = new THREE.MeshLambertMaterial( {
+                map: objectSprite.texture,
+                transparent:( object.type == "being" || object.type === "artifact" ),
+                side:THREE.FrontSide
+            });
 
-        this.scene.add( objectSprite.character );
+            objectSprite.character = new THREE.Mesh( objectSprite.geometry, objectSprite.material );
+            objectSprite.character.position.x = object.position.x * 10 - 30 * 10 / 2 + 5 ;
+            objectSprite.character.position.z = object.position.y * 10 - 30 * 10 / 2 + 5 ;
+            objectSprite.character.position.y = -145 + objectSprite.offsetHeight;
+            objectSprite.character.rotation.x = objectSprite.rotation;
+
+            this.scene.add( objectSprite.character );
+            
+        }
 
 
     }
+
+    this.animatedSprites = function( params ){
+        this.time = Date.now();
+
+        console.log('dibuja',params.target);
+        sprite( { 
+            'img' : params.target.images,
+            'padre' : this.scene,
+            'return' : params.target,
+            'position' : params.position,
+            'rotation' : params.rotation
+        });
+
+
+        function sprite( params ){
+
+            var startImage = new Image();
+            var sprite;
+            startImage.src = params.img;
+            startImage.onload = (function(params){
+                return function(){
+                    var sprGroup = new THREE.AnimatedSprites.SpritesGroup(startImage, {
+                                    "sprites" : params.return.animation
+                                }
+                        );
+                    sprite = sprGroup.getNewSprite("walk",{position: new THREE.Vector3(params.position.x,params.position.y,params.position.z)});
+                    params.return.character = sprite;
+
+                    // Asigno posiciones
+                    sprite.position.x = params.position.x;
+                    sprite.position.y = params.position.y;
+                    sprite.position.z = params.position.z;
+                    sprite.rotation.x = params.rotation.x;
+
+                    // Creo en el mapa
+                    params.padre.add( sprite );
+                }
+            })(params);
+        }
+    }
+
+
+    
 
 
     this.renderer.setSize( window.innerWidth-100, window.innerHeight-100 );
@@ -54,7 +117,7 @@ var Sprites = function(){
     var actualObject;
 
     this.render = render;
-        var a=0;
+
     function render() {
         requestAnimationFrame( render );
 
@@ -64,10 +127,9 @@ var Sprites = function(){
         for( var object in world.createdObjects ){
             if( world.createdObjects[ object ].sprite.hasToCalculatePosition ){
 
-                console.log("nueva posicion");
                 actualObject = world.createdObjects[ object ];
-                actualObject.sprite.hasToCalculatePosition = false;
                 if( actualObject.sprite.character == undefined ) continue;
+                actualObject.sprite.hasToCalculatePosition = false;
                 actualObject.sprite.character.position.x = actualObject.position.x * 10 - 150 + 5;
                 actualObject.sprite.character.position.z = actualObject.position.y * 10 - 150 + 5 ;
                 if(actualObject.id == client.userId){
@@ -78,8 +140,13 @@ var Sprites = function(){
 
             }
         }
+        // Animacion sprite
+        var delta = new Date().getTime() - this.time;
+        THREE.AnimatedSprites.update(delta);
+        //
         sprites.renderer.render( sprites.scene, sprites.camera );
 
+        this.time = new Date().getTime();
     }
 
     this.preloadImages = function(){

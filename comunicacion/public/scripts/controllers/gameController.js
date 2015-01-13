@@ -28,7 +28,6 @@ function queue_world_update( data ){
 	}
 }
 function world_update( data ){
-	console.log("MIRA ESTOOO!!! " , data);
 	var propertyReference;
 	var treeArray;
 	var value;
