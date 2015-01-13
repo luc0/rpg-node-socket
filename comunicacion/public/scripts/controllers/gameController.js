@@ -193,7 +193,9 @@ var reproducirAnimaciones = function( params ){
 	var newValue = params.newValue;
 
 	if( p == 'direction'){
-		sprites.changeAnimation({ "target" : being.sprite , "animation" : newValue })
+		if( being.sprite.animation !== undefined ){ // si el objeto tiene animacion
+			sprites.changeAnimation({ "target" : being.sprite , "animation" : newValue })
+		}	
 	}
 }
 var reproducirSonidos = function( params ){
