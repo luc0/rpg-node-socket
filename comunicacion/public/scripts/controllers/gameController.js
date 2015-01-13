@@ -17,7 +17,7 @@ function ask_drop(){
 
 }
 function pong( data ){
-	var pong = (new Date()).getMilliseconds();
+	var pong = (new Date()).getTime();
 	document.getElementById('ping').innerHTML = (pong - client.ping) + 'ms';
 }
 

@@ -26,7 +26,7 @@ var Client = function(){
 	}
 
 	setInterval(function(){
-		client.ping = (new Date()).getMilliseconds();
+		client.ping = (new Date()).getTime();
 		websocket.emit( 'ping' );
 	},1000)
 
