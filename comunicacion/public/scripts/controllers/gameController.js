@@ -111,6 +111,11 @@ function world_update( data ){
 
 			lastTile[ tileObject.type ] = null;
 			tile[ tileObject.type ] = tileObject;
+			if(world.createdObjects[client.userId].sprite.character !== undefined){
+				tileObject.sprite.character.position.x = tileObject.position.x * 10 - 150 + 5;
+				tileObject.sprite.character.position.z = tileObject.position.y * 10 - 150 + 12 ;
+			}
+
 			return;
 		}
 		if(data.tile === "remove"){

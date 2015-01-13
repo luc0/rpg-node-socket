@@ -14,12 +14,12 @@ var Sprites = function(){
 
         // Si tiene definida una Animacion.
         if( objectSprite.animation !== undefined ){
-            
-            this.animatedSprites({ 
-                "target" : objectSprite , 
-                "position" :  { 
-                    "x" : object.position.x * 10 - 30 * 10 / 2 + 5 , 
-                    "z" : object.position.y * 10 - 30 * 10 / 2 + 5 ,
+
+            this.animatedSprites({
+                "target" : objectSprite ,
+                "position" :  {
+                    "x" : object.position.x * 10 - 30 * 10 / 2 + 5 ,
+                    "z" : object.position.y * 10 - 30 * 10 / 2 + 12 ,
                     "y" : -145 + objectSprite.offsetHeight
                 },
                 "rotation" : {
@@ -46,7 +46,7 @@ var Sprites = function(){
             objectSprite.character.rotation.x = objectSprite.rotation;
 
             this.scene.add( objectSprite.character );
-            
+
         }
 
 
@@ -55,7 +55,8 @@ var Sprites = function(){
     this.animatedSprites = function( params ){
         sprites.time = Date.now();
 
-        sprite( { 
+        console.log('dibuja',params.target);
+        sprite( {
             'img' : params.target.images,
             'padre' : this.scene,
             'return' : params.target,
@@ -92,7 +93,7 @@ var Sprites = function(){
     }
 
 
-    
+
 
 
     this.renderer.setSize( window.innerWidth-100, window.innerHeight-100 );
@@ -118,8 +119,12 @@ var Sprites = function(){
     this.render = render;
 
     function render() {
+        requestAnimationFrame( render );
 
-        sprites.spotLight.position = sprites.camera.position;
+        sprites.spotLight.position.x = sprites.camera.position.x;
+        sprites.spotLight.position.y = sprites.camera.position.y;
+        sprites.spotLight.position.z = sprites.camera.position.z;
+        /*
         for( var object in world.createdObjects ){
             if( world.createdObjects[ object ].sprite.hasToCalculatePosition ){
 
@@ -133,10 +138,15 @@ var Sprites = function(){
                     sprites.camera.position.x = actualObject.sprite.character.position.x;
                     sprites.camera.lookAt( world.createdObjects[client.userId].sprite.character.position );
                 }
+
             }
         }
-
-        requestAnimationFrame( render );
+        */
+        if(world.createdObjects[client.userId].sprite.character !== undefined){
+            sprites.camera.position.z = world.createdObjects[client.userId].sprite.character.position.z+140;
+            sprites.camera.position.x = world.createdObjects[client.userId].sprite.character.position.x;
+            sprites.camera.lookAt( world.createdObjects[client.userId].sprite.character.position );
+        }
         // Animacion sprite
         var delta = new Date().getTime() - sprites.time;
         THREE.AnimatedSprites.update(delta);
