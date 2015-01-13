@@ -120,33 +120,6 @@ var Sprites = function(){
 
     function render() {
         requestAnimationFrame( render );
-
-        sprites.spotLight.position.x = sprites.camera.position.x;
-        sprites.spotLight.position.y = sprites.camera.position.y;
-        sprites.spotLight.position.z = sprites.camera.position.z;
-        /*
-        for( var object in world.createdObjects ){
-            if( world.createdObjects[ object ].sprite.hasToCalculatePosition ){
-
-                actualObject = world.createdObjects[ object ];
-                if( actualObject.sprite.character == undefined ) continue;
-                actualObject.sprite.hasToCalculatePosition = false;
-                actualObject.sprite.character.position.x = actualObject.position.x * 10 - 150 + 5;
-                actualObject.sprite.character.position.z = actualObject.position.y * 10 - 150 + 5 ;
-                if(actualObject.id == client.userId){
-                    sprites.camera.position.z = actualObject.sprite.character.position.z+140;
-                    sprites.camera.position.x = actualObject.sprite.character.position.x;
-                    sprites.camera.lookAt( world.createdObjects[client.userId].sprite.character.position );
-                }
-
-            }
-        }
-        */
-        if(world.createdObjects[client.userId].sprite.character !== undefined){
-            sprites.camera.position.z = world.createdObjects[client.userId].sprite.character.position.z+140;
-            sprites.camera.position.x = world.createdObjects[client.userId].sprite.character.position.x;
-            sprites.camera.lookAt( world.createdObjects[client.userId].sprite.character.position );
-        }
         // Animacion sprite
         var delta = new Date().getTime() - sprites.time;
         THREE.AnimatedSprites.update(delta);

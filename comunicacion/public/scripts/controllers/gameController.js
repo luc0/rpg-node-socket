@@ -111,10 +111,16 @@ function world_update( data ){
 
 			lastTile[ tileObject.type ] = null;
 			tile[ tileObject.type ] = tileObject;
-			if(world.createdObjects[client.userId].sprite.character !== undefined){
+			if(tileObject.sprite.character !== undefined){
 				tileObject.sprite.character.position.x = tileObject.position.x * 10 - 150 + 5;
 				tileObject.sprite.character.position.z = tileObject.position.y * 10 - 150 + 12 ;
+				if(tileObject.id == client.userId){
+					sprites.camera.position.z = tileObject.sprite.character.position.z+140;
+					sprites.camera.position.x = tileObject.sprite.character.position.x;
+					sprites.camera.lookAt( tileObject.sprite.character.position );
+				}
 			}
+
 
 			return;
 		}
