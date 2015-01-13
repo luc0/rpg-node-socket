@@ -80,7 +80,7 @@ io.sockets.on('connection', function(socket){
   // Configuracion
   //socket.hearthbeatTimeout = 5000;
   io.set('heartbeat timeout', 60000);
-  io.set('heartbeat interval', 25000);
+  io.set('heartbeat interval', 2000);
 
   userController( socket );
   gameController( socket );
