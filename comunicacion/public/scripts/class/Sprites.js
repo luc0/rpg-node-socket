@@ -4,6 +4,9 @@ var Sprites = function(){
     this.camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 3000 );
     this.renderer = new THREE.WebGLRenderer();
     this.time = new Date().getTime();
+    this.textures = {};
+    this.geometry = {};
+    this.material = {};
 
     /*
         sprites.initSprite( { "object" : being } )
@@ -31,13 +34,25 @@ var Sprites = function(){
 
         // Sino es una imagen estatica.
 
-            objectSprite.texture = new THREE.ImageUtils.loadTexture(objectSprite.images);
-            objectSprite.geometry = new THREE.PlaneBufferGeometry(objectSprite.width, objectSprite.height);
-            objectSprite.material = new THREE.MeshLambertMaterial( {
-                map: objectSprite.texture,
-                transparent:( object.type == "being" || object.type === "artifact" ),
-                side:THREE.FrontSide
-            });
+            // Si las texturas y geometrias son las mismas que otras ya usadas, las reutiliza.
+            if(this.textures[object.name] !== undefined){
+                objectSprite.texture = this.textures[object.name];
+                objectSprite.geometry = this.geometry[object.name];
+                objectSprite.material = this.material[object.name];
+            }else{
+            //Si las texturas y geometrias son nuevas las crea.
+                objectSprite.texture = new THREE.ImageUtils.loadTexture(objectSprite.images);
+                objectSprite.geometry = new THREE.PlaneBufferGeometry(objectSprite.width, objectSprite.height);
+                objectSprite.material = new THREE.MeshLambertMaterial( {
+                    map: objectSprite.texture,
+                    transparent:( object.type == "being" || object.type === "artifact" ),
+                    side:THREE.FrontSide
+                });
+                this.textures[object.name] = objectSprite.texture;
+                this.geometry[object.name] = objectSprite.geometry;
+                this.material[object.name] = objectSprite.material;
+            }
+
 
             objectSprite.character = new THREE.Mesh( objectSprite.geometry, objectSprite.material );
             objectSprite.character.position.x = object.position.x * 10 - 30 * 10 / 2 + 5 ;
