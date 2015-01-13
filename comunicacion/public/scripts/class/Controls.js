@@ -12,16 +12,21 @@ var Controls = function(){
     this.eventsDown = {
         "nothing":function(){},
         "up":function(){
-            client.sendControls({ "control" : "up" });
+            console.log(world.createdObjects[client.userId].isAnimating)
+            if(world.createdObjects[client.userId].isAnimating !== true)
+                client.sendControls({ "control" : "up" });
         },
         "right":function(){
-            client.sendControls({ "control" : "right" });
+            if(world.createdObjects[client.userId].isAnimating !== true)
+                client.sendControls({ "control" : "right" });
         },
         "down":function(){
-            client.sendControls({ "control" : "down" });
+            if(world.createdObjects[client.userId].isAnimating !== true)
+                client.sendControls({ "control" : "down" });
         },
         "left":function(){
-            client.sendControls({ "control" : "left" });
+            if(world.createdObjects[client.userId].isAnimating !== true)
+                client.sendControls({ "control" : "left" });
         },
         "attack":function(){
             client.sendControls({ "control" : "attack" });

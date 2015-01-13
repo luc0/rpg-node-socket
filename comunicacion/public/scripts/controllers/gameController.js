@@ -113,13 +113,32 @@ function world_update( data ){
 			lastTile[ tileObject.type ] = null;
 			tile[ tileObject.type ] = tileObject;
 			if(tileObject.sprite.character !== undefined){
-				tileObject.sprite.character.position.x = tileObject.position.x * 10 - 150 + 5;
-				tileObject.sprite.character.position.z = tileObject.position.y * 10 - 150 + 12 ;
-				if(tileObject.id == client.userId){
-					sprites.camera.position.z = tileObject.sprite.character.position.z+140;
-					sprites.camera.position.x = tileObject.sprite.character.position.x;
-					sprites.camera.lookAt( tileObject.sprite.character.position );
-				}
+				clearInterval(tileObject.animationInterval);
+				tileObject.animationInterval = parseInt(setInterval( (function(tileObject){
+						tileObject.isAnimating = true;
+						return function(){
+							if(tileObject.sprite.character.position.x < tileObject.position.x * 10 - 150 + 5){
+								tileObject.sprite.character.position.x ++;
+							}else if(tileObject.sprite.character.position.x > tileObject.position.x * 10 - 150 + 5){
+								tileObject.sprite.character.position.x --;
+							}
+							if(tileObject.sprite.character.position.z < tileObject.position.y * 10 - 150 + 15){
+								tileObject.sprite.character.position.z ++;
+
+							}else if(tileObject.sprite.character.position.z > tileObject.position.y * 10 - 150 + 15){
+								tileObject.sprite.character.position.z --;
+							}
+							if(tileObject.id == client.userId){
+								sprites.camera.position.z = tileObject.sprite.character.position.z+140;
+								sprites.camera.position.x = tileObject.sprite.character.position.x;
+								sprites.camera.lookAt( tileObject.sprite.character.position );
+							}
+							if((tileObject.sprite.character.position.x == tileObject.position.x * 10 - 150 + 5) && (tileObject.sprite.character.position.z == tileObject.position.y * 10 - 150 + 15)){
+								clearInterval(tileObject.animationInterval)
+								tileObject.isAnimating = false;
+							}
+						}
+				})(tileObject),10));
 			}
 
 
@@ -194,7 +213,7 @@ var reproducirAnimaciones = function( params ){
 	if( p == 'direction'){
 		if( being.sprite.animation !== undefined ){ // si el objeto tiene animacion
 			sprites.changeAnimation({ "target" : being.sprite , "animation" : newValue })
-		}	
+		}
 	}
 }
 var reproducirSonidos = function( params ){
