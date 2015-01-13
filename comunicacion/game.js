@@ -76,18 +76,28 @@ world.create();
 	});
 	world.createdObjects[temporalObject.id] = temporalObject;
 
-
-	for(var i = 0 ; i < 50 ; i++){
-		temporalObject = new Aguila({
-		"position":{
-			"x": Math.floor(Math.random()*15)+15,
-			"y": Math.floor(Math.random()*15)+15,
-		},
-		"controls":"npc",
-		"name" : "bicho",
-	});
-	world.createdObjects[temporalObject.id] = temporalObject;
-	}
+	(function(){
+		var xpos;
+		var ypos;
+		for(var i = 0 ; i < 50 ; i++){
+			xpos = Math.floor(Math.random()*10)+20;
+			ypos = Math.floor(Math.random()*10)+20;
+			if( !world.getTile({ "x" : xpos , "y" : ypos }).being ){
+				temporalObject = new Aguila({
+					"position":{
+						"x": xpos,
+						"y": ypos,
+					},
+					"controls":"npc",
+					"name" : "bicho",
+				});
+			}else{
+				i--;
+			}
+			console.log('bicho agregado num:',i)
+			world.createdObjects[temporalObject.id] = temporalObject;
+		}
+	})()
 
 /*
 	temporalObject = new Aguila({
