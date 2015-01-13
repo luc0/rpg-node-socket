@@ -12,7 +12,7 @@ var Sprites = function(){
         var objectSprite = object.sprite;
 
         objectSprite.texture = new THREE.ImageUtils.loadTexture(objectSprite.images);
-        if(object.type == "being"){
+        if(object.type == "being" || object.type === "artifact"){
             objectSprite.geometry = new THREE.PlaneGeometry(18, 23);
             objectSprite.material = new THREE.MeshLambertMaterial( {
                 map: objectSprite.texture,
@@ -33,7 +33,7 @@ var Sprites = function(){
         objectSprite.character.position.y = -150;
         objectSprite.character.rotation.x = -Math.PI / 2;
         this.scene.add( objectSprite.character );
-        if( object.type === "being" ){
+        if( object.type === "being" || object.type === "artifact" ){
 
             objectSprite.character.rotation.x = 0;
             objectSprite.character.position.y = -140;
