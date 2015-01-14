@@ -9,7 +9,6 @@ rpgnode
   <li>Invetario: Interfaz, Seleccion de objetos</li>
   <li>Invetario: Equipar, desequipar, usar, tirar</li>
   <li>Sprites: Pj con ropa, con escudo, etc.</li>
-  <li>Npc: Cuando lo mates, que se respawnee.</li>
   <li>Stats: Interfaz (barra de vida, mana, etc.)</li>
   <li>Mapa: Agrandar el mapa, agregar rango de vision del Pj, que no le llegue info de los tiles lejanos. Hacer niebla donde  no llegue info.</li>
   <li>Conectarse: Que te conectes en un espacio vacio</li>
