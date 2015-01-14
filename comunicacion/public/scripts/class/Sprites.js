@@ -123,6 +123,11 @@ var Sprites = function(){
     }
 
 
+    this.removeObject = function( params ){
+        this.scene.remove( params.removeObject.sprite.character );
+    }
+
+
 
 
 

@@ -76,12 +76,21 @@ world.create();
 	});
 	world.createdObjects[temporalObject.id] = temporalObject;
 
+	// Creamos aguilas
+	for(var i = 0 ; i < 5 ; i++){
+		world.createBeing({ 
+			"userId" : world.generateId({ "prefix" : "b" }) , 
+			"type" : Aguila , 
+			"controls" : "npc" 
+		});
+	}
+/*
 	(function(){
 		var xpos;
 		var ypos;
-		for(var i = 0 ; i < 50 ; i++){
-			xpos = Math.floor(Math.random()*10)+20;
-			ypos = Math.floor(Math.random()*10)+20;
+		for(var i = 0 ; i < 5 ; i++){
+			xpos = Math.floor(Math.random()*20)+10;
+			ypos = Math.floor(Math.random()*20)+10;
 			if( !world.getTile({ "x" : xpos , "y" : ypos }).being ){
 				temporalObject = new Aguila({
 					"position":{
@@ -97,7 +106,7 @@ world.create();
 			world.createdObjects[temporalObject.id] = temporalObject;
 		}
 	})()
-
+*/
 /*
 	temporalObject = new Aguila({
 		"position":{

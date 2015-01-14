@@ -152,12 +152,19 @@ function world_update( data ){
 			var lastTile = world.getTile( lastPosition );
 
 			lastTile[ tileObject.type ] = null;
+			console.log("Tile borrado: ",lastTile[ tileObject.type ])
 			return;
 		}
 
 	}else if( data.world !== undefined ){
 	// Actualización de las propiedades del WORLD
-		delete world.createdObjects[ tileObject.id ];
+		var removeId = data.data.object.id
+		delete world.createdObjects[ removeId ];
+		console.log("Instancia borrada",world.createdObjects[ removeId ])
+		delete data.data.object;
+		return;
+
+		//sprites.removeObject({ "object" : world.createdObjects[ removeId ] });
 
 	}else if( data.newBeing !== undefined ){
 
