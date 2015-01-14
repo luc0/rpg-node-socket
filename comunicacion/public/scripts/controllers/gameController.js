@@ -122,10 +122,10 @@ function world_update( data ){
 							}else if(tileObject.sprite.character.position.x > tileObject.position.x * 10 - 150 + 5){
 								tileObject.sprite.character.position.x --;
 							}
-							if(tileObject.sprite.character.position.z < tileObject.position.y * 10 - 150 + tileObject.sprite.offsetHeight/2){
+							if(tileObject.sprite.character.position.z < tileObject.position.y * 10 - 150 + 5){
 								tileObject.sprite.character.position.z ++;
 
-							}else if(tileObject.sprite.character.position.z > tileObject.position.y * 10 - 150 + tileObject.sprite.offsetHeight/2){
+							}else if(tileObject.sprite.character.position.z > tileObject.position.y * 10 - 150 + 5){
 								tileObject.sprite.character.position.z --;
 							}
 							if(tileObject.id == client.userId){
@@ -133,7 +133,7 @@ function world_update( data ){
 								sprites.camera.position.x = tileObject.sprite.character.position.x;
 								sprites.camera.lookAt( tileObject.sprite.character.position );
 							}
-							if((tileObject.sprite.character.position.x == tileObject.position.x * 10 - 150 + 5) && (tileObject.sprite.character.position.z == tileObject.position.y * 10 - 150 + tileObject.sprite.offsetHeight/2)){
+							if((tileObject.sprite.character.position.x == tileObject.position.x * 10 - 150 + 5) && (tileObject.sprite.character.position.z == tileObject.position.y * 10 - 150 + 5)){
 								clearInterval(tileObject.animationInterval)
 								tileObject.isAnimating = false;
 							}

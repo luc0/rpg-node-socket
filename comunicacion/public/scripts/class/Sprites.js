@@ -34,7 +34,7 @@ var Sprites = function(){
                 "position" :  {
                     "x" : object.position.x * 10 - 30 * 10 / 2 + 5 ,
                     "z" : object.position.y * 10 - 30 * 10 / 2 + object.sprite.offsetHeight/2 ,
-                    "y" : -145 + objectSprite.offsetHeight
+                    "y" : -133 + objectSprite.offsetHeight/2
                 },
                 "rotation" : {
                     "x" : 0//objectSprite.rotation
