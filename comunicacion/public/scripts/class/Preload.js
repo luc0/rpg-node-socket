@@ -1,7 +1,6 @@
-console.log('Clase User -> OK');
 
 //------------------------------------------------------------------
-// User
+// Preload
 //------------------------------------------------------------------
 
 var Preload = function(){
@@ -11,7 +10,7 @@ var Preload = function(){
 	this.assetsLoadedCount = 0;
 
 	this.elementLoaded = function(){
-		console.log('Cargado!')
+		console.log('Termino de cargar el sonido.')
         this.assetsLoadedCount++;
         if( this.assetsLoadedCount ){
         	//document.getElementById('elementsLoaded').innerHTML = this.assetsLoadedCount;
