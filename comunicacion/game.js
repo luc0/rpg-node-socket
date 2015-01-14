@@ -19,6 +19,9 @@ global.Escudo = require('class/artifacts/Escudo.js').Escudo;
 global.Casco = require('class/artifacts/Casco.js').Casco;
 global.PocionRoja = require('class/artifacts/PocionRoja.js').PocionRoja;
 global.Tile = require('class/Tile.js').Tile;
+global.Timers = require('class/Timers.js').Timers;
+
+global.timers = new Timers();
 
 world.create();
 

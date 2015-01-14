@@ -25,6 +25,7 @@ var Sprites = function(){
     this.initSprite = function( params ){
         var object = params.object;
         var objectSprite = object.sprite;
+        objectSprite.id = object.id;
 
         // Si tiene definida una Animacion.
         if( objectSprite.animation !== undefined ){
@@ -70,7 +71,7 @@ var Sprites = function(){
             objectSprite.character.position.z = object.position.y * 10 - 30 * 10 / 2 + objectSprite.offsetHeight/2 ;
             objectSprite.character.position.y = -133 + objectSprite.offsetHeight/2;
             objectSprite.character.rotation.x = objectSprite.rotation;
-
+            objectSprite.character.name = object.id;
             this.scene.add( objectSprite.character );
 
         }
@@ -112,6 +113,7 @@ var Sprites = function(){
                     params.return.character.rotation.x = params.rotation.x;
 
                     // Creo en el mapa
+                    params.return.character.name = params.return.id;
                     params.padre.add( params.return.character );
                 }
             })(params);
@@ -124,7 +126,8 @@ var Sprites = function(){
 
 
     this.removeObject = function( params ){
-        this.scene.remove( params.removeObject.sprite.character );
+        var spriteRemove = this.scene.getObjectByName( params.object.sprite.character.name )
+        this.scene.remove( spriteRemove );
     }
 
 
