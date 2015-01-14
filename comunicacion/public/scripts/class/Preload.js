@@ -11,10 +11,13 @@ var Preload = function(){
 	this.assetsLoadedCount = 0;
 
 	this.elementLoaded = function(){
+		console.log('Cargado!')
         this.assetsLoadedCount++;
         if( this.assetsLoadedCount ){
         	//document.getElementById('elementsLoaded').innerHTML = this.assetsLoadedCount;
-        	document.getElementById('percent').innerHTML = Math.round(this.assetsLoadedCount / this.assetsTotalCount * 100) + '%';
+        	if( document.getElementById('percent') ){
+        		document.getElementById('percent').innerHTML = Math.round(this.assetsLoadedCount / this.assetsTotalCount * 100) + '%';
+        	}
     	}
         if( this.assetsLoadedCount == this.assetsTotalCount ){
         	this.done();
@@ -35,8 +38,15 @@ var Preload = function(){
 	}
 
 	this.done = function(){
-		document.getElementById('percent').remove();
-		document.getElementById('loading-text').innerHTML = 'Cargando mundo...';
+		var html_percent = document.getElementById('percent');
+		var html_loading_txt = document.getElementById('loading-text');
+
+		if( html_percent ){
+			html_percent.remove();
+		}
+		if( html_loading_txt ){
+			document.getElementById('loading-text').innerHTML = 'Cargando mundo...';
+		}
 		return true;
 	}
 
