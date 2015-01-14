@@ -65,7 +65,12 @@
         audio['caminar'] = new Audio('/public/sounds/caminar_arena.mp3');
         audio['muerte'] = new Audio('/public/sounds/muerte.mp3');
 
-        preload.init({ "sounds" : audio });
+        var preload = preload.init({ "sounds" : audio });
+
+        if( preload ){
+            console.log('listo')
+            preload = null;
+        }
 
 
     </script>
