@@ -94,7 +94,6 @@ world.create();
 			}else{
 				i--;
 			}
-			console.log('bicho agregado num:',i)
 			world.createdObjects[temporalObject.id] = temporalObject;
 		}
 	})()

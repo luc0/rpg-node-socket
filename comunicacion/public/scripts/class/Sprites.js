@@ -81,7 +81,6 @@ var Sprites = function(){
     this.animatedSprites = function( params ){
         sprites.time = Date.now();
 
-        console.log('dibuja',params.target);
         sprite( {
             'img' : params.target.images,
             'padre' : this.scene,
