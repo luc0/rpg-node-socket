@@ -56,11 +56,11 @@
 
         #preload{color:white; }
         #panelStats{width:100px;background:#111;opacity.8;padding:10px;margin-top:10px;}
-        #panelStats .barra_stat{width:80px;height:5px;background:#333;border-radius:4px;overflow:hidden;}
-        #panelStats .name_stat{color:#555;font-family: tahoma;font-size:11px;}
-        #panelStats .barra_nivel{width:100%;height:100%;background:green;}
-        #panelStats .barra_exp{width:100%;height:100%;background:yellow;}
-        #panelStats .barra_vida{width:100%;height:100%;background:red;}
+        #panelStats .barra_stat{width:100px;height:5px;background:#333;border-radius:4px;overflow:hidden;margin-bottom: 5px;}
+        #panelStats .name_stat{color:#555;font-family: tahoma;font-size:11px;margin-bottom: 2px;}
+        #panelStats #texto_nivel{width:100%;height:100%;color:green;}
+        #panelStats #barra_exp{width:0%;height:100%;background:yellow;}
+        #panelStats #barra_vida{width:100%;height:100%;background:red;}
     </style>
 
     <script src="/public/scripts/class/Preload.js"></script>
@@ -86,16 +86,14 @@
     <div id="ping">--</div>
     <div id="panelStats">
         <div class="name_stat">Nivel</div>
-        <div class="barra_stat">
-            <div class="barra_nivel"></div>
-        </div>
+        <div id="texto_nivel">1</div>
         <div class="name_stat">Exp</div>
         <div class="barra_stat">
-            <div class="barra_exp"></div>
+            <div id="barra_exp"></div>
         </div>
         <div class="name_stat">Vida</div>
         <div class="barra_stat">
-            <div class="barra_vida"></div>
+            <div id="barra_vida"></div>
         </div>
     </div>
     <div class="loading">

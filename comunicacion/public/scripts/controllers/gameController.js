@@ -62,6 +62,7 @@ function world_update( data ){
 
 			reproducirAnimaciones({ "property" : treeArray[level] , "newValue" : value , "being" : being });
 			reproducirSonidos({ "property" : treeArray[level] , 'newValue' : value , 'oldValue' : propertyReference[ treeArray[level] ] });
+			eventStats({ "property" : treeArray[level] , "newValue" : value , "being" : being });
 
 			propertyReference[ treeArray[level] ] = value;
 
@@ -241,5 +242,22 @@ var reproducirSonidos = function( params ){
 	if( p == 'position'){
 		audio['caminar'].play();
 		return;
+	}
+}
+
+
+function eventStats( params ){
+	var p = params.property;
+	var being = params.being;
+	var newValue = params.newValue;
+
+	if( being.id == client.userId ){
+		if( p == 'life'){
+			document.getElementById('barra_vida').style.width = (newValue.min / newValue.max * 100) + '%';
+		}
+		if( p == 'experience'){
+			document.getElementById('barra_exp').style.width = (newValue.min / newValue.max * 100) + '%';
+			document.getElementById('texto_nivel').innerHTML = newValue.min;
+		}
 	}
 }
