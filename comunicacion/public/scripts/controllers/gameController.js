@@ -122,23 +122,23 @@ function world_update( data ){
 							}else if(tileObject.sprite.character.position.x > tileObject.position.x * 10 - 150 + 5){
 								tileObject.sprite.character.position.x --;
 							}
-							if(tileObject.sprite.character.position.z < tileObject.position.y * 10 - 150 + 15){
+							if(tileObject.sprite.character.position.z < tileObject.position.y * 10 - 150 + tileObject.sprite.offsetHeight/2){
 								tileObject.sprite.character.position.z ++;
 
-							}else if(tileObject.sprite.character.position.z > tileObject.position.y * 10 - 150 + 15){
+							}else if(tileObject.sprite.character.position.z > tileObject.position.y * 10 - 150 + tileObject.sprite.offsetHeight/2){
 								tileObject.sprite.character.position.z --;
 							}
 							if(tileObject.id == client.userId){
-								sprites.camera.position.z = tileObject.sprite.character.position.z+140;
+								sprites.camera.position.z = tileObject.sprite.character.position.z+240;
 								sprites.camera.position.x = tileObject.sprite.character.position.x;
 								sprites.camera.lookAt( tileObject.sprite.character.position );
 							}
-							if((tileObject.sprite.character.position.x == tileObject.position.x * 10 - 150 + 5) && (tileObject.sprite.character.position.z == tileObject.position.y * 10 - 150 + 15)){
+							if((tileObject.sprite.character.position.x == tileObject.position.x * 10 - 150 + 5) && (tileObject.sprite.character.position.z == tileObject.position.y * 10 - 150 + tileObject.sprite.offsetHeight/2)){
 								clearInterval(tileObject.animationInterval)
 								tileObject.isAnimating = false;
 							}
 						}
-				})(tileObject),10));
+				})(tileObject),30));
 			}
 
 

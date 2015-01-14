@@ -1,7 +1,7 @@
 var Sprites = function(){
 
     this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 3000 );
+    this.camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 0.1, 3000 );
     this.renderer = webglAvailable() ? new THREE.WebGLRenderer() : new THREE.CanvasRenderer();
     this.time = new Date().getTime();
     this.textures = {};
@@ -33,7 +33,7 @@ var Sprites = function(){
                 "target" : objectSprite ,
                 "position" :  {
                     "x" : object.position.x * 10 - 30 * 10 / 2 + 5 ,
-                    "z" : object.position.y * 10 - 30 * 10 / 2 + 12 ,
+                    "z" : object.position.y * 10 - 30 * 10 / 2 + object.sprite.offsetHeight/2 ,
                     "y" : -145 + objectSprite.offsetHeight
                 },
                 "rotation" : {
@@ -67,8 +67,8 @@ var Sprites = function(){
 
             objectSprite.character = new THREE.Mesh( objectSprite.geometry, objectSprite.material );
             objectSprite.character.position.x = object.position.x * 10 - 30 * 10 / 2 + 5 ;
-            objectSprite.character.position.z = object.position.y * 10 - 30 * 10 / 2 + 5 ;
-            objectSprite.character.position.y = -145 + objectSprite.offsetHeight;
+            objectSprite.character.position.z = object.position.y * 10 - 30 * 10 / 2 + objectSprite.offsetHeight/2 ;
+            objectSprite.character.position.y = -133 + objectSprite.offsetHeight/2;
             objectSprite.character.rotation.x = objectSprite.rotation;
 
             this.scene.add( objectSprite.character );
@@ -143,7 +143,7 @@ var Sprites = function(){
     this.scene.add(this.spotLight);
 
     this.camera.position.z = 800;
-    this.camera.position.y = -40;
+    this.camera.position.y = -50;
 
     var actualObject;
 
