@@ -47,22 +47,27 @@ var Sprites = function(){
         // Sino es una imagen estatica.
 
             // Si las texturas y geometrias son las mismas que otras ya usadas, las reutiliza.
-            if(this.textures[object.name] !== undefined){
-                objectSprite.texture = this.textures[object.name];
-                objectSprite.geometry = this.geometry[object.name];
-                objectSprite.material = this.material[object.name];
+            if( this.textures[object.specie] !== undefined){
+                objectSprite.texture = this.textures[object.specie];
+                objectSprite.geometry = this.geometry[object.specie];
+                objectSprite.material = this.material[object.specie];
             }else{
             //Si las texturas y geometrias son nuevas las crea.
-                objectSprite.texture = new THREE.ImageUtils.loadTexture(objectSprite.images);
+                console.log('crea por aca')
+                if( object.type == "terrain" ){
+                    objectSprite.texture = new THREE.ImageUtils.loadTexture(objectSprite.images[object.specie]);
+                }else{
+                    objectSprite.texture = new THREE.ImageUtils.loadTexture(objectSprite.images);
+                }
                 objectSprite.geometry = new THREE.PlaneBufferGeometry(objectSprite.width, objectSprite.height);
                 objectSprite.material = new THREE.MeshLambertMaterial( {
                     map: objectSprite.texture,
                     transparent:( object.type == "being" || object.type === "artifact" ),
                     side:THREE.FrontSide
                 });
-                this.textures[object.name] = objectSprite.texture;
-                this.geometry[object.name] = objectSprite.geometry;
-                this.material[object.name] = objectSprite.material;
+                this.textures[object.specie] = objectSprite.texture;
+                this.geometry[object.specie] = objectSprite.geometry;
+                this.material[object.specie] = objectSprite.material;
             }
 
 

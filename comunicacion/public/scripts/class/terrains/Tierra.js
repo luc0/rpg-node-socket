@@ -3,7 +3,7 @@ var Tierra = function( params ){
 	// Props del hijo (con mas valor que las del Padre)
 	var defaults = {
 		"sprite":{
-			"images":"../public/sprites/pasto.jpg",
+			"images":"../public/sprites/tiles-juego_29.jpg",
 			"hasToCalculatePosition":false
 		},
 		"name": 'tierra',

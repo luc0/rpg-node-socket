@@ -3,7 +3,7 @@ var Agua = function( params ){
 	// Props del hijo (con mas valor que las del Padre)
 	var defaults = {
 		"sprite":{
-			"images":"../public/sprites/agua.jpg",
+			"images":"../public/sprites/tiles-juego_26.jpg",
 			"hasToCalculatePosition":false
 		},
 		"name": 'agua',
