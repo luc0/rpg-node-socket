@@ -20,7 +20,7 @@ var Aguila = function( params ){
 
 			"agility" : 10e3,
 
-			"points": {"min":210 }
+			"points": {"min":150 }
 		}
 	}
 

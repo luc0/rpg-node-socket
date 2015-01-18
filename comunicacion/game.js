@@ -80,7 +80,7 @@ world.create();
 	world.createdObjects[temporalObject.id] = temporalObject;
 
 	// Creamos aguilas
-	for(var i = 0 ; i < 5 ; i++){
+	for(var i = 0 ; i < 20 ; i++){
 		world.createBeing({ 
 			"userId" : world.generateId({ "prefix" : "b" }) , 
 			"type" : Aguila , 

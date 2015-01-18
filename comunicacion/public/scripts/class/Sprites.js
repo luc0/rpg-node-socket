@@ -53,7 +53,6 @@ var Sprites = function(){
                 objectSprite.material = this.material[object.specie];
             }else{
             //Si las texturas y geometrias son nuevas las crea.
-                console.log('crea por aca')
                 if( object.type == "terrain" ){
                     objectSprite.texture = new THREE.ImageUtils.loadTexture(objectSprite.images[object.specie]);
                 }else{
@@ -131,6 +130,7 @@ var Sprites = function(){
 
 
     this.removeObject = function( params ){
+        console.log(params)
         var spriteRemove = this.scene.getObjectByName( params.object.sprite.character.name )
         this.scene.remove( spriteRemove );
     }

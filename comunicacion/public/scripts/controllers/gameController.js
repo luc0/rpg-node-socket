@@ -32,6 +32,14 @@ function world_update( data ){
 	var value;
 	if( data.being !== undefined ){
 	// Actualización de las propiedades del BEING
+	if(data.data.all){
+		if(data.data.all[0]){
+			if(data.data.all[0].tree){
+				console.log('RECIBE:',data.data.all[0].tree)
+
+			}
+		}
+	}
 
 
 		//Busca el objeto en el mundo que coincida con el id
@@ -110,36 +118,47 @@ function world_update( data ){
 			var lastTile = world.getTile( lastPosition );
 			var tile = world.getTile( position );
 
-
+			// Borramos el objeto del ultimo tile en el que estuvo.
 			lastTile[ tileObject.type ] = null;
+			// Lo creamos en el tile que esta actualmente.
 			tile[ tileObject.type ] = tileObject;
-			if(tileObject.sprite.character !== undefined){
-				clearInterval(tileObject.animationInterval);
-				tileObject.animationInterval = parseInt(setInterval( (function(tileObject){
-						tileObject.isAnimating = true;
-						return function(){
-							if(tileObject.sprite.character.position.x < tileObject.position.x * 10 - 150 + 5){
-								tileObject.sprite.character.position.x ++;
-							}else if(tileObject.sprite.character.position.x > tileObject.position.x * 10 - 150 + 5){
-								tileObject.sprite.character.position.x --;
-							}
-							if(tileObject.sprite.character.position.z < tileObject.position.y * 10 - 150 + 5){
-								tileObject.sprite.character.position.z ++;
 
-							}else if(tileObject.sprite.character.position.z > tileObject.position.y * 10 - 150 + 5){
-								tileObject.sprite.character.position.z --;
+			// Definimos graficos
+			if(tileObject.sprite.character !== undefined){
+				// Si es un being entonces ocuparse de la animacion tambien.
+				//if( tileObject.type == 'being'){
+					clearInterval(tileObject.animationInterval);
+					tileObject.animationInterval = parseInt(setInterval( (function(tileObject){
+							tileObject.isAnimating = true;
+							return function(){
+								if(tileObject.sprite.character.position.x < tileObject.position.x * 10 - 150 + 5){
+									tileObject.sprite.character.position.x ++;
+								}else if(tileObject.sprite.character.position.x > tileObject.position.x * 10 - 150 + 5){
+									tileObject.sprite.character.position.x --;
+								}
+								if(tileObject.sprite.character.position.z < tileObject.position.y * 10 - 150 + 5){
+									tileObject.sprite.character.position.z ++;
+
+								}else if(tileObject.sprite.character.position.z > tileObject.position.y * 10 - 150 + 5){
+									tileObject.sprite.character.position.z --;
+								}
+								if(tileObject.id == client.userId){
+									sprites.camera.position.z = tileObject.sprite.character.position.z+240;
+									sprites.camera.position.x = tileObject.sprite.character.position.x;
+									sprites.camera.lookAt( tileObject.sprite.character.position );
+								}
+								if((tileObject.sprite.character.position.x == tileObject.position.x * 10 - 150 + 5) && (tileObject.sprite.character.position.z == tileObject.position.y * 10 - 150 + 5)){
+									clearInterval(tileObject.animationInterval)
+									tileObject.isAnimating = false;
+								}
 							}
-							if(tileObject.id == client.userId){
-								sprites.camera.position.z = tileObject.sprite.character.position.z+240;
-								sprites.camera.position.x = tileObject.sprite.character.position.x;
-								sprites.camera.lookAt( tileObject.sprite.character.position );
-							}
-							if((tileObject.sprite.character.position.x == tileObject.position.x * 10 - 150 + 5) && (tileObject.sprite.character.position.z == tileObject.position.y * 10 - 150 + 5)){
-								clearInterval(tileObject.animationInterval)
-								tileObject.isAnimating = false;
-							}
-						}
-				})(tileObject),30));
+					})(tileObject),30));
+
+				 if( tileObject.type == 'artifact'){
+				// Si es artifact el grafico es estatico.
+					sprites.initSprite( { "object" : tileObject } )
+
+				}
 			}
 
 
@@ -151,6 +170,7 @@ function world_update( data ){
 			var tileObject = world.createdObjects[data.data.object];
 			var lastPosition = data.data.lastPosition;
 			var lastTile = world.getTile( lastPosition );
+			sprites.removeObject({ "object" : world.createdObjects[ tileObject.id ] });
 
 			lastTile[ tileObject.type ] = null;
 			return;
@@ -158,11 +178,13 @@ function world_update( data ){
 
 	}else if( data.world !== undefined ){
 	// Actualización de las propiedades del WORLD
+
 		var removeId = data.data.object.id
 		sprites.removeObject({ "object" : world.createdObjects[ removeId ] });
 		delete world.createdObjects[ removeId ];
 		delete data.data.object;
 		return;
+
 
 
 	}else if( data.newBeing !== undefined ){
@@ -175,6 +197,8 @@ function world_update( data ){
 		var newArtifact = data.newArtifact;
 		sprites.initSprite( {"object" : newArtifact} );
 		world.createdObjects[newArtifact.id] = newArtifact;
+	}else{
+		console.log('data no capturada en gameController',data);
 	}
 
 }
@@ -257,6 +281,8 @@ function eventStats( params ){
 		}
 		if( p == 'experience'){
 			document.getElementById('barra_exp').style.width = (newValue.min / newValue.max * 100) + '%';
+		}
+		if( p == 'level'){
 			document.getElementById('texto_nivel').innerHTML = newValue.min;
 		}
 	}
